@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author luuhu
  */
-public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
+public class PacManMainGame_Frame extends javax.swing.JFrame {
     
     public void pacmanHit() {
         
@@ -57,15 +57,9 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
     /**
      * Creates new form PacMan_Demo_v11
      */
-    public PacMan_Demo_v1_Frame() {
+    public PacManMainGame_Frame() {
         initComponents();
-         // Chặn tương tác bảng
-        jTable3.setEnabled(false);
-        jTable3.setRowSelectionAllowed(false);
-        jTable3.setCellSelectionEnabled(false);
 
-        // Đọc dữ liệu từ file
-        loadDataToTable();
 
         // Khóa khích thước cửa sổ game
         this.setResizable(false);
@@ -92,8 +86,6 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
         txtfLive1 = new javax.swing.JTextField();
         pnBoard = new javax.swing.JPanel();
         pnlTile = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
         lbCountLive = new javax.swing.JLabel();
@@ -131,29 +123,8 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
         pnBoard.setBackground(new java.awt.Color(0, 0, 0));
         pnBoard.setName("PacMan"); // NOI18N
 
+        pnlTile.setBackground(new java.awt.Color(51, 102, 255));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Name", "Time", "Score"
-            }
-        ));
-        jTable3.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable3AncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane3.setViewportView(jTable3);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pacmanlogo.jpg"))); // NOI18N
 
@@ -164,16 +135,31 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
             }
         });
 
+        lbCountLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbCountLive.setForeground(new java.awt.Color(255, 255, 0));
+        lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountLive.setText("3");
 
+        lbCountTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCountTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountTime.setText("00:00:00");
 
+        lbTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/timeIcon.png"))); // NOI18N
         lbTime.setText("TIME");
 
+        lbLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbLive.setForeground(new java.awt.Color(51, 255, 102));
+        lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacmanRight.png"))); // NOI18N
         lbLive.setText("LIVE");
 
+        lbScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbScore.setForeground(new java.awt.Color(255, 255, 255));
+        lbScore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/scoreIcon.png"))); // NOI18N
         lbScore.setText("SCORE");
 
+        lbCountScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbCountScore.setForeground(new java.awt.Color(255, 255, 255));
         lbCountScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountScore.setText("0");
 
@@ -184,55 +170,42 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
             .addGroup(pnlTileLayout.createSequentialGroup()
                 .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTileLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTileLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbTime)
-                                .addGap(31, 31, 31))
-                            .addGroup(pnlTileLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbLive)
-                                    .addComponent(lbScore))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbCountTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbCountLive, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbCountScore, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addComponent(btnHome)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbLive)
+                                .addComponent(lbScore, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(lbTime))
+                        .addGap(19, 19, 19)
+                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbCountLive, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbCountTime)
+                            .addComponent(lbCountScore, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnHome))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         pnlTileLayout.setVerticalGroup(
             pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTileLayout.createSequentialGroup()
-                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                        .addGap(38, 38, 38))
-                    .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTileLayout.createSequentialGroup()
-                            .addGap(5, 5, 5)
-                            .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbCountTime, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(14, 14, 14)
-                            .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbCountLive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbLive))
-                            .addGap(18, 18, 18)
-                            .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbScore)
-                                .addComponent(lbCountScore))
-                            .addGap(39, 39, 39))
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCountTime, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTime))
+                .addGap(26, 26, 26)
+                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbLive)
+                    .addComponent(lbCountLive))
+                .addGap(26, 26, 26)
+                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbScore)
+                    .addComponent(lbCountScore))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlTileLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlBoardLayout = new javax.swing.GroupLayout(pnlBoard);
@@ -243,7 +216,7 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
         );
         pnlBoardLayout.setVerticalGroup(
             pnlBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnBoardLayout = new javax.swing.GroupLayout(pnBoard);
@@ -281,10 +254,6 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable3AncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable3AncestorAdded
-
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
         // Tạm dừng game
@@ -316,29 +285,6 @@ public class PacMan_Demo_v1_Frame extends javax.swing.JFrame {
     private void txtfLive1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfLive1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtfLive1ActionPerformed
-// Đọc dữ liệu từ file txt vào bảng jTable3
-private void loadDataToTable() {
-    DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-    model.setRowCount(0); // Xóa dữ liệu cũ
-
-    try {
-        File file = new File("Score.txt"); // File nằm cùng thư mục với project
-        Scanner scanner = new Scanner(file);
-
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            if (!line.isEmpty()) {
-                String[] parts = line.split("\\s+");
-                if (parts.length >= 3) {
-                    model.addRow(new Object[]{parts[0], parts[1], parts[2]});
-                }
-            }
-        }
-        scanner.close();
-    } catch (Exception e) {
-        System.out.println("Không thể đọc file dữ liệu: " + e.getMessage());
-    }
-}
 
     /**
      * @param args the command line arguments
@@ -357,21 +303,23 @@ private void loadDataToTable() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PacMan_Demo_v1_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacManMainGame_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PacMan_Demo_v1_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacManMainGame_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PacMan_Demo_v1_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacManMainGame_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PacMan_Demo_v1_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacManMainGame_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PacMan_Demo_v1_Frame().setVisible(true);
+                new PacManMainGame_Frame().setVisible(true);
             }
         });
     }
@@ -380,9 +328,7 @@ private void loadDataToTable() {
     private javax.swing.JButton btnHome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
     public javax.swing.JLabel lbCountLive;
     public javax.swing.JLabel lbCountScore;
     public javax.swing.JLabel lbCountTime;

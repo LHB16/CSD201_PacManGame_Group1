@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer; 
 
 public class BoardPanel extends JPanel implements ActionListener {
-    private PacMan_Demo_v1_Frame gameFrame;
+    private PacManMainGame_Frame gameFrame;
     
     Random rand = new Random();
 
@@ -89,7 +89,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     private int moveCounter = 0;
 
 
-    public BoardPanel(PacMan_Demo_v1_Frame frame) {
+    public BoardPanel(PacManMainGame_Frame frame) {
         this.gameFrame = frame;
         this.setBackground(Color.BLACK);
         loadPacmanImages();
