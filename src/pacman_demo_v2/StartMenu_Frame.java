@@ -32,6 +32,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        lbLogo = new javax.swing.JLabel();
         lbPlay = new javax.swing.JLabel();
         lbTutorial = new javax.swing.JLabel();
         lbRankingBoard = new javax.swing.JLabel();
@@ -43,6 +44,13 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         setTitle("Main Menu");
 
         jPanel1.setLayout(null);
+
+        lbLogo.setBackground(new java.awt.Color(204, 255, 0));
+        lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacManLogo.png"))); // NOI18N
+        lbLogo.setOpaque(true);
+        jPanel1.add(lbLogo);
+        lbLogo.setBounds(270, 120, 190, 190);
 
         lbPlay.setBackground(new java.awt.Color(0, 255, 255));
         lbPlay.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -79,6 +87,11 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         lbRankingBoard.setText("RANKING BOARD");
         lbRankingBoard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbRankingBoard.setOpaque(true);
+        lbRankingBoard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbRankingBoardMouseClicked(evt);
+            }
+        });
         jPanel1.add(lbRankingBoard);
         lbRankingBoard.setBounds(100, 500, 530, 50);
 
@@ -140,6 +153,13 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_lbExitMouseClicked
 
+    private void lbRankingBoardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbRankingBoardMouseClicked
+        // TODO add your handling code here:
+        RankingBoard_Frame rkf = new RankingBoard_Frame();
+        rkf.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbRankingBoardMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -179,6 +199,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbAboutUs;
     private javax.swing.JLabel lbExit;
+    private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbPlay;
     private javax.swing.JLabel lbRankingBoard;
     private javax.swing.JLabel lbTutorial;
