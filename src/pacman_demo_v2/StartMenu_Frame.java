@@ -130,7 +130,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
 
     private void lbPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbPlayMouseClicked
         // TODO add your handling code here:
-        PacMan_Demo_v1_Frame pacManGame = new PacMan_Demo_v1_Frame();
+        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame();
         pacManGame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbPlayMouseClicked
