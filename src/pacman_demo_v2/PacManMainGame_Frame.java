@@ -95,13 +95,13 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnBoard = new javax.swing.JPanel();
         pnlTile = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnHome = new javax.swing.JButton();
         lbCountLive = new javax.swing.JLabel();
         lbCountTime = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
         lbLive = new javax.swing.JLabel();
         lbScore = new javax.swing.JLabel();
         lbCountScore = new javax.swing.JLabel();
+        lbHome = new javax.swing.JLabel();
         pnlBoard = new BoardPanel(this);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -136,15 +136,6 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pacmanlogo.jpg"))); // NOI18N
 
-        btnHome.setBackground(new java.awt.Color(255, 0, 255));
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/homeIcon.png"))); // NOI18N
-        btnHome.setText("Home");
-        btnHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeActionPerformed(evt);
-            }
-        });
-
         lbCountLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountLive.setForeground(new java.awt.Color(255, 255, 0));
         lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -173,32 +164,41 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbCountScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountScore.setText("0");
 
+        lbHome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
+        lbHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbHomeMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTileLayout = new javax.swing.GroupLayout(pnlTile);
         pnlTile.setLayout(pnlTileLayout);
         pnlTileLayout.setHorizontalGroup(
             pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTileLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbScore)
+                            .addComponent(lbScore, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbTime)
                             .addComponent(lbLive))
-                        .addGap(19, 19, 19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbCountLive, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbCountTime)
-                            .addComponent(lbCountScore, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnHome))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                            .addComponent(lbCountScore, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         pnlTileLayout.setVerticalGroup(
             pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTileLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCountTime, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbTime))
@@ -211,11 +211,13 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                     .addComponent(lbScore)
                     .addComponent(lbCountScore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addGroup(pnlTileLayout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 22, Short.MAX_VALUE))
         );
+
+        pnlBoard.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout pnlBoardLayout = new javax.swing.GroupLayout(pnlBoard);
         pnlBoard.setLayout(pnlBoardLayout);
@@ -235,8 +237,8 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
             .addGroup(pnBoardLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlTile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlTile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnBoardLayout.setVerticalGroup(
@@ -263,7 +265,11 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+    private void txtfLive1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfLive1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfLive1ActionPerformed
+
+    private void lbHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbHomeMouseClicked
         // TODO add your handling code here:
         // Tạm dừng game
         ((BoardPanel) pnlBoard).stopTimers();
@@ -289,11 +295,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
             ((BoardPanel) pnlBoard).startTimers();
             pnlBoard.requestFocusInWindow(); // Trả lại focus cho panel game để bắt sự kiện phím
         }
-    }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void txtfLive1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfLive1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfLive1ActionPerformed
+    }//GEN-LAST:event_lbHomeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -334,13 +336,13 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnHome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     public javax.swing.JLabel lbCountLive;
     public javax.swing.JLabel lbCountScore;
     public javax.swing.JLabel lbCountTime;
+    private javax.swing.JLabel lbHome;
     private javax.swing.JLabel lbLive;
     private javax.swing.JLabel lbScore;
     private javax.swing.JLabel lbTime;
