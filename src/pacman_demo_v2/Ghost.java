@@ -2,13 +2,12 @@
 // cmt
 package pacman_demo_v2;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
-import javax.imageio.ImageIO;
+
+    private BufferedImage image;
+    private BufferedImage upImage1, upImage2;
+    private BufferedImage downImage1, downImage2;
+    private BufferedImage leftImage1, leftImage2;
+    private BufferedImage rightImage1, rightImage2;
 
 public class Ghost {
     private int x, y;
