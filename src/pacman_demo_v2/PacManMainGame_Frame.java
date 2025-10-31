@@ -123,11 +123,13 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnBoard.setBackground(new java.awt.Color(0, 0, 0));
         pnBoard.setName("PacMan"); // NOI18N
 
-        pnlTile.setBackground(new java.awt.Color(51, 102, 255));
+        pnlTile.setBackground(new java.awt.Color(0, 153, 255));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pacmanlogo.jpg"))); // NOI18N
 
+        btnHome.setBackground(new java.awt.Color(255, 0, 255));
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/homeIcon.png"))); // NOI18N
         btnHome.setText("Home");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +184,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                             .addComponent(lbCountTime)
                             .addComponent(lbCountScore, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnHome))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -225,9 +227,9 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
             pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBoardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(pnlBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlTile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlTile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnBoardLayout.setVerticalGroup(
@@ -263,7 +265,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         int choice = JOptionPane.showConfirmDialog(
             this, // parent component
             "Do you want to return to the main menu?\nYour current game progress will be lost.", // message
-            "Return to Menu", // title
+            "Return to Main Menu", // title
             JOptionPane.YES_NO_OPTION, // option type
             JOptionPane.QUESTION_MESSAGE // message type
         );

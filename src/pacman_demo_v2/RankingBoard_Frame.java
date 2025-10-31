@@ -6,15 +6,9 @@
 package pacman_demo_v2;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.List;
 import javax.swing.JLabel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -30,78 +24,53 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
     public RankingBoard_Frame() {
         initComponents();
         
-        this.setSize(694, 725);          // Đặt kích thước
+        this.setSize(688, 729);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
         
         scoreManager = new ScoreManager();
-        styleTable(); // Gọi styleTable trước để định dạng bảng
-        loadDataToTable(); // Tải và hiển thị điểm
+        
+        loadAndDisplayScores();
+        
     }
     
-    /**
-     * Phương thức này đã được sửa để đọc trực tiếp từ file Scores.txt
-     */
-    private void loadDataToTable() {
-        DefaultTableModel model = (DefaultTableModel) tbRankingBoard.getModel();
-        model.setRowCount(0); // Xóa hết dữ liệu cũ trên bảng
+    private void styleLabel(JLabel label) {
+        label.setFont(new Font("Tahoma", Font.BOLD, 16)); // Đặt font chữ
+        label.setForeground(Color.WHITE); // Đặt màu chữ
+    }
+    
+    // THÊM MỚI: Phương thức tải và hiển thị điểm
+    private void loadAndDisplayScores() {
+        // Đọc danh sách điểm đã được sắp xếp
+        List<PlayerScore> topScores = scoreManager.readScores();
 
-        // Tên file phải khớp với tên file được ghi bởi ScoreManager
-        File scoreFile = new File("scores.txt"); 
+        // Nhóm các label lại để dễ xử lý
+        JLabel[] nameLabels = {lbText1st1, lbText2nd1, lbText3rd1, lbText4th1, lbText5th1};
+        JLabel[] timeLabels = {lbText1st2, lbText2nd2, lbText3rd2, lbText4th2, lbText5th2};
+        JLabel[] scoreLabels = {lbText1st3, lbText2nd3, lbText3rd3, lbText4th3, lbText5th3};
 
-        if (!scoreFile.exists()) {
-            System.out.println("File Scores.txt does not exist. The leaderboard will be empty.");
-            return; // Dừng lại nếu không tìm thấy file
+        // Áp dụng style cho tất cả các label
+        for (int i = 0; i < 5; i++) {
+            styleLabel(nameLabels[i]);
+            styleLabel(timeLabels[i]);
+            styleLabel(scoreLabels[i]);
         }
 
-        try (Scanner sc = new Scanner(scoreFile)) {
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine().trim();
-                if (!line.isEmpty()) {
-                    // Định dạng file mong muốn: "Rank Name Time Score"
-                    // Ví dụ: "1 LuuHuynh 00:00:45 1200"
-                    String[] parts = line.split("\\s+", 4); // Tách dòng thành 4 phần
-                    
-                    if (parts.length == 4) {
-                        // Thêm dữ liệu vào bảng theo đúng thứ tự các cột
-                        model.addRow(new Object[]{parts[0], parts[1], parts[2], parts[3]});
-                    }
-                }
+        // Hiển thị thông tin top 3 người chơi
+        for (int i = 0; i < 5; i++) {
+            if (i < topScores.size()) {
+                // Nếu có đủ người chơi trong danh sách
+                PlayerScore ps = topScores.get(i);
+                nameLabels[i].setText(ps.getUsername());      // Name
+                timeLabels[i].setText(ps.getTime());          // Time
+                scoreLabels[i].setText(String.valueOf(ps.getScore())); // Score
+            } else {
+                // Nếu không đủ 3 người, hiển thị ký tự trống
+                nameLabels[i].setText("---");
+                timeLabels[i].setText("--:--:--");
+                scoreLabels[i].setText("---");
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("Đã xảy ra lỗi khi đọc file: " + e.getMessage());
-            e.printStackTrace();
         }
-    }
-    
-    /**
-     * Tùy chỉnh giao diện cho JTable
-     */
-    private void styleTable() {
-        // Căn giữa nội dung trong các ô
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        
-        tbRankingBoard.setDefaultRenderer(Object.class, centerRenderer);
-
-        // Tùy chỉnh Header
-        JTableHeader header = tbRankingBoard.getTableHeader();
-        header.setFont(new Font("Tahoma", Font.BOLD, 16));
-        header.setBackground(new Color(255, 165, 0));
-        header.setForeground(Color.BLACK);
-        header.setPreferredSize(new Dimension(100, 40));
-        header.setReorderingAllowed(false); // Không cho kéo thả cột
-
-        // Tùy chỉnh các dòng
-        tbRankingBoard.setRowHeight(30);
-        tbRankingBoard.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        tbRankingBoard.setSelectionBackground(new Color(255, 228, 181));
-        
-        // Tùy chỉnh kích thước cột
-        tbRankingBoard.getColumnModel().getColumn(0).setPreferredWidth(50);   // Rank
-        tbRankingBoard.getColumnModel().getColumn(1).setPreferredWidth(200);  // Name
-        tbRankingBoard.getColumnModel().getColumn(2).setPreferredWidth(150);  // Time
-        tbRankingBoard.getColumnModel().getColumn(3).setPreferredWidth(150);  // Score
     }
 
     /**
@@ -115,14 +84,27 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lbBack = new javax.swing.JLabel();
-        lbbackground = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tbRankingBoard = new javax.swing.JTable();
+        lbText3rd3 = new javax.swing.JLabel();
+        lbText3rd2 = new javax.swing.JLabel();
+        lbText3rd1 = new javax.swing.JLabel();
+        lbText2nd3 = new javax.swing.JLabel();
+        lbText2nd2 = new javax.swing.JLabel();
+        lbText2nd1 = new javax.swing.JLabel();
+        lbText1st3 = new javax.swing.JLabel();
+        lbText1st2 = new javax.swing.JLabel();
+        lbText1st1 = new javax.swing.JLabel();
+        lbText5th3 = new javax.swing.JLabel();
+        lbText5th2 = new javax.swing.JLabel();
+        lbText5th1 = new javax.swing.JLabel();
+        lbText4th3 = new javax.swing.JLabel();
+        lbText4th2 = new javax.swing.JLabel();
+        lbText4th1 = new javax.swing.JLabel();
+        lbBgRankingBoard = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ranking Board");
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 102, 255));
         jPanel1.setLayout(null);
 
         lbBack.setBackground(new java.awt.Color(0, 255, 255));
@@ -139,52 +121,70 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbBack);
-        lbBack.setBounds(0, 650, 170, 50);
+        lbBack.setBounds(0, 660, 120, 40);
 
-        lbbackground.setBackground(new java.awt.Color(0, 0, 204));
-        lbbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rankingBoard.gif"))); // NOI18N
-        lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        lbbackground.setOpaque(true);
-        jPanel1.add(lbbackground);
-        lbbackground.setBounds(230, 40, 210, 200);
+        lbText3rd3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText3rd3);
+        lbText3rd3.setBounds(490, 310, 70, 40);
+        jPanel1.add(lbText3rd2);
+        lbText3rd2.setBounds(340, 320, 70, 20);
 
-        tbRankingBoard.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        lbText3rd1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText3rd1);
+        lbText3rd1.setBounds(190, 310, 70, 40);
 
-            },
-            new String [] {
-                "Rank", "Name", "Time", "Score"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
+        lbText2nd3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText2nd3);
+        lbText2nd3.setBounds(490, 240, 70, 40);
+        jPanel1.add(lbText2nd2);
+        lbText2nd2.setBounds(340, 250, 70, 20);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tbRankingBoard.setOpaque(false);
-        tbRankingBoard.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tbRankingBoardAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane3.setViewportView(tbRankingBoard);
+        lbText2nd1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText2nd1);
+        lbText2nd1.setBounds(190, 240, 70, 40);
 
-        jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(20, 280, 648, 350);
+        lbText1st3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText1st3);
+        lbText1st3.setBounds(490, 170, 70, 40);
+        jPanel1.add(lbText1st2);
+        lbText1st2.setBounds(340, 180, 70, 20);
+
+        lbText1st1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText1st1);
+        lbText1st1.setBounds(190, 170, 70, 40);
+
+        lbText5th3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText5th3);
+        lbText5th3.setBounds(490, 440, 70, 40);
+        jPanel1.add(lbText5th2);
+        lbText5th2.setBounds(340, 450, 70, 20);
+
+        lbText5th1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText5th1);
+        lbText5th1.setBounds(190, 440, 70, 40);
+
+        lbText4th3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText4th3);
+        lbText4th3.setBounds(490, 370, 70, 40);
+        jPanel1.add(lbText4th2);
+        lbText4th2.setBounds(340, 380, 70, 20);
+
+        lbText4th1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lbText4th1);
+        lbText4th1.setBounds(190, 370, 70, 40);
+
+        lbBgRankingBoard.setBackground(new java.awt.Color(51, 153, 255));
+        lbBgRankingBoard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbBgRankingBoard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rankingBoardBG.png"))); // NOI18N
+        lbBgRankingBoard.setOpaque(true);
+        jPanel1.add(lbBgRankingBoard);
+        lbBgRankingBoard.setBounds(10, 20, 660, 660);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,10 +200,6 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         startMenu.setVisible(true); // Mở lại menu chính
         this.dispose(); // Đóng cửa sổ game hiện tại
     }//GEN-LAST:event_lbBackMouseClicked
-
-    private void tbRankingBoardAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbRankingBoardAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbRankingBoardAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -243,9 +239,22 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbBack;
-    private javax.swing.JLabel lbbackground;
-    private javax.swing.JTable tbRankingBoard;
+    private javax.swing.JLabel lbBgRankingBoard;
+    private javax.swing.JLabel lbText1st1;
+    private javax.swing.JLabel lbText1st2;
+    private javax.swing.JLabel lbText1st3;
+    private javax.swing.JLabel lbText2nd1;
+    private javax.swing.JLabel lbText2nd2;
+    private javax.swing.JLabel lbText2nd3;
+    private javax.swing.JLabel lbText3rd1;
+    private javax.swing.JLabel lbText3rd2;
+    private javax.swing.JLabel lbText3rd3;
+    private javax.swing.JLabel lbText4th1;
+    private javax.swing.JLabel lbText4th2;
+    private javax.swing.JLabel lbText4th3;
+    private javax.swing.JLabel lbText5th1;
+    private javax.swing.JLabel lbText5th2;
+    private javax.swing.JLabel lbText5th3;
     // End of variables declaration//GEN-END:variables
 }
