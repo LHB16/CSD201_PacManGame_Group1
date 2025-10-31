@@ -6,9 +6,6 @@
 package pacman_demo_v2;
 
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import java.io.File;
-import java.util.Scanner;
 
 
 /**
@@ -25,33 +22,44 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbCountLive.setText(String.valueOf(lives)); // Cập nhật text trên label
 
         if (lives <= 0) {
-        // Tạm dừng game timer trong khi hộp thoại hiển thị
-        ((BoardPanel) pnlBoard).stopTimers();
+            // Tạm dừng game timer trong khi hộp thoại hiển thị
+            ((BoardPanel) pnlBoard).stopTimers();
 
-        String[] options = {"Replay", "Exit"};
-        int choice = JOptionPane.showOptionDialog(
-            this,                          // Parent component
-            "Game Over! Do you want to play again?", // Message
-            "Game Over",                   // Title
-            JOptionPane.DEFAULT_OPTION,    // Option type
-            JOptionPane.QUESTION_MESSAGE,  // Message type
-            null,                          // Icon
-            options,                       // Custom button texts
-            options[0]                     // Default button
-        );
+            String[] options = {"Replay", "Exit"};
+            int choice = JOptionPane.showOptionDialog(
+                this,                          // Parent component
+                "Game Over! Do you want to play again?", // Message
+                "Game Over",                   // Title
+                JOptionPane.DEFAULT_OPTION,    // Option type
+                JOptionPane.QUESTION_MESSAGE,  // Message type
+                null,                          // Icon
+                options,                       // Custom button texts
+                options[0]                     // Default button
+            );
 
-        if (choice == 0) {
-            // Người dùng chọn "Replay"
-            ((BoardPanel) pnlBoard).replayGame();
-            lbCountLive.setText("3");
+            if (choice == 0) {
+                // Người dùng chọn "Replay"
+                ((BoardPanel) pnlBoard).replayGame();
+                lbCountLive.setText("3");
+            } else {
+                // Người dùng chọn "Exit" hoặc đóng hộp thoại
+                System.exit(0);
+            }
         } else {
-            // Người dùng chọn "Exit" hoặc đóng hộp thoại
-            System.exit(0);
+            // Nếu còn mạng, chỉ reset vị trí Pac-Man
+            ((BoardPanel) pnlBoard).resetPosition();
+            // Tạm dừng 500ms
+            ((BoardPanel) pnlBoard).stopTimers();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // Lỗi này xảy ra nếu có một luồng khác ngắt quãng luồng này.
+                // Trong game đơn giản, bạn có thể bỏ qua hoặc in ra lỗi.
+                e.printStackTrace();
+            }
+            ((BoardPanel) pnlBoard).startTimers();
+                    
         }
-    } else {
-        // Nếu còn mạng, chỉ reset vị trí Pac-Man
-        ((BoardPanel) pnlBoard).resetPosition();
-    }
     }
     
     /**
@@ -152,7 +160,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
 
         lbLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbLive.setForeground(new java.awt.Color(51, 255, 102));
-        lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacmanRight.png"))); // NOI18N
+        lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacman/pacnu1phai.png"))); // NOI18N
         lbLive.setText("LIVE");
 
         lbScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -174,10 +182,9 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                     .addGroup(pnlTileLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbLive)
-                                .addComponent(lbScore, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(lbTime))
+                            .addComponent(lbScore)
+                            .addComponent(lbTime)
+                            .addComponent(lbLive))
                         .addGap(19, 19, 19)
                         .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbCountLive, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
