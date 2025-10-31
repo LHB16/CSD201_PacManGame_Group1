@@ -76,6 +76,11 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         lbTutorial.setText("HOW TO PLAY");
         lbTutorial.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbTutorial.setOpaque(true);
+        lbTutorial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTutorialMouseClicked(evt);
+            }
+        });
         jPanel1.add(lbTutorial);
         lbTutorial.setBounds(100, 440, 530, 50);
 
@@ -159,6 +164,13 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         rkf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lbRankingBoardMouseClicked
+
+    private void lbTutorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTutorialMouseClicked
+        // TODO add your handling code here:
+        Tutorial_Frame1 tut = new Tutorial_Frame1();
+        tut.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbTutorialMouseClicked
 
     /**
      * @param args the command line arguments

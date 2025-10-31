@@ -124,11 +124,9 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lbLive" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbScore" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lbScore" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbLive" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -242,7 +240,7 @@
                   <Color blue="66" green="ff" red="33" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/pacmanRight.png"/>
+                  <Image iconType="3" name="/img/pacman/pacnu1phai.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="LIVE"/>
               </Properties>

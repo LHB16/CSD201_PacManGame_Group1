@@ -24,7 +24,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
     public RankingBoard_Frame() {
         initComponents();
         
-        this.setSize(688, 729);          // Đặt kích thước
+        this.setSize(698, 739);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
         
@@ -126,8 +126,10 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         lbText3rd3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText3rd3);
         lbText3rd3.setBounds(490, 310, 70, 40);
+
+        lbText3rd2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText3rd2);
-        lbText3rd2.setBounds(340, 320, 70, 20);
+        lbText3rd2.setBounds(330, 320, 100, 20);
 
         lbText3rd1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText3rd1);
@@ -136,8 +138,10 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         lbText2nd3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText2nd3);
         lbText2nd3.setBounds(490, 240, 70, 40);
+
+        lbText2nd2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText2nd2);
-        lbText2nd2.setBounds(340, 250, 70, 20);
+        lbText2nd2.setBounds(330, 250, 100, 20);
 
         lbText2nd1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText2nd1);
@@ -146,8 +150,10 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         lbText1st3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText1st3);
         lbText1st3.setBounds(490, 170, 70, 40);
+
+        lbText1st2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText1st2);
-        lbText1st2.setBounds(340, 180, 70, 20);
+        lbText1st2.setBounds(330, 180, 100, 20);
 
         lbText1st1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText1st1);
@@ -156,8 +162,10 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         lbText5th3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText5th3);
         lbText5th3.setBounds(490, 440, 70, 40);
+
+        lbText5th2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText5th2);
-        lbText5th2.setBounds(340, 450, 70, 20);
+        lbText5th2.setBounds(330, 450, 100, 20);
 
         lbText5th1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText5th1);
@@ -166,8 +174,10 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         lbText4th3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText4th3);
         lbText4th3.setBounds(490, 370, 70, 40);
+
+        lbText4th2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText4th2);
-        lbText4th2.setBounds(340, 380, 70, 20);
+        lbText4th2.setBounds(330, 380, 100, 20);
 
         lbText4th1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText4th1);
@@ -178,7 +188,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         lbBgRankingBoard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rankingBoardBG.png"))); // NOI18N
         lbBgRankingBoard.setOpaque(true);
         jPanel1.add(lbBgRankingBoard);
-        lbBgRankingBoard.setBounds(10, 20, 660, 660);
+        lbBgRankingBoard.setBounds(20, 20, 660, 660);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
