@@ -1,4 +1,5 @@
 // Ghost.java
+// cmt
 package pacman_demo_v2;
 
 import java.awt.Graphics2D;
