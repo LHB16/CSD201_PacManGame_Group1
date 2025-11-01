@@ -9,15 +9,15 @@ package pacman_demo_v2;
  *
  * @author luuhu
  */
-public class Tutorial_Frame1 extends javax.swing.JFrame {
+public class AboutUs_Frame extends javax.swing.JFrame {
 
     /**
-     * Creates new form StartMenu_Frame
+     * Creates new form AboutUs
      */
-    public Tutorial_Frame1() {
+    public AboutUs_Frame() {
         initComponents();
         
-        this.setSize(635, 650);          // Đặt kích thước
+        this.setSize(800, 800);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
     }
@@ -31,15 +31,12 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         lbback = new javax.swing.JLabel();
-        lbnext = new javax.swing.JLabel();
-        lbbackground = new javax.swing.JLabel();
+        lbBackGround = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Tutotrial");
-
-        jPanel1.setLayout(null);
+        setTitle("About Us");
+        getContentPane().setLayout(null);
 
         lbback.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
         lbback.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -49,47 +46,15 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
                 lbbackMouseClicked(evt);
             }
         });
-        jPanel1.add(lbback);
-        lbback.setBounds(40, 520, 120, 50);
+        getContentPane().add(lbback);
+        lbback.setBounds(0, 710, 120, 50);
 
-        lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutnext.png"))); // NOI18N
-        lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbnext.setPreferredSize(new java.awt.Dimension(120, 54));
-        lbnext.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbnextMouseClicked(evt);
-            }
-        });
-        jPanel1.add(lbnext);
-        lbnext.setBounds(170, 520, 130, 50);
-
-        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut1.png"))); // NOI18N
-        lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 630, 610);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        lbBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/aboutUsFrame.png"))); // NOI18N
+        getContentPane().add(lbBackGround);
+        lbBackGround.setBounds(0, 0, 800, 800);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void lbnextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbnextMouseClicked
-        // TODO add your handling code here:
-        Tutorial_Frame2 tut = new Tutorial_Frame2();
-        tut.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_lbnextMouseClicked
 
     private void lbbackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbbackMouseClicked
         // TODO add your handling code here:
@@ -115,35 +80,27 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tutorial_Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutUs_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tutorial_Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutUs_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tutorial_Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutUs_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tutorial_Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutUs_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Tutorial_Frame1().setVisible(true);
+                new AboutUs_Frame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbBackGround;
     private javax.swing.JLabel lbback;
-    private javax.swing.JLabel lbbackground;
-    private javax.swing.JLabel lbnext;
     // End of variables declaration//GEN-END:variables
 }

@@ -63,10 +63,10 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
         jPanel1.add(lbnext);
         lbnext.setBounds(160, 560, 130, 50);
 
-        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tut2.png"))); // NOI18N
+        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut2.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 620, 633);
+        lbbackground.setBounds(0, 0, 620, 630);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

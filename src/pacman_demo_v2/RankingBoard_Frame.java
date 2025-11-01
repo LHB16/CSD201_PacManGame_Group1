@@ -83,7 +83,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lbBack = new javax.swing.JLabel();
+        lbback = new javax.swing.JLabel();
         lbText3rd3 = new javax.swing.JLabel();
         lbText3rd2 = new javax.swing.JLabel();
         lbText3rd1 = new javax.swing.JLabel();
@@ -107,21 +107,16 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 102, 255));
         jPanel1.setLayout(null);
 
-        lbBack.setBackground(new java.awt.Color(0, 255, 255));
-        lbBack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbBack.setForeground(new java.awt.Color(255, 0, 0));
-        lbBack.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/backIcon.png"))); // NOI18N
-        lbBack.setText("BACK");
-        lbBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbBack.setOpaque(true);
-        lbBack.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbback.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
+        lbback.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbback.setPreferredSize(new java.awt.Dimension(117, 54));
+        lbback.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbBackMouseClicked(evt);
+                lbbackMouseClicked(evt);
             }
         });
-        jPanel1.add(lbBack);
-        lbBack.setBounds(0, 660, 120, 40);
+        jPanel1.add(lbback);
+        lbback.setBounds(0, 630, 120, 50);
 
         lbText3rd3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText3rd3);
@@ -204,12 +199,12 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lbBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBackMouseClicked
+    private void lbbackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbbackMouseClicked
         // TODO add your handling code here:
         StartMenu_Frame startMenu = new StartMenu_Frame();
         startMenu.setVisible(true); // Mở lại menu chính
         this.dispose(); // Đóng cửa sổ game hiện tại
-    }//GEN-LAST:event_lbBackMouseClicked
+    }//GEN-LAST:event_lbbackMouseClicked
 
     /**
      * @param args the command line arguments
@@ -249,7 +244,6 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lbBack;
     private javax.swing.JLabel lbBgRankingBoard;
     private javax.swing.JLabel lbText1st1;
     private javax.swing.JLabel lbText1st2;
@@ -266,5 +260,6 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
     private javax.swing.JLabel lbText5th1;
     private javax.swing.JLabel lbText5th2;
     private javax.swing.JLabel lbText5th3;
+    private javax.swing.JLabel lbback;
     // End of variables declaration//GEN-END:variables
 }
