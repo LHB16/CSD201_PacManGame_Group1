@@ -173,7 +173,7 @@ public BoardPanel(PacManMainGame_Frame frame) {
                 totalDots--;
             }
             if (mapData[newX][newY] == 2) {
-                score += 1;
+                score += 1000;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
             }
             // Ăn siêu điểm
