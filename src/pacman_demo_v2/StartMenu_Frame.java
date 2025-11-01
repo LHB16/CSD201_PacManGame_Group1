@@ -108,6 +108,11 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         lbAboutUs.setText("ABOUT US");
         lbAboutUs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbAboutUs.setOpaque(true);
+        lbAboutUs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbAboutUsMouseClicked(evt);
+            }
+        });
         jPanel1.add(lbAboutUs);
         lbAboutUs.setBounds(100, 560, 530, 50);
 
@@ -171,6 +176,13 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         tut.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lbTutorialMouseClicked
+
+    private void lbAboutUsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbAboutUsMouseClicked
+        // TODO add your handling code here:
+        AboutUs_Frame tut = new AboutUs_Frame();
+        tut.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lbAboutUsMouseClicked
 
     /**
      * @param args the command line arguments

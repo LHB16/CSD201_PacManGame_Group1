@@ -63,12 +63,11 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
         jPanel1.add(lbback);
         lbback.setBounds(30, 560, 120, 50);
 
-        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tut4.png"))); // NOI18N
+        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut4.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lbbackground.setMaximumSize(new java.awt.Dimension(611, 628));
-        lbbackground.setMinimumSize(null);
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 617, 617);
+        lbbackground.setBounds(0, 0, 620, 630);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
