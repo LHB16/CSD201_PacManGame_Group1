@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
  * @author luuhu
  */
 public class PacManMainGame_Frame extends javax.swing.JFrame {
+    // Khởi tạo 1 màn làm mở cửa sổ
+    private GlassPane glassPane;
     
     public void pacmanHit() {
         
@@ -78,6 +80,9 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         this.setResizable(false);
         this.setTitle("PacMan Demo"); // Thêm tiêu đề cho cửa sổ
         this.setLocationRelativeTo(null); // Hiển thị cửa sổ ở giữa màn hình
+        
+        glassPane = new GlassPane(this);
+        setGlassPane(glassPane);
     }
 
     /**
@@ -170,6 +175,14 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbHome.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbHomeMouseClicked(evt);
+            }
+        });
+        lbHome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lbHomeKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                lbHomeKeyTyped(evt);
             }
         });
 
@@ -272,30 +285,41 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     private void lbHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbHomeMouseClicked
         // TODO add your handling code here:
         // Tạm dừng game
-        ((BoardPanel) pnlBoard).stopTimers();
+        ((BoardPanel) pnlBoard).stopTimers(); // Dòng này của bạn
 
-        // Hiển thị hộp thoại xác nhận
-        int choice = JOptionPane.showConfirmDialog(
-            this, // parent component
-            "Do you want to return to the main menu?\nYour current game progress will be lost.", // message
-            "Return to Main Menu", // title
-            JOptionPane.YES_NO_OPTION, // option type
-            JOptionPane.QUESTION_MESSAGE // message type
-        );
+        // 1. Làm mờ nền game
+        glassPane.setVisible(true);
 
-        // Xử lý lựa chọn
+        // 2. Tạo và hiển thị hộp thoại tùy chỉnh
+        CustomDialog dialog = new CustomDialog(this, true); 
+            int choice = dialog.showDialog();
+
+        // 3. Tắt lớp làm mờ
+        glassPane.setVisible(false);
+
+        // 4. Xử lý lựa chọn
         if (choice == JOptionPane.YES_OPTION) {
             // Nếu người dùng chọn "Yes"
             StartMenu_Frame startMenu = new StartMenu_Frame();
             startMenu.setVisible(true); // Mở lại menu chính
             this.dispose(); // Đóng cửa sổ game hiện tại
+            System.out.println("Returning to main menu..."); // In ra để kiểm tra
         } else {
-            // Nếu người dùng chọn "No" hoặc đóng hộp thoại
-            // Tiếp tục game (bạn sẽ cần tạo phương thức này trong BoardPanel)
+            // Nếu người dùng chọn "No"
+            // Tiếp tục game
             ((BoardPanel) pnlBoard).startTimers();
-            pnlBoard.requestFocusInWindow(); // Trả lại focus cho panel game để bắt sự kiện phím
+            pnlBoard.requestFocusInWindow(); // Trả lại focus
+            System.out.println("Resuming game..."); // In ra để kiểm tra
         }
     }//GEN-LAST:event_lbHomeMouseClicked
+
+    private void lbHomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbHomeKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbHomeKeyTyped
+
+    private void lbHomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbHomeKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbHomeKeyPressed
 
     /**
      * @param args the command line arguments
