@@ -47,7 +47,7 @@ public class AboutUs_Frame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lbback);
-        lbback.setBounds(30, 700, 120, 50);
+        lbback.setBounds(0, 710, 120, 50);
 
         lbBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/aboutUsFrame.png"))); // NOI18N
         getContentPane().add(lbBackGround);
