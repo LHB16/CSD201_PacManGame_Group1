@@ -65,7 +65,7 @@ public class CustomDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnNo);
-        btnNo.setBounds(310, 220, 60, 40);
+        btnNo.setBounds(220, 220, 60, 40);
 
         btnYes.setBackground(new java.awt.Color(255, 51, 51));
         btnYes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -77,12 +77,12 @@ public class CustomDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnYes);
-        btnYes.setBounds(30, 220, 60, 40);
+        btnYes.setBounds(110, 220, 60, 40);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/GoBackHomeHeader.png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(140, 40, 142, 80);
+        jLabel1.setBounds(130, 40, 142, 80);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
