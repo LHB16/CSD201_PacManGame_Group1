@@ -7,17 +7,18 @@ package pacman_demo_v2;
 
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author luuhu
  */
 public class PacManMainGame_Frame extends javax.swing.JFrame {
+
     // Khởi tạo 1 màn làm mở cửa sổ
     private GlassPane glassPane;
-    
+
     public void pacmanHit() {
-        
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
+        this.setIconImage(icon.getImage());
         int lives = ((BoardPanel) pnlBoard).totalLives;
         lives--;
         ((BoardPanel) pnlBoard).totalLives = lives; // Giảm số mạng đi 1
@@ -29,14 +30,14 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
 
             String[] options = {"Replay", "Exit"};
             int choice = JOptionPane.showOptionDialog(
-                this,                          // Parent component
-                "Game Over! Do you want to play again?", // Message
-                "Game Over",                   // Title
-                JOptionPane.DEFAULT_OPTION,    // Option type
-                JOptionPane.QUESTION_MESSAGE,  // Message type
-                null,                          // Icon
-                options,                       // Custom button texts
-                options[0]                     // Default button
+                    this, // Parent component
+                    "Game Over! Do you want to play again?", // Message
+                    "Game Over", // Title
+                    JOptionPane.DEFAULT_OPTION, // Option type
+                    JOptionPane.QUESTION_MESSAGE, // Message type
+                    null, // Icon
+                    options, // Custom button texts
+                    options[0] // Default button
             );
 
             if (choice == 0) {
@@ -60,27 +61,25 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                 e.printStackTrace();
             }
             ((BoardPanel) pnlBoard).startTimers();
-                    
+
         }
     }
-    
+
     /**
      * Creates new form PacMan_Demo_v11
      */
     public PacManMainGame_Frame() {
         initComponents();
 
-
         // Khóa khích thước cửa sổ game
         this.setResizable(false);
-        
-        
-        pnlBoard.requestFocusInWindow(); 
-        
+
+        pnlBoard.requestFocusInWindow();
+
         this.setResizable(false);
         this.setTitle("PacMan Demo"); // Thêm tiêu đề cho cửa sổ
         this.setLocationRelativeTo(null); // Hiển thị cửa sổ ở giữa màn hình
-        
+
         glassPane = new GlassPane(this);
         setGlassPane(glassPane);
     }
@@ -293,8 +292,8 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         glassPane.setVisible(true);
 
         // 2. Tạo và hiển thị hộp thoại tùy chỉnh
-        CustomDialog dialog = new CustomDialog(this, true); 
-            int choice = dialog.showDialog();
+        CustomDialog dialog = new CustomDialog(this, true);
+        int choice = dialog.showDialog();
 
         // 3. Tắt lớp làm mờ
         glassPane.setVisible(false);

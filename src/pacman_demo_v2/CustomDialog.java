@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class CustomDialog extends javax.swing.JDialog {
 
     private int userChoice = JOptionPane.CLOSED_OPTION;
+
     /**
      * Creates new form CustomDialog
      */
@@ -22,13 +23,14 @@ public class CustomDialog extends javax.swing.JDialog {
         super(parent, modal);
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
-        
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
+        this.setIconImage(icon.getImage());
         initComponents();
-        
+
         setSize(400, 280);
-        setLocationRelativeTo(parent);        
+        setLocationRelativeTo(parent);
     }
-    
+
     public int showDialog() {
         this.setVisible(true);
         return this.userChoice;

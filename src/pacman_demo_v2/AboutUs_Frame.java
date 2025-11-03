@@ -16,7 +16,8 @@ public class AboutUs_Frame extends javax.swing.JFrame {
      */
     public AboutUs_Frame() {
         initComponents();
-        
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
+        this.setIconImage(icon.getImage());
         this.setSize(800, 800);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình

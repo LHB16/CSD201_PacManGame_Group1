@@ -23,15 +23,17 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     // --- Game Objects ---
     private Pacman pacman;
-    private Ghost redGhost;
-    
+
+    private int cntGhost = 3;
+    private Ghost[] ghosts = new Ghost[105];
+    //private redGhost
+
     // --- Map and Game State ---
     private int mapData[][];
     private int score = 0;
-    public int totalLives = 3;
+    public int totalLives = 100;
     private int totalDots = 0;
     private int cherryStatus = 0;
-
     private Timer gameLoopTimer;
     private Timer clockTimer;
     private int seconds = 0, minutes = 0, hours = 0;
@@ -43,14 +45,14 @@ public class BoardPanel extends JPanel implements ActionListener {
     private BufferedImage cornerImage1, cornerImage2, cornerImage3, cornerImage4;
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
     private BufferedImage UImage1, UImage2, UImage3, UImage4;
-    
+
     // --- Super Point ---
     private int superPointX = -1;
     private int superPointY = -1;
     private int superPointStatus = 0;
     private ArrayList<Block> superPoint = new ArrayList<>();
     Random rand = new Random();
-    
+
     private int cnt = 0; // Counter for animations
 
     private static final int[][] ORIGINAL_MAP = {
@@ -77,12 +79,12 @@ public class BoardPanel extends JPanel implements ActionListener {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-public BoardPanel(PacManMainGame_Frame frame) {
+    public BoardPanel(PacManMainGame_Frame frame) {
         this.gameFrame = frame;
         this.setBackground(Color.BLACK);
-        
+
         loadMapImages();
-        
+
         mapData = new int[ORIGINAL_MAP.length][];
         for (int i = 0; i < ORIGINAL_MAP.length; i++) {
             mapData[i] = ORIGINAL_MAP[i].clone();
@@ -90,10 +92,26 @@ public BoardPanel(PacManMainGame_Frame frame) {
 
         // --- Initialize Game Objects ---
         pacman = new Pacman(10, 15, TILE_SIZE); // (row, col)
-        redGhost = new Ghost(10, 9, TILE_SIZE); // (row, col)
-        
+
+        for (int i = 0; i < 4; ++i) {
+            if (i % 4 == 0) {
+                ghosts[i] = new GhostRed(10, 9, TILE_SIZE);
+            }
+
+            if (i % 4 == 1) {
+                ghosts[i] = new GhostBlue(10, 9, TILE_SIZE);
+            }
+
+            if (i % 4 == 2) {
+                ghosts[i] = new GhostYellow(10, 9, TILE_SIZE);
+            }
+
+            if (i % 4 == 3) {
+                ghosts[i] = new GhostPink(10, 9, TILE_SIZE);
+            }
+        }
         countInitialDots();
-        
+
         addKeyListener(new TAdapter());
         setFocusable(true);
 
@@ -112,7 +130,7 @@ public BoardPanel(PacManMainGame_Frame frame) {
             }
         }
     }
-    
+
     private void updateGameTime() {
         seconds++;
         if (seconds >= 60) {
@@ -126,30 +144,37 @@ public BoardPanel(PacManMainGame_Frame frame) {
         String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
         gameFrame.lbCountTime.setText(timeString);
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        
+
         // Tăng bộ đếm và cập nhật hình ảnh
         cnt++;
         updateCherryImage();
         pacman.updateImage(cnt);
-        redGhost.updateImage(cnt);
-        
+        for (int i = 0; i < 4; ++i) {
+            ghosts[i].updateImage(cnt);
+
+        }
+
         drawMaze(g2d);
         pacman.draw(g2d);
-        redGhost.draw(g2d);
+        for (int i = 0; i < 4; ++i) {
+            ghosts[i].draw(g2d);
+        }
     }
-    
+
     // ĐIỀU KHIỂN LOGIC GAME
     @Override
     public void actionPerformed(ActionEvent e) {
         // Pac-Man và ma di chuyển mỗi 4 tick (4 * 50ms = 200ms)
         if (cnt % 4 == 0) {
             movePacman();
-            redGhost.move(mapData);
+            for (int i = 0; i < 4; ++i) {
+                ghosts[i].move(mapData);
+            }
         }
         checkCollision();
         repaint();
@@ -158,15 +183,15 @@ public BoardPanel(PacManMainGame_Frame frame) {
     private void movePacman() {
         int oldX = pacman.getX();
         int oldY = pacman.getY();
-        
+
         pacman.move(mapData, totalDots);
-        
+
         int newX = pacman.getX();
         int newY = pacman.getY();
-        
+
         // Kiểm tra xem Pacman có thực sự di chuyển không
         if (oldX != newX || oldY != newY) {
-             // Ăn điểm
+            // Ăn điểm
             if (mapData[newX][newY] == 3) {
                 score += 10;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
@@ -182,31 +207,33 @@ public BoardPanel(PacManMainGame_Frame frame) {
                 superPointX = -1;
                 superPointY = -1;
             }
-            
+
             // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
-            if (mapData[oldX][oldY] != 1) { 
-                 superPoint.add(new Block(oldX, oldY));
+            if (mapData[oldX][oldY] != 1) {
+                superPoint.add(new Block(oldX, oldY));
             }
-            
+
             // Cập nhật vị trí trên bản đồ logic
             mapData[oldX][oldY] = 1; // Vị trí cũ trở thành ô trống
             mapData[newX][newY] = 6; // Vị trí mới là Pacman
         }
     }
-    
+
     private void checkCollision() {
         // Va chạm tại cùng một ô
-        if (pacman.getX() == redGhost.getX() && pacman.getY() == redGhost.getY()) {
-            gameFrame.pacmanHit();
-            return;
-        }
-        // Va chạm khi đi ngược chiều nhau
-        if (pacman.getX() == redGhost.getPrevX() && pacman.getY() == redGhost.getPrevY() &&
-            redGhost.getX() == pacman.getPrevX() && redGhost.getY() == pacman.getPrevY()) {
-            gameFrame.pacmanHit();
+        for (int i = 0; i < 4; ++i) {
+            if (pacman.getX() == ghosts[i].getX() && pacman.getY() == ghosts[i].getY()) {
+                gameFrame.pacmanHit();
+                return;
+            }
+            // Va chạm khi đi ngược chiều nhau
+            if (pacman.getX() == ghosts[i].getPrevX() && pacman.getY() == ghosts[i].getPrevY()
+                    && ghosts[i].getX() == pacman.getPrevX() && ghosts[i].getY() == pacman.getPrevY()) {
+                gameFrame.pacmanHit();
+            }
         }
     }
-    
+
     public int manhattanDistance(int x1, int y1, int x2, int y2) {
         return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
@@ -214,10 +241,12 @@ public BoardPanel(PacManMainGame_Frame frame) {
     public void resetPosition() {
         // Đặt lại vị trí logic của Pacman cũ
         mapData[pacman.getX()][pacman.getY()] = 1;
-        
+
         pacman.resetPosition(10, 15);
-        redGhost.resetPosition(10, 9);
-        
+        for (int i = 0; i < 4; ++i) {
+            ghosts[i].resetPosition(10, 9);
+        }
+
         // Cập nhật vị trí mới trên mapData
         mapData[pacman.getX()][pacman.getY()] = 6;
     }
@@ -246,6 +275,11 @@ public BoardPanel(PacManMainGame_Frame frame) {
         if (!(x >= 0 && x < mapData.length && y >= 0 && y < mapData[0].length)) {
             return false;
         }
+        
+        if (mapData[x][y] == 5 && totalDots <= 0) {
+            return false;
+        }
+        
         if (mapData[x][y] == 0 || mapData[x][y] == 5) {
             return true;
         }
@@ -253,7 +287,7 @@ public BoardPanel(PacManMainGame_Frame frame) {
     }
 
     private void drawMaze(Graphics2D g2d) {
-
+        
         for (int x = 0; x < mapData.length; x++) {
             for (int y = 0; y < mapData[x].length; y++) {
                 int value = mapData[x][y];
@@ -266,7 +300,6 @@ public BoardPanel(PacManMainGame_Frame frame) {
                     boolean check1 = checkWall(x + 1, y);
                     boolean check4 = checkWall(x, y - 1);
                     boolean check3 = checkWall(x - 1, y);
-                    
 
                     if (check1 == true && check2 == true && check3 == true && check4 == false) {
                         g2d.drawImage(intersectionImage4, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
@@ -317,30 +350,26 @@ public BoardPanel(PacManMainGame_Frame frame) {
                         g2d.drawImage(verticalImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                         continue;
                     }
-                    
+
                     if (check1 == false && check2 == true && check3 == false && check4 == false) {
                         g2d.drawImage(UImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                         continue;
                     }
-                    
+
                     if (check1 == true && check2 == false && check3 == false && check4 == false) {
                         g2d.drawImage(UImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                         continue;
                     }
-                    
+
                     if (check1 == false && check2 == false && check3 == false && check4 == true) {
                         g2d.drawImage(UImage3, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                         continue;
                     }
-                    
+
                     if (check1 == false && check2 == false && check3 == true && check4 == false) {
                         g2d.drawImage(UImage4, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                         continue;
                     }
-                    
-
-                    g2d.setColor(new Color(0, 0, 200));
-                    g2d.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
 
                 if (value == 2) { // Cherry
@@ -358,7 +387,7 @@ public BoardPanel(PacManMainGame_Frame frame) {
                         g2d.drawImage(verticalImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
-                
+
                 if (x == superPointX && y == superPointY) {
                     if (cnt % 4 == 0) {
                         superPointStatus ^= 1;
@@ -391,7 +420,9 @@ public BoardPanel(PacManMainGame_Frame frame) {
                 }
                 System.out.println(superPointX + " " + superPointY);
             }
-            if (cnt == 10000000) cnt = 0;
+            if (cnt == 10000000) {
+                cnt = 0;
+            }
         }
     }
 
@@ -447,25 +478,26 @@ public BoardPanel(PacManMainGame_Frame frame) {
         }
     }
 
-class TAdapter extends KeyAdapter {
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
-            pacman.setRequestedDirection(0, -1); // dx = -1 (Lên)
-        }
-        if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
-            pacman.setRequestedDirection(0, 1);  // dx = 1 (Xuống)
-        }
-        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
-            pacman.setRequestedDirection(-1, 0); // dy = -1 (Trái)
-        }
-        if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
-            pacman.setRequestedDirection(1, 0);  // dy = 1 (Phải)
+    class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+                pacman.setRequestedDirection(0, -1); // dx = -1 (Lên)
+            }
+            if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+                pacman.setRequestedDirection(0, 1);  // dx = 1 (Xuống)
+            }
+            if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
+                pacman.setRequestedDirection(-1, 0); // dy = -1 (Trái)
+            }
+            if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
+                pacman.setRequestedDirection(1, 0);  // dy = 1 (Phải)
+            }
         }
     }
-}
-    
+
     public void stopTimers() {
         gameLoopTimer.stop();
         clockTimer.stop();
