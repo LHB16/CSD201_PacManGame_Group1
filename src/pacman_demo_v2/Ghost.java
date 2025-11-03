@@ -5,9 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
+import java.util.Random;
 
 public class Ghost {
     private int x, y;
@@ -33,6 +34,8 @@ public class Ghost {
     private final int TILE_SIZE;
     private final int[][] moveDeltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // Lên, Xuống, Trái, Phải
     
+    protected Random rand;
+    
     public Ghost(int startX, int startY, int tileSize) {
         this.x = startX;
         this.y = startY;
@@ -41,6 +44,7 @@ public class Ghost {
         this.dy = 0; 
         loadImages();
         this.image = upImage1;
+        this.rand = new Random();
     }
 
     private void loadImages() {
@@ -84,36 +88,64 @@ public class Ghost {
         }
     }
 
+    /**
+     * Di chuyển con ma
+     * Logic mới: Ưu tiên rẽ ngẫu nhiên tại các ngã rẽ.
+     * @param mapData
+     */
     public void move(int[][] mapData) {
         prevX = x;
         prevY = y;
-        
-        Collections.shuffle(Arrays.asList(moveDeltas));
-        
-        // Ưu tiên đi thẳng nếu có thể
-        int newX = x + dx;
-        int newY = y + dy;
-        if (isValidMove(newX, newY, mapData)) {
-            x = newX;
-            y = newY;
-            return;
-        }
-        
-        // Nếu không đi thẳng được, tìm hướng khác
-        for (int[] delta : moveDeltas) {
-            // Không quay đầu lại
-            if (delta[0] == -dx && delta[1] == -dy) {
+
+        List<int[]> validMoves = new ArrayList<>();
+
+        // 1. Tìm tất cả các hướng đi hợp lệ (không phải là tường)
+        //    NGOẠI TRỪ việc quay đầu 180 độ.
+        for (int[] d : moveDeltas) {
+            // Bỏ qua hướng đi ngược lại (quay đầu)
+            if (d[0] == -dx && d[1] == -dy) {
                 continue;
             }
-            newX = x + delta[0];
-            newY = y + delta[1];
-            if (isValidMove(newX, newY, mapData)) {
-                dx = delta[0];
-                dy = delta[1];
+
+            // Kiểm tra xem nước đi có hợp lệ không (không phải tường)
+            if (isValidMove(x + d[0], y + d[1], mapData)) {
+                validMoves.add(d);
+            }
+        }
+
+        // 2. Xử lý các trường hợp
+        if (validMoves.isEmpty()) {
+            // --- Trường hợp 0: Ngõ cụt ---
+            // Buộc phải quay đầu lại
+            int newX = x - dx;
+            int newY = y - dy;
+
+            if (isValidMove(newX, newY, mapData)) { // Kiểm tra cho chắc
+                dx = -dx;
+                dy = -dy;
                 x = newX;
                 y = newY;
-                return;
             }
+            // Nếu không làm gì cả, con ma sẽ bị kẹt (trường hợp map lỗi)
+
+        } else if (validMoves.size() == 1) {
+            // --- Trường hợp 1: Hành lang / Chỉ có 1 lối rẽ ---
+            // Chỉ có một lựa chọn duy nhất, đi theo hướng đó
+            int[] chosenMove = validMoves.get(0);
+            dx = chosenMove[0];
+            dy = chosenMove[1];
+            x = x + dx;
+            y = y + dy;
+
+        } else {
+            // --- Trường hợp 2: Ngã rẽ (2 lối đi trở lên) ---
+            // Đây là lúc áp dụng "xác suất" theo yêu cầu của bạn.
+            // Chọn ngẫu nhiên một trong các hướng đi hợp lệ.
+            int[] chosenMove = validMoves.get(rand.nextInt(validMoves.size()));
+            dx = chosenMove[0];
+            dy = chosenMove[1];
+            x = x + dx;
+            y = y + dy;
         }
     }
 

@@ -24,18 +24,20 @@ public class BoardPanel extends JPanel implements ActionListener {
     // --- Game Objects ---
     private Pacman pacman;
 
-    private int cntGhost = 3;
+    private int cntGhost = 4;
     private Ghost[] ghosts = new Ghost[105];
     //private redGhost
 
     // --- Map and Game State ---
     private int mapData[][];
     private int score = 0;
-    public int totalLives = 100;
+    private int defaultLives = 100;
+    public int totalLives = defaultLives;
     private int totalDots = 0;
     private int cherryStatus = 0;
     private Timer gameLoopTimer;
     private Timer clockTimer;
+    private Timer ghostSpawnTimer; // Timer để sinh ghost
     private int seconds = 0, minutes = 0, hours = 0;
 
     // --- Images ---
@@ -117,6 +119,9 @@ public class BoardPanel extends JPanel implements ActionListener {
 
         gameLoopTimer = new Timer(50, this); // Vòng lặp game nhanh hơn
         clockTimer = new Timer(1000, e -> updateGameTime());
+        
+        // Khởi tạo timer sinh ghost (4 giây = 4000ms), nhưng chưa start
+        ghostSpawnTimer = new Timer(4000, e -> spawnNewGhost());
         startTimers();
     }
 
@@ -154,14 +159,14 @@ public class BoardPanel extends JPanel implements ActionListener {
         cnt++;
         updateCherryImage();
         pacman.updateImage(cnt);
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < cntGhost; ++i) {
             ghosts[i].updateImage(cnt);
 
         }
 
         drawMaze(g2d);
         pacman.draw(g2d);
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < cntGhost; ++i) {
             ghosts[i].draw(g2d);
         }
     }
@@ -169,15 +174,46 @@ public class BoardPanel extends JPanel implements ActionListener {
     // ĐIỀU KHIỂN LOGIC GAME
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Pac-Man và ma di chuyển mỗi 4 tick (4 * 50ms = 200ms)
+        // Pac-Man di chuyển mỗi 4 tick (4 * 50ms = 200ms)
         if (cnt % 4 == 0) {
             movePacman();
-            for (int i = 0; i < 4; ++i) {
+        }
+        
+        // Ghost di chuyển mỗi 3 tick (3 * 50ms = 150ms)
+        if (cnt % 3 == 0) {
+            for (int i = 0; i < cntGhost; ++i) {
                 ghosts[i].move(mapData);
             }
         }
+        
         checkCollision();
         repaint();
+    }
+    
+    /**
+     * Sinh ra một ghost mới tại vị trí mặc định (10, 9)
+     */
+    private void spawnNewGhost() {
+        // Nếu đã đạt giới hạn mảng, không sinh nữa
+        if (cntGhost >= ghosts.length) {
+            ghostSpawnTimer.stop();
+            return;
+        }
+
+        // Tạo ghost mới, xoay vòng màu
+        int ghostType = cntGhost % 4;
+        if (ghostType == 0) {
+            ghosts[cntGhost] = new GhostRed(10, 9, TILE_SIZE);
+        } else if (ghostType == 1) {
+            ghosts[cntGhost] = new GhostBlue(10, 9, TILE_SIZE);
+        } else if (ghostType == 2) {
+            ghosts[cntGhost] = new GhostYellow(10, 9, TILE_SIZE);
+        } else {
+            ghosts[cntGhost] = new GhostPink(10, 9, TILE_SIZE);
+        }
+        
+        // Tăng số lượng ghost đang hoạt động
+        cntGhost++;
     }
 
     private void movePacman() {
@@ -196,6 +232,14 @@ public class BoardPanel extends JPanel implements ActionListener {
                 score += 10;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
                 totalDots--;
+                
+                // Kiểm tra nếu hết chấm
+                if (totalDots <= 0) {
+                    // Bắt đầu sinh ghost nếu timer chưa chạy
+                    if (!ghostSpawnTimer.isRunning()) {
+                        ghostSpawnTimer.start();
+                    }
+                }
             }
             if (mapData[newX][newY] == 2) {
                 score += 1000;
@@ -221,14 +265,28 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     private void checkCollision() {
         // Va chạm tại cùng một ô
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < cntGhost; ++i) {
             if (pacman.getX() == ghosts[i].getX() && pacman.getY() == ghosts[i].getY()) {
+                
+                // Nếu hết chấm, đặt mạng về 1 (để cú va chạm này là cú cuối cùng)
+                if (totalDots <= 0) {
+                    totalLives = 1;
+                    gameFrame.uploadLives();
+                }
+                
                 gameFrame.pacmanHit();
                 return;
             }
             // Va chạm khi đi ngược chiều nhau
             if (pacman.getX() == ghosts[i].getPrevX() && pacman.getY() == ghosts[i].getPrevY()
                     && ghosts[i].getX() == pacman.getPrevX() && ghosts[i].getY() == pacman.getPrevY()) {
+                
+                // Nếu hết chấm, đặt mạng về 1 (để cú va chạm này là cú cuối cùng)
+                if (totalDots <= 0) {
+                    totalLives = 1;
+                    gameFrame.uploadLives();
+                }
+                
                 gameFrame.pacmanHit();
             }
         }
@@ -243,7 +301,8 @@ public class BoardPanel extends JPanel implements ActionListener {
         mapData[pacman.getX()][pacman.getY()] = 1;
 
         pacman.resetPosition(10, 15);
-        for (int i = 0; i < 4; ++i) {
+        
+        for (int i = 0; i < cntGhost; ++i) {
             ghosts[i].resetPosition(10, 9);
         }
 
@@ -252,7 +311,14 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     public void replayGame() {
-        totalLives = 3;
+        totalLives = defaultLives;
+        
+        // Reset lại số lượng ghost về 4
+        cntGhost = 4;
+        // Dừng timer sinh ghost nếu đang chạy
+        if (ghostSpawnTimer.isRunning()) {
+            ghostSpawnTimer.stop();
+        }
 
         for (int i = 0; i < ORIGINAL_MAP.length; i++) {
             mapData[i] = ORIGINAL_MAP[i].clone();
@@ -501,6 +567,10 @@ public class BoardPanel extends JPanel implements ActionListener {
     public void stopTimers() {
         gameLoopTimer.stop();
         clockTimer.stop();
+        // Dừng timer sinh ghost nếu nó tồn tại
+        if (ghostSpawnTimer != null) {
+            ghostSpawnTimer.stop();
+        }
     }
 
     public void startTimers() {
