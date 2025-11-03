@@ -12,18 +12,23 @@ import javax.imageio.ImageIO;
 public class Ghost {
     private int x, y;
     private int prevX, prevY;
-    private int dx, dy; // Hướng di chuyển hiện tại
+    int dx; // Hướng di chuyển hiện tại
+    int dy; // Hướng di chuyển hiện tại
 
-    private BufferedImage image;
-    private BufferedImage upImage1, upImage2;
-    private BufferedImage downImage1, downImage2;
-    private BufferedImage leftImage1, leftImage2;
-    private BufferedImage rightImage1, rightImage2;
+    BufferedImage image;
+    BufferedImage upImage1;
+    BufferedImage upImage2;
+    BufferedImage downImage1;
+    BufferedImage downImage2;
+    BufferedImage leftImage1;
+    BufferedImage leftImage2;
+    BufferedImage rightImage1;
+    BufferedImage rightImage2;
     
-    private int leftStatus = 0;
-    private int rightStatus = 0;
-    private int upStatus = 0;
-    private int downStatus = 0;
+    int leftStatus = 0;
+    int rightStatus = 0;
+    int upStatus = 0;
+    int downStatus = 0;
 
     private final int TILE_SIZE;
     private final int[][] moveDeltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // Lên, Xuống, Trái, Phải
@@ -49,7 +54,7 @@ public class Ghost {
         rightImage2 = loadImage("/img/ghost/red/redright2.png");
     }
 
-    private BufferedImage loadImage(String path) {
+    public BufferedImage loadImage(String path) {
         try {
             URL imageUrl = getClass().getResource(path);
             if (imageUrl != null) {

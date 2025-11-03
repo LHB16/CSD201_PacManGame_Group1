@@ -117,7 +117,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(0, 630, 120, 50);
+        lbback.setBounds(20, 630, 120, 50);
 
         lbText3rd3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbText3rd3);
