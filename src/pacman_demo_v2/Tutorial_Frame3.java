@@ -16,7 +16,8 @@ public class Tutorial_Frame3 extends javax.swing.JFrame {
      */
     public Tutorial_Frame3() {
         initComponents();
-        
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
+        this.setIconImage(icon.getImage());
         this.setSize(625, 660);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
