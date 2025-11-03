@@ -14,15 +14,13 @@ public class Pacman {
     private int prevX, prevY;
 
     private BufferedImage image;
-    private BufferedImage upImage1, upImage2;
-    private BufferedImage downImage1, downImage2;
-    private BufferedImage leftImage1, leftImage2;
-    private BufferedImage rightImage1, rightImage2;
+    // Mỗi hướng có 3 frame
+    private BufferedImage upImage0, upImage1, upImage2;
+    private BufferedImage downImage0, downImage1, downImage2;
+    private BufferedImage leftImage0, leftImage1, leftImage2;
+    private BufferedImage rightImage0, rightImage1, rightImage2;
 
-    private int leftStatus = 0;
-    private int rightStatus = 0;
-    private int upStatus = 0;
-    private int downStatus = 0;
+    private int upStatus = 0, downStatus = 0, leftStatus = 0, rightStatus = 0;
 
     private final int TILE_SIZE;
 
@@ -35,16 +33,29 @@ public class Pacman {
         this.req_dx = 0;
         this.req_dy = 0;
         loadImages();
-        this.image = rightImage1; // Hình ảnh ban đầu
+        this.image = rightImage1; // Hình ảnh ban đầu (miệng đóng, hướng phải)
     }
 
+    /**
+     * Tải 3 ảnh cho mỗi hướng
+     */
     private void loadImages() {
+        upImage0 = loadImage("/img/pacman/pacnu0tren.png");
         upImage1 = loadImage("/img/pacman/pacnu1tren.png");
         upImage2 = loadImage("/img/pacman/pacnu2tren.png");
+
+        // Hướng xuống
+        downImage0 = loadImage("/img/pacman/pacnu0duoi.png");
         downImage1 = loadImage("/img/pacman/pacnu1duoi.png");
         downImage2 = loadImage("/img/pacman/pacnu2duoi.png");
+
+        // Hướng trái
+        leftImage0 = loadImage("/img/pacman/pacnu0trai.png");
         leftImage1 = loadImage("/img/pacman/pacnu1trai.png");
         leftImage2 = loadImage("/img/pacman/pacnu2trai.png");
+
+        // Hướng phải
+        rightImage0 = loadImage("/img/pacman/pacnu0phai.png");
         rightImage1 = loadImage("/img/pacman/pacnu1phai.png");
         rightImage2 = loadImage("/img/pacman/pacnu2phai.png");
     }
@@ -63,38 +74,67 @@ public class Pacman {
         return null;
     }
 
+    /**
+     * Cập nhật frame ảnh theo hướng di chuyển
+     */
     public void updateImage(int cnt) {
-        if (dx == -1) { // Left
-            if (cnt % 4 == 0) leftStatus ^= 1;
-            image = (leftStatus % 2 == 0) ? leftImage1 : leftImage2;
-        } else if (dx == 1) { // Right
-            if (cnt % 4 == 0) rightStatus ^= 1;
-            image = (rightStatus % 2 == 0) ? rightImage1 : rightImage2;
-        } else if (dy == -1) { // Up
-            if (cnt % 4 == 0) upStatus ^= 1;
-            image = (upStatus % 2 == 0) ? upImage1 : upImage2;
-        } else if (dy == 1) { // Down
-            if (cnt % 4 == 0) downStatus ^= 1;
-            image = (downStatus % 2 == 0) ? downImage1 : downImage2;
+        int frame = (cnt / 4) % 3; // đổi frame mỗi 4 tick, xoay giữa 0-1-2
+
+        if (dx == -1) { // LEFT
+            if (frame == 0) {
+                image = leftImage0;
+            } else if (frame == 1) {
+                image = leftImage1;
+            } else {
+                image = leftImage2;
+            }
+
+        } else if (dx == 1) { // RIGHT
+            if (frame == 0) {
+                image = rightImage0;
+            } else if (frame == 1) {
+                image = rightImage1;
+            } else {
+                image = rightImage2;
+            }
+
+        } else if (dy == -1) { // UP
+            if (frame == 0) {
+                image = upImage0;
+            } else if (frame == 1) {
+                image = upImage1;
+            } else {
+                image = upImage2;
+            }
+
+        } else if (dy == 1) { // DOWN
+            if (frame == 0) {
+                image = downImage0;
+            } else if (frame == 1) {
+                image = downImage1;
+            } else {
+                image = downImage2;
+            }
         }
     }
 
+    /**
+     * Di chuyển Pac-Man theo bản đồ
+     */
     public void move(int[][] mapData, int totalDots) {
         prevX = x;
         prevY = y;
 
-        // Thử di chuyển theo hướng yêu cầu mới
-        int newX_req = x + req_dx;
-        int newY_req = y + req_dy;
 
-        if (isValidMove(newX_req, newY_req, mapData, totalDots)) {
-            dx = req_dx;
-            dy = req_dy;
-        }
+        // Kiểm tra xem hướng YÊU CẦU có hợp lệ không
+        dx = req_dx;
+        dy = req_dy;
 
-        // Di chuyển theo hướng chính thức (đã được xác thực)
         int newX = x + dx;
         int newY = y + dy;
+
+
+        // Di chuyển chính thức
 
         if (isValidMove(newX, newY, mapData, totalDots)) {
             x = newX;
@@ -106,20 +146,20 @@ public class Pacman {
         if (x >= 0 && x < mapData.length && y >= 0 && y < mapData[0].length) {
             int tile = mapData[x][y];
             if (totalDots > 0) {
-                return tile != 0 && tile != 5; // Không thể đi vào tường hoặc tường ẩn
+                return tile != 0 && tile != 5; // tường & tường ẩn
             } else {
-                return tile != 0; // Khi hết chấm, có thể đi qua tường ẩn
+                return tile != 0;
             }
         }
         return false;
     }
-    
+
     public void draw(Graphics2D g2d) {
         if (image != null) {
             g2d.drawImage(image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
         }
     }
-    
+
     public void resetPosition(int startX, int startY) {
         this.x = startX;
         this.y = startY;
@@ -130,11 +170,22 @@ public class Pacman {
         this.image = rightImage1;
     }
 
-    // Getters and Setters
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public int getPrevX() { return prevX; }
-    public int getPrevY() { return prevY; }
+    // Getters / Setters
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getPrevX() {
+        return prevX;
+    }
+
+    public int getPrevY() {
+        return prevY;
+    }
 
     public void setRequestedDirection(int req_dx, int req_dy) {
         this.req_dx = req_dx;

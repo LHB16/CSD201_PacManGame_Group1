@@ -17,28 +17,29 @@ import javax.swing.JLabel;
 public class RankingBoard_Frame extends javax.swing.JFrame {
 
     private ScoreManager scoreManager;
-    
+
     /**
      * Creates new form StartMenu_Frame
      */
     public RankingBoard_Frame() {
         initComponents();
-        
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
+        this.setIconImage(icon.getImage());
         this.setSize(698, 739);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
-        
+
         scoreManager = new ScoreManager();
-        
+
         loadAndDisplayScores();
-        
+
     }
-    
+
     private void styleLabel(JLabel label) {
         label.setFont(new Font("Tahoma", Font.BOLD, 16)); // Đặt font chữ
         label.setForeground(Color.WHITE); // Đặt màu chữ
     }
-    
+
     // THÊM MỚI: Phương thức tải và hiển thị điểm
     private void loadAndDisplayScores() {
         // Đọc danh sách điểm đã được sắp xếp
