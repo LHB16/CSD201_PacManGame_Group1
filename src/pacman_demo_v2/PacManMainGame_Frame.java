@@ -25,6 +25,8 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         this.setIconImage(icon.getImage());
         int lives = ((BoardPanel) pnlBoard).totalLives;
         lives--;
+        
+        
         ((BoardPanel) pnlBoard).totalLives = lives; // Giảm số mạng đi 1
         lbCountLive.setText(String.valueOf(lives)); // Cập nhật text trên label
 

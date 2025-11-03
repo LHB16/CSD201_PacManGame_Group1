@@ -42,17 +42,22 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     // --- Images ---
     private BufferedImage cherryImage, cherryImage1, cherryImage2;
-    private BufferedImage ballImage;
+    private BufferedImage appleImage;
+    private BufferedImage appleGoldImage;
     private BufferedImage verticalImage, horizontalImage;
     private BufferedImage cornerImage1, cornerImage2, cornerImage3, cornerImage4;
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
     private BufferedImage UImage1, UImage2, UImage3, UImage4;
 
     // --- Super Point ---
-    private int superPointX = -1;
-    private int superPointY = -1;
-    private int superPointStatus = 0;
+    public int superPointX = -1;
+    public int superPointY = -1;
     private ArrayList<Block> superPoint = new ArrayList<>();
+
+    public int appleGoldX = -1;
+    public int appleGoldY = -1;
+    private int appleGoldStatus = 0;
+    private ArrayList<Block> appleGold = new ArrayList<>();
     Random rand = new Random();
 
     private int cnt = 0; // Counter for animations
@@ -119,7 +124,7 @@ public class BoardPanel extends JPanel implements ActionListener {
 
         gameLoopTimer = new Timer(50, this); // Vòng lặp game nhanh hơn
         clockTimer = new Timer(1000, e -> updateGameTime());
-        
+
         // Khởi tạo timer sinh ghost (4 giây = 4000ms), nhưng chưa start
         ghostSpawnTimer = new Timer(4000, e -> spawnNewGhost());
         startTimers();
@@ -178,18 +183,18 @@ public class BoardPanel extends JPanel implements ActionListener {
         if (cnt % 4 == 0) {
             movePacman();
         }
-        
+
         // Ghost di chuyển mỗi 3 tick (3 * 50ms = 150ms)
-        if (cnt % 3 == 0) {
+        if (cnt % 4 == 0) {
             for (int i = 0; i < cntGhost; ++i) {
                 ghosts[i].move(mapData);
             }
         }
-        
+
         checkCollision();
         repaint();
     }
-    
+
     /**
      * Sinh ra một ghost mới tại vị trí mặc định (10, 9)
      */
@@ -211,7 +216,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         } else {
             ghosts[cntGhost] = new GhostPink(10, 9, TILE_SIZE);
         }
-        
+
         // Tăng số lượng ghost đang hoạt động
         cntGhost++;
     }
@@ -232,7 +237,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                 score += 10;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
                 totalDots--;
-                
+
                 // Kiểm tra nếu hết chấm
                 if (totalDots <= 0) {
                     // Bắt đầu sinh ghost nếu timer chưa chạy
@@ -241,20 +246,31 @@ public class BoardPanel extends JPanel implements ActionListener {
                     }
                 }
             }
+            
+            // tao gold
             if (mapData[newX][newY] == 2) {
                 score += 1000;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
             }
-            // Ăn siêu điểm
+            // tao do
             if (newX == superPointX && newY == superPointY) {
-                score += 5;
+                score += 50;
+                gameFrame.lbCountScore.setText(String.valueOf(score));
                 superPointX = -1;
                 superPointY = -1;
+            }
+            // an tao do
+            if (newX == appleGoldX && newY == appleGoldY) {
+                ++totalLives;
+                gameFrame.uploadLives();
+                appleGoldX = -1;
+                appleGoldY = -1;
             }
 
             // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
             if (mapData[oldX][oldY] != 1) {
                 superPoint.add(new Block(oldX, oldY));
+                appleGold.add(new Block(oldX, oldY));
             }
 
             // Cập nhật vị trí trên bản đồ logic
@@ -267,26 +283,28 @@ public class BoardPanel extends JPanel implements ActionListener {
         // Va chạm tại cùng một ô
         for (int i = 0; i < cntGhost; ++i) {
             if (pacman.getX() == ghosts[i].getX() && pacman.getY() == ghosts[i].getY()) {
-                
+
                 // Nếu hết chấm, đặt mạng về 1 (để cú va chạm này là cú cuối cùng)
                 if (totalDots <= 0) {
                     totalLives = 1;
                     gameFrame.uploadLives();
                 }
-                
+                superPointX = superPointY = -1;
+                appleGoldX = appleGoldY = -1;
                 gameFrame.pacmanHit();
                 return;
             }
             // Va chạm khi đi ngược chiều nhau
             if (pacman.getX() == ghosts[i].getPrevX() && pacman.getY() == ghosts[i].getPrevY()
                     && ghosts[i].getX() == pacman.getPrevX() && ghosts[i].getY() == pacman.getPrevY()) {
-                
+
                 // Nếu hết chấm, đặt mạng về 1 (để cú va chạm này là cú cuối cùng)
                 if (totalDots <= 0) {
                     totalLives = 1;
                     gameFrame.uploadLives();
                 }
-                
+                superPointX = superPointY = -1;
+                appleGoldX = appleGoldY = -1;
                 gameFrame.pacmanHit();
             }
         }
@@ -301,7 +319,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         mapData[pacman.getX()][pacman.getY()] = 1;
 
         pacman.resetPosition(10, 15);
-        
+
         for (int i = 0; i < cntGhost; ++i) {
             ghosts[i].resetPosition(10, 9);
         }
@@ -312,7 +330,7 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     public void replayGame() {
         totalLives = defaultLives;
-        
+
         // Reset lại số lượng ghost về 4
         cntGhost = 4;
         // Dừng timer sinh ghost nếu đang chạy
@@ -341,11 +359,11 @@ public class BoardPanel extends JPanel implements ActionListener {
         if (!(x >= 0 && x < mapData.length && y >= 0 && y < mapData[0].length)) {
             return false;
         }
-        
+
         if (mapData[x][y] == 5 && totalDots <= 0) {
             return false;
         }
-        
+
         if (mapData[x][y] == 0 || mapData[x][y] == 5) {
             return true;
         }
@@ -353,7 +371,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void drawMaze(Graphics2D g2d) {
-        
+
         for (int x = 0; x < mapData.length; x++) {
             for (int y = 0; y < mapData[x].length; y++) {
                 int value = mapData[x][y];
@@ -455,16 +473,21 @@ public class BoardPanel extends JPanel implements ActionListener {
                 }
 
                 if (x == superPointX && y == superPointY) {
-                    if (cnt % 4 == 0) {
-                        superPointStatus ^= 1;
-                    }
 
-                    if (superPointStatus == 1) {
-                        g2d.drawImage(ballImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    if (cherryStatus == 0) {
+                        g2d.drawImage(appleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(ballImage, x * TILE_SIZE + 6, y * TILE_SIZE + 6, TILE_SIZE / 2, TILE_SIZE / 2, null);
+                        g2d.drawImage(appleImage, x * TILE_SIZE + 6, y * TILE_SIZE + 6, TILE_SIZE / 2, TILE_SIZE / 2, null);
                     }
+                }
 
+                if (x == appleGoldX && y == appleGoldY) {
+
+                    if (cherryStatus == 0) {
+                        g2d.drawImage(appleGoldImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    } else {
+                        g2d.drawImage(appleGoldImage, x * TILE_SIZE + 6, y * TILE_SIZE + 6, TILE_SIZE / 2, TILE_SIZE / 2, null);
+                    }
                 }
 
             }
@@ -478,7 +501,8 @@ public class BoardPanel extends JPanel implements ActionListener {
                     x = superPoint.get(id).getX();
                     y = superPoint.get(id).getY();
                     System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
-                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5) {
+                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5
+                            && manhattanDistance(appleGoldX, appleGoldX, x, y) > 5) {
                         superPointX = x;
                         superPointY = y;
                         break;
@@ -486,17 +510,43 @@ public class BoardPanel extends JPanel implements ActionListener {
                 }
                 System.out.println(superPointX + " " + superPointY);
             }
-            if (cnt == 10000000) {
-                cnt = 0;
+        }
+
+        if (cnt % 200 == 0) {
+            appleGoldStatus ^= 1;
+            if (appleGoldStatus == 1) {
+                int x = -1, y = -1;
+                if (!appleGold.isEmpty()) {
+                    for (int i = 1; i <= 5; ++i) {
+                        int id = rand.nextInt(appleGold.size());
+                        x = appleGold.get(id).getX();
+                        y = appleGold.get(id).getY();
+                        //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
+                        if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5
+                                && manhattanDistance(superPointX, superPointY, x, y) > 5) {
+                            appleGoldX = x;
+                            appleGoldY = y;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                appleGoldX = appleGoldY = -1;
             }
         }
+
+        if (cnt == 10000000) {
+            cnt = 0;
+        }
+
     }
 
     private void loadMapImages() {
         cherryImage1 = loadImage("/img/food/cherry.png");
         cherryImage2 = loadImage("/img/food/cherry2.png");
 
-        ballImage = loadImage("/img/food/ball.png");
+        appleImage = loadImage("/img/food/apple.png");
+        appleGoldImage = loadImage("/img/food/goldenApple.png");
 
         verticalImage = loadImage("/img/Map/vertical.png");
         horizontalImage = loadImage("/img/Map/horizontal.png");
