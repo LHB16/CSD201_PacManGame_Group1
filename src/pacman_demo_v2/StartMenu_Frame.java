@@ -17,6 +17,9 @@ public class StartMenu_Frame extends javax.swing.JFrame {
     public StartMenu_Frame() {
         initComponents();
         
+        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
+        this.setIconImage(icon.getImage());
+        
         this.setSize(694, 725);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
