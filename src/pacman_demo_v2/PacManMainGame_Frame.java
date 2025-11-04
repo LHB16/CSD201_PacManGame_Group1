@@ -26,34 +26,38 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         int lives = ((BoardPanel) pnlBoard).totalLives;
         lives--;
         
-        
         ((BoardPanel) pnlBoard).totalLives = lives; // Giảm số mạng đi 1
-        lbCountLive.setText(String.valueOf(lives)); // Cập nhật text trên label
+        uploadLives();
 
+        // Game over
         if (lives <= 0) {
-            // Tạm dừng game timer trong khi hộp thoại hiển thị
+            // Tạm dừng game
             ((BoardPanel) pnlBoard).stopTimers();
-
-            String[] options = {"Replay", "Exit"};
-            int choice = JOptionPane.showOptionDialog(
-                    this, // Parent component
-                    "Game Over! Do you want to play again?", // Message
-                    "Game Over", // Title
-                    JOptionPane.DEFAULT_OPTION, // Option type
-                    JOptionPane.QUESTION_MESSAGE, // Message type
-                    null, // Icon
-                    options, // Custom button texts
-                    options[0] // Default button
-            );
-
-            if (choice == 0) {
-                // Người dùng chọn "Replay"
-                ((BoardPanel) pnlBoard).replayGame();
-                lbCountLive.setText(((BoardPanel) pnlBoard).totalLives + "");
-            } else {
-                // Người dùng chọn "Exit" hoặc đóng hộp thoại
-                System.exit(0);
+            
+            // Lấy điểm số và thời gian cuối cùng từ các JLabel
+            long finalScore = 0;
+            try {
+                finalScore = Long.parseLong(lbCountScore.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
+
+            String finalTime = lbCountTime.getText();
+            
+            // Làm mờ nền game
+            glassPane.setVisible(true);
+
+            // Tạo và hiển thị hộp thoại tùy chỉnh
+            GameOver_Frame gameOverDialog = new GameOver_Frame(this, true, finalScore, finalTime);
+            gameOverDialog.showDialog();
+
+            // Tắt lớp làm mờ
+            glassPane.setVisible(false);
+
+            StartMenu_Frame startMenu = new StartMenu_Frame();
+            startMenu.setVisible(true); // Mở lại menu chính
+            this.dispose(); // Đóng cửa sổ hiện tại
+                      
         } else {
             // Nếu còn mạng, chỉ reset vị trí Pac-Man
             ((BoardPanel) pnlBoard).resetPosition();
