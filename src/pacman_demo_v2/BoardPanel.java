@@ -42,8 +42,10 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     // --- Images ---
     private BufferedImage cherryImage, cherryImage1, cherryImage2;
-    private BufferedImage appleImage;
-    private BufferedImage appleGoldImage;
+    private BufferedImage appleImage1;
+    private BufferedImage appleImage2;
+    private BufferedImage appleGoldImage1;
+    private BufferedImage appleGoldImage2;
     private BufferedImage verticalImage, horizontalImage;
     private BufferedImage cornerImage1, cornerImage2, cornerImage3, cornerImage4;
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
@@ -243,8 +245,12 @@ public class BoardPanel extends JPanel implements ActionListener {
                     // Bắt đầu sinh ghost nếu timer chưa chạy
                     if (!ghostSpawnTimer.isRunning()) {
                         ghostSpawnTimer.start();
+                        // Đặt số mạng còn lại thành 1
+                        totalLives = 1;
+                        gameFrame.uploadLives();
                     }
                 }
+                
             }
             
             // tao gold
@@ -284,11 +290,6 @@ public class BoardPanel extends JPanel implements ActionListener {
         for (int i = 0; i < cntGhost; ++i) {
             if (pacman.getX() == ghosts[i].getX() && pacman.getY() == ghosts[i].getY()) {
 
-                // Nếu hết chấm, đặt mạng về 1 (để cú va chạm này là cú cuối cùng)
-                if (totalDots <= 0) {
-                    totalLives = 1;
-                    gameFrame.uploadLives();
-                }
                 superPointX = superPointY = -1;
                 appleGoldX = appleGoldY = -1;
                 gameFrame.pacmanHit();
@@ -298,11 +299,6 @@ public class BoardPanel extends JPanel implements ActionListener {
             if (pacman.getX() == ghosts[i].getPrevX() && pacman.getY() == ghosts[i].getPrevY()
                     && ghosts[i].getX() == pacman.getPrevX() && ghosts[i].getY() == pacman.getPrevY()) {
 
-                // Nếu hết chấm, đặt mạng về 1 (để cú va chạm này là cú cuối cùng)
-                if (totalDots <= 0) {
-                    totalLives = 1;
-                    gameFrame.uploadLives();
-                }
                 superPointX = superPointY = -1;
                 appleGoldX = appleGoldY = -1;
                 gameFrame.pacmanHit();
@@ -475,18 +471,18 @@ public class BoardPanel extends JPanel implements ActionListener {
                 if (x == superPointX && y == superPointY) {
 
                     if (cherryStatus == 0) {
-                        g2d.drawImage(appleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                        g2d.drawImage(appleImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(appleImage, x * TILE_SIZE + 6, y * TILE_SIZE + 6, TILE_SIZE / 2, TILE_SIZE / 2, null);
+                        g2d.drawImage(appleImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
 
                 if (x == appleGoldX && y == appleGoldY) {
 
                     if (cherryStatus == 0) {
-                        g2d.drawImage(appleGoldImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                        g2d.drawImage(appleGoldImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(appleGoldImage, x * TILE_SIZE + 6, y * TILE_SIZE + 6, TILE_SIZE / 2, TILE_SIZE / 2, null);
+                        g2d.drawImage(appleGoldImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
 
@@ -545,8 +541,10 @@ public class BoardPanel extends JPanel implements ActionListener {
         cherryImage1 = loadImage("/img/food/cherry.png");
         cherryImage2 = loadImage("/img/food/cherry2.png");
 
-        appleImage = loadImage("/img/food/apple.png");
-        appleGoldImage = loadImage("/img/food/goldenApple.png");
+        appleImage1 = loadImage("/img/food/apple1.png");
+        appleImage2 = loadImage("/img/food/apple2.png");
+        appleGoldImage1 = loadImage("/img/food/goldenApple1.png");
+        appleGoldImage2 = loadImage("/img/food/goldenApple2.png");
 
         verticalImage = loadImage("/img/Map/vertical.png");
         horizontalImage = loadImage("/img/Map/horizontal.png");
