@@ -11,7 +11,7 @@ package pacman_demo_v2;
  */
 public class ChoiceCharacter_Frame extends javax.swing.JFrame {
 
-    public int choice;
+    public int choiceCharacter;
     private GlassPane glassPane;
     
     /**
@@ -23,16 +23,9 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
         
-        this.setSize(694, 725);          // Đặt kích thước
+        this.setSize(725, 702);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
-        
-        
-        glassPane = new GlassPane(this);
-        setGlassPane(glassPane);
-        glassPane.setVisible(true);
-       
-
     }
 
     /**
@@ -47,7 +40,6 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbWoMan = new javax.swing.JLabel();
         lbMan = new javax.swing.JLabel();
-        lbLogo = new javax.swing.JLabel();
         lbChoiceMan = new javax.swing.JLabel();
         lbChoiceWoMan = new javax.swing.JLabel();
         lbbackground = new javax.swing.JLabel();
@@ -58,23 +50,16 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
         jPanel1.setLayout(null);
 
         lbWoMan.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lbWoMan.setText("WOMAN");
-        lbWoMan.setOpaque(true);
+        lbWoMan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbWoMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacWoman.png"))); // NOI18N
         jPanel1.add(lbWoMan);
-        lbWoMan.setBounds(490, 440, 160, 90);
+        lbWoMan.setBounds(360, 270, 310, 290);
 
         lbMan.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lbMan.setText("Man");
-        lbMan.setOpaque(true);
+        lbMan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacMan.png"))); // NOI18N
         jPanel1.add(lbMan);
-        lbMan.setBounds(130, 440, 100, 90);
-
-        lbLogo.setBackground(new java.awt.Color(204, 255, 0));
-        lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacManLogo.png"))); // NOI18N
-        lbLogo.setOpaque(true);
-        jPanel1.add(lbLogo);
-        lbLogo.setBounds(270, 120, 190, 190);
+        lbMan.setBounds(30, 280, 320, 280);
 
         lbChoiceMan.setBackground(new java.awt.Color(0, 255, 255));
         lbChoiceMan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -88,7 +73,7 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbChoiceMan);
-        lbChoiceMan.setBounds(-80, 550, 540, 50);
+        lbChoiceMan.setBounds(20, 550, 340, 50);
 
         lbChoiceWoMan.setBackground(new java.awt.Color(0, 255, 255));
         lbChoiceWoMan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -102,12 +87,13 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbChoiceWoMan);
-        lbChoiceWoMan.setBounds(270, 550, 540, 50);
+        lbChoiceWoMan.setBounds(370, 550, 340, 50);
 
-        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacManloop.gif"))); // NOI18N
+        lbbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/BackGroundChoiceCharacter.jpg"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 10, 726, 680);
+        lbbackground.setBounds(0, 10, 720, 680);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,21 +109,20 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lbChoiceManMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbChoiceManMouseClicked
-        // TODO add your handling code here:
-        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame();
-        choice = 1;
-        pacManGame.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_lbChoiceManMouseClicked
-
     private void lbChoiceWoManMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbChoiceWoManMouseClicked
         // TODO add your handling code here:
-        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame();
-        choice = 2;
+        
+        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame(1);
         pacManGame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbChoiceWoManMouseClicked
+
+    private void lbChoiceManMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbChoiceManMouseClicked
+        // TODO add your handling code here:
+        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame(2);
+        pacManGame.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lbChoiceManMouseClicked
 
     /**
      * @param args the command line arguments
@@ -179,7 +164,6 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbChoiceMan;
     private javax.swing.JLabel lbChoiceWoMan;
-    private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbMan;
     private javax.swing.JLabel lbWoMan;
     private javax.swing.JLabel lbbackground;

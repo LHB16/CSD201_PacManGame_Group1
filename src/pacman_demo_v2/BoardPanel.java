@@ -89,19 +89,19 @@ public class BoardPanel extends JPanel implements ActionListener {
     };
 
     public BoardPanel(PacManMainGame_Frame frame) {
+        System.out.println("hahahihi : " + frame.getChoice());
         this.gameFrame = frame;
         this.setBackground(Color.BLACK);
-
+        
+        
         loadMapImages();
 
         mapData = new int[ORIGINAL_MAP.length][];
         for (int i = 0; i < ORIGINAL_MAP.length; i++) {
             mapData[i] = ORIGINAL_MAP[i].clone();
         }
-
+        pacman = new Pacman(10, 15, TILE_SIZE, frame.getChoice());
         // --- Initialize Game Objects ---
-        pacman = new Pacman(10, 15, TILE_SIZE); // (row, col)
-
         for (int i = 0; i < 4; ++i) {
             if (i % 4 == 0) {
                 ghosts[i] = new GhostRed(10, 9, TILE_SIZE);
@@ -250,9 +250,9 @@ public class BoardPanel extends JPanel implements ActionListener {
                         gameFrame.uploadLives();
                     }
                 }
-                
+
             }
-            
+
             // tao gold
             if (mapData[newX][newY] == 2) {
                 score += 1000;
@@ -470,7 +470,7 @@ public class BoardPanel extends JPanel implements ActionListener {
 
                 if (x == superPointX && y == superPointY) {
 
-                    if (cherryStatus == 0) {
+                    if (cherryStatus == 1) {
                         g2d.drawImage(appleImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
                         g2d.drawImage(appleImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
@@ -479,7 +479,7 @@ public class BoardPanel extends JPanel implements ActionListener {
 
                 if (x == appleGoldX && y == appleGoldY) {
 
-                    if (cherryStatus == 0) {
+                    if (cherryStatus == 1) {
                         g2d.drawImage(appleGoldImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
                         g2d.drawImage(appleGoldImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
