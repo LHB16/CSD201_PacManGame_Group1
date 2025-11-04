@@ -12,9 +12,13 @@ import javax.swing.JOptionPane;
  * @author luuhu
  */
 public class PacManMainGame_Frame extends javax.swing.JFrame {
-
+    private int choice;
     // Khởi tạo 1 màn làm mở cửa sổ
     private GlassPane glassPane;
+
+    public int getChoice() {
+        return choice;
+    }
     
     public void uploadLives() {
         lbCountLive.setText(String.valueOf(((BoardPanel) pnlBoard).totalLives)); // Cập nhật text trên label
@@ -75,10 +79,13 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         }
     }
 
+    
     /**
      * Creates new form PacMan_Demo_v11
      */
-    public PacManMainGame_Frame() {
+    public PacManMainGame_Frame(int choice) {
+        this.choice = choice;
+        System.out.println("choice: " + choice);
         initComponents();
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
@@ -89,7 +96,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnlBoard.requestFocusInWindow();
 
         this.setResizable(false);
-        this.setTitle("PacMan Demo"); // Thêm tiêu đề cho cửa sổ
+        this.setTitle("PacMan Game"); // Thêm tiêu đề cho cửa sổ
         this.setLocationRelativeTo(null); // Hiển thị cửa sổ ở giữa màn hình
 
         glassPane = new GlassPane(this);
@@ -338,12 +345,15 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+
     public static void main(String args[]) {
+         //final int choice = choice; 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -364,13 +374,14 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
+        //static int x = this.choice;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PacManMainGame_Frame().setVisible(true);
+                new PacManMainGame_Frame(0).setVisible(true);
             }
-        });
+        }); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

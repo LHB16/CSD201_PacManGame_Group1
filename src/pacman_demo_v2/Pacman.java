@@ -7,7 +7,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class Pacman {
-
+    private int choiceCharacter;
     private int x, y;
     private int dx, dy;
     private int req_dx, req_dy;
@@ -24,10 +24,11 @@ public class Pacman {
 
     private final int TILE_SIZE;
 
-    public Pacman(int startX, int startY, int tileSize) {
+    public Pacman(int startX, int startY, int tileSize, int choiceCharacter) {
         this.x = startX;
         this.y = startY;
         this.TILE_SIZE = tileSize;
+        this.choiceCharacter = choiceCharacter;
         this.dx = 0;
         this.dy = 0;
         this.req_dx = 0;
@@ -36,10 +37,24 @@ public class Pacman {
         this.image = rightImage1; // Hình ảnh ban đầu (miệng đóng, hướng phải)
     }
 
+    public int getChoiceCharacter() {
+        return choiceCharacter;
+    }
+
+    public void setChoiceCharacter(int choiceCharacter) {
+        this.choiceCharacter = choiceCharacter;
+    }
+
+    
     /**
      * Tải 3 ảnh cho mỗi hướng
      */
     private void loadImages() {
+       // int choiceCharacter;
+        //if (choiceCharacter == 1){
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa: " + choiceCharacter + '\n');
+            
+        //}
         upImage0 = loadImage("/img/pacman/pacnu0tren.png");
         upImage1 = loadImage("/img/pacman/pacnu1tren.png");
         upImage2 = loadImage("/img/pacman/pacnu2tren.png");
