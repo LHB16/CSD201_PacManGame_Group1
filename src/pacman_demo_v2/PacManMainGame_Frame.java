@@ -108,7 +108,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         txtfLive1 = new javax.swing.JTextField();
         pnBoard = new javax.swing.JPanel();
         pnlTile = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbLogo = new javax.swing.JLabel();
         lbCountLive = new javax.swing.JLabel();
         lbCountTime = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
@@ -145,16 +145,16 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnBoard.setBackground(new java.awt.Color(0, 0, 0));
         pnBoard.setName("PacMan"); // NOI18N
 
-        pnlTile.setBackground(new java.awt.Color(0, 0, 204));
+        pnlTile.setBackground(new java.awt.Color(0, 102, 204));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pacmanlogo.jpg"))); // NOI18N
+        lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
 
         lbCountLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountLive.setForeground(new java.awt.Color(255, 255, 0));
         lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        lbCountTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCountTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountTime.setForeground(new java.awt.Color(255, 255, 255));
         lbCountTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountTime.setText("00:00:00");
@@ -165,7 +165,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbTime.setText("TIME");
 
         lbLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbLive.setForeground(new java.awt.Color(51, 255, 102));
+        lbLive.setForeground(new java.awt.Color(153, 255, 153));
         lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacman/pacnu1phai.png"))); // NOI18N
         lbLive.setText("LIVE");
 
@@ -214,9 +214,9 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                             .addComponent(lbCountScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbCountLive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbCountTime, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))))
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         pnlTileLayout.setVerticalGroup(
             pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,10 +234,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                     .addComponent(lbScore)
                     .addComponent(lbCountScore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 48, Short.MAX_VALUE))
             .addGroup(pnlTileLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pnlBoard.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -250,7 +250,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         );
         pnlBoardLayout.setVerticalGroup(
             pnlBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGap(0, 486, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnBoardLayout = new javax.swing.GroupLayout(pnBoard);
@@ -370,7 +370,6 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     public javax.swing.JLabel lbCountLive;
@@ -378,6 +377,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     public javax.swing.JLabel lbCountTime;
     private javax.swing.JLabel lbHome;
     private javax.swing.JLabel lbLive;
+    private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbScore;
     private javax.swing.JLabel lbTime;
     private javax.swing.JPanel pnBoard;
