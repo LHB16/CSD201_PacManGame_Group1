@@ -60,80 +60,70 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         lbPlay.setForeground(new java.awt.Color(204, 204, 0));
         lbPlay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/playIcon.png"))); // NOI18N
-        lbPlay.setText("PLAY");
         lbPlay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbPlay.setOpaque(true);
         lbPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbPlayMouseClicked(evt);
             }
         });
         jPanel1.add(lbPlay);
-        lbPlay.setBounds(100, 380, 530, 50);
+        lbPlay.setBounds(100, 380, 540, 50);
 
         lbTutorial.setBackground(new java.awt.Color(0, 255, 255));
         lbTutorial.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbTutorial.setForeground(new java.awt.Color(153, 0, 153));
         lbTutorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTutorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorialIcon.png"))); // NOI18N
-        lbTutorial.setText("HOW TO PLAY");
         lbTutorial.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbTutorial.setOpaque(true);
         lbTutorial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbTutorialMouseClicked(evt);
             }
         });
         jPanel1.add(lbTutorial);
-        lbTutorial.setBounds(100, 440, 530, 50);
+        lbTutorial.setBounds(100, 440, 540, 50);
 
         lbRankingBoard.setBackground(new java.awt.Color(0, 255, 255));
         lbRankingBoard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbRankingBoard.setForeground(new java.awt.Color(0, 0, 153));
         lbRankingBoard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbRankingBoard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rankingBoardIcon.png"))); // NOI18N
-        lbRankingBoard.setText("RANKING BOARD");
         lbRankingBoard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbRankingBoard.setOpaque(true);
         lbRankingBoard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbRankingBoardMouseClicked(evt);
             }
         });
         jPanel1.add(lbRankingBoard);
-        lbRankingBoard.setBounds(100, 500, 530, 50);
+        lbRankingBoard.setBounds(100, 500, 540, 50);
 
         lbAboutUs.setBackground(new java.awt.Color(0, 255, 255));
         lbAboutUs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbAboutUs.setForeground(new java.awt.Color(0, 153, 0));
         lbAboutUs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/aboutUsIcon.png"))); // NOI18N
-        lbAboutUs.setText("ABOUT US");
         lbAboutUs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbAboutUs.setOpaque(true);
         lbAboutUs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbAboutUsMouseClicked(evt);
             }
         });
         jPanel1.add(lbAboutUs);
-        lbAboutUs.setBounds(100, 560, 530, 50);
+        lbAboutUs.setBounds(100, 560, 540, 50);
 
         lbExit.setBackground(new java.awt.Color(0, 255, 255));
         lbExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbExit.setForeground(new java.awt.Color(255, 0, 0));
         lbExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitIcon.png"))); // NOI18N
-        lbExit.setText("EXIT");
         lbExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lbExit.setOpaque(true);
         lbExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbExitMouseClicked(evt);
             }
         });
         jPanel1.add(lbExit);
-        lbExit.setBounds(100, 620, 530, 50);
+        lbExit.setBounds(100, 620, 540, 50);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacManloop.gif"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
