@@ -18,7 +18,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
         initComponents();
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
-        this.setSize(635, 650);          // Đặt kích thước
+        this.setSize(630, 630);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
     }
@@ -51,7 +51,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(40, 520, 120, 50);
+        lbback.setBounds(170, 520, 120, 50);
 
         lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutnext.png"))); // NOI18N
         lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -62,24 +62,22 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbnext);
-        lbnext.setBounds(170, 520, 130, 50);
+        lbnext.setBounds(330, 520, 130, 50);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut1.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 630, 610);
+        lbbackground.setBounds(0, 0, 630, 630);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
