@@ -51,7 +51,7 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(170, 560, 120, 50);
+        lbback.setBounds(30, 560, 120, 50);
 
         lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutnext.png"))); // NOI18N
         lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -62,7 +62,7 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbnext);
-        lbnext.setBounds(330, 560, 130, 50);
+        lbnext.setBounds(160, 560, 130, 50);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut2.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
