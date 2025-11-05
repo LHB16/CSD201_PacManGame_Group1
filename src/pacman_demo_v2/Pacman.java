@@ -7,6 +7,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class Pacman {
+
     private int choiceCharacter;
     private int x, y;
     private int dx, dy;
@@ -45,16 +46,32 @@ public class Pacman {
         this.choiceCharacter = choiceCharacter;
     }
 
-    
     /**
      * Tải 3 ảnh cho mỗi hướng
      */
     private void loadImages() {
-       // int choiceCharacter;
-        //if (choiceCharacter == 1){
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa: " + choiceCharacter + '\n');
-            
-        //}
+        // int choiceCharacter;
+        if (choiceCharacter == 2) {
+            upImage0 = loadImage("/img/pacman2/U0.png");
+            upImage1 = loadImage("/img/pacman2/U1.png");
+            upImage2 = loadImage("/img/pacman2/U2.png");
+
+            // Hướng xuống
+            downImage0 = loadImage("/img/pacman2/D0.png");
+            downImage1 = loadImage("/img/pacman2/D1.png");
+            downImage2 = loadImage("/img/pacman2/D2.png");
+
+            // Hướng trái
+            leftImage0 = loadImage("/img/pacman2/L0.png");
+            leftImage1 = loadImage("/img/pacman2/L1.png");
+            leftImage2 = loadImage("/img/pacman2/L2.png");
+
+            // Hướng phải
+            rightImage0 = loadImage("/img/pacman2/R0.png");
+            rightImage1 = loadImage("/img/pacman2/R1.png");
+            rightImage2 = loadImage("/img/pacman2/R2.png");
+            return;
+        }
         upImage0 = loadImage("/img/pacman/pacnu0tren.png");
         upImage1 = loadImage("/img/pacman/pacnu1tren.png");
         upImage2 = loadImage("/img/pacman/pacnu2tren.png");
@@ -140,7 +157,6 @@ public class Pacman {
         prevX = x;
         prevY = y;
 
-
         // Kiểm tra xem hướng YÊU CẦU có hợp lệ không
         dx = req_dx;
         dy = req_dy;
@@ -148,9 +164,7 @@ public class Pacman {
         int newX = x + dx;
         int newY = y + dy;
 
-
         // Di chuyển chính thức
-
         if (isValidMove(newX, newY, mapData, totalDots)) {
             x = newX;
             y = newY;

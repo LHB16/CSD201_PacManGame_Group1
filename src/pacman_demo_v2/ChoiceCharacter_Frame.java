@@ -65,7 +65,7 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
         lbChoiceMan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbChoiceMan.setForeground(new java.awt.Color(204, 204, 0));
         lbChoiceMan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbChoiceMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/playIcon.png"))); // NOI18N
+        lbChoiceMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Male.png"))); // NOI18N
         lbChoiceMan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbChoiceMan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -73,13 +73,13 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbChoiceMan);
-        lbChoiceMan.setBounds(20, 550, 340, 50);
+        lbChoiceMan.setBounds(130, 560, 140, 60);
 
         lbChoiceWoMan.setBackground(new java.awt.Color(0, 255, 255));
         lbChoiceWoMan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbChoiceWoMan.setForeground(new java.awt.Color(255, 0, 0));
         lbChoiceWoMan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbChoiceWoMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exitIcon.png"))); // NOI18N
+        lbChoiceWoMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Female.png"))); // NOI18N
         lbChoiceWoMan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbChoiceWoMan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -87,7 +87,7 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbChoiceWoMan);
-        lbChoiceWoMan.setBounds(370, 550, 340, 50);
+        lbChoiceWoMan.setBounds(460, 560, 140, 60);
 
         lbbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/BackGroundChoiceCharacter.jpg"))); // NOI18N
