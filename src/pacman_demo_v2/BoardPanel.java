@@ -61,6 +61,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     private int appleGoldStatus = 0;
     private ArrayList<Block> appleGold = new ArrayList<>();
     Random rand = new Random();
+    private int pacManSpeed = 4; // Càng cao càng chậm
+    private int ghostSpeed = 5;
 
     private int cnt = 0; // Counter for animations
 
@@ -181,13 +183,13 @@ public class BoardPanel extends JPanel implements ActionListener {
     // ĐIỀU KHIỂN LOGIC GAME
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Pac-Man di chuyển mỗi 4 tick (4 * 50ms = 200ms)
-        if (cnt % 4 == 0) {
+        // Tốc độ Pac-Man theo hệ số tick
+        if (cnt % pacManSpeed == 0) {
             movePacman();
         }
 
-        // Ghost di chuyển mỗi 3 tick (3 * 50ms = 150ms)
-        if (cnt % 4 == 0) {
+        // Tốc độ của Ghost theo hệ số tick
+        if (cnt % ghostSpeed == 0) {
             for (int i = 0; i < cntGhost; ++i) {
                 ghosts[i].move(mapData);
             }
