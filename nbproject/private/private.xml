@@ -2,10 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< Updated upstream
         <group>
             <file>file:/E:/CSD201_PacManGame_Group1/src/pacman_demo_v2/BoardPanel.java</file>
             <file>file:/E:/CSD201_PacManGame_Group1/src/pacman_demo_v2/Pacman.java</file>
             <file>file:/E:/CSD201_PacManGame_Group1/src/pacman_demo_v2/ChoiceCharacter_Frame.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> Stashed changes
     </open-files>
 </project-private>
