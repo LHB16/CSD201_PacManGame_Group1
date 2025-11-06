@@ -159,7 +159,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnlTile.setBackground(new java.awt.Color(0, 0, 204));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pacmanlogo.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
 
         lbCountLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountLive.setForeground(new java.awt.Color(255, 255, 0));
