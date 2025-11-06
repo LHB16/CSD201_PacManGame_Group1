@@ -49,7 +49,7 @@ public class Pacman {
     /**
      * Tải 3 ảnh cho mỗi hướng
      */
-    private void loadImages() {
+    public void loadImages() { 
         // int choiceCharacter;
         if (choiceCharacter == 2) {
             upImage0 = loadImage("/img/pacman2/U0.png");

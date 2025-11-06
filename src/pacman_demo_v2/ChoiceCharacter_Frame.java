@@ -73,7 +73,7 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbChoiceMan);
-        lbChoiceMan.setBounds(130, 560, 140, 60);
+        lbChoiceMan.setBounds(120, 560, 150, 60);
 
         lbChoiceWoMan.setBackground(new java.awt.Color(0, 255, 255));
         lbChoiceWoMan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -87,13 +87,13 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbChoiceWoMan);
-        lbChoiceWoMan.setBounds(460, 560, 140, 60);
+        lbChoiceWoMan.setBounds(450, 560, 170, 60);
 
         lbbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/BackGroundChoiceCharacter.jpg"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 10, 720, 680);
+        lbbackground.setBounds(0, 0, 720, 680);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,20 +109,20 @@ public class ChoiceCharacter_Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lbChoiceWoManMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbChoiceWoManMouseClicked
-        // TODO add your handling code here:
-        
-        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame(1);
-        pacManGame.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_lbChoiceWoManMouseClicked
-
     private void lbChoiceManMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbChoiceManMouseClicked
         // TODO add your handling code here:
         PacManMainGame_Frame pacManGame = new PacManMainGame_Frame(2);
         pacManGame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbChoiceManMouseClicked
+
+    private void lbChoiceWoManMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbChoiceWoManMouseClicked
+        // TODO add your handling code here:
+
+        PacManMainGame_Frame pacManGame = new PacManMainGame_Frame(1);
+        pacManGame.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lbChoiceWoManMouseClicked
 
     /**
      * @param args the command line arguments
