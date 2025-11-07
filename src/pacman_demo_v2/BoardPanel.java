@@ -25,7 +25,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     private Pacman pacman;
 
     private int cntGhost = 4;
-    private int pacmanSpeed = 4;
+    private int pacManSpeed = 4;
     private int ghostSpeed = 5;
     private Ghost[] ghosts = new Ghost[105];
     //private redGhost
@@ -68,8 +68,6 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     private ArrayList<Block> itemBlock = new ArrayList<>();
     Random rand = new Random();
-    private int pacManSpeed = 4; // Càng cao càng chậm
-    private int ghostSpeed = 5;
 
     private int cnt = 0; // Counter for animations
 
@@ -189,7 +187,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // Pac-Man di chuyển mỗi 4 tick (4 * 50ms = 200ms)
-        if (cnt % pacmanSpeed == 0) {
+        if (cnt % pacManSpeed == 0) {
             movePacman();
         }
 
