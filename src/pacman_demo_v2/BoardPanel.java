@@ -24,6 +24,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     // --- Game Objects ---
     private Pacman pacman;
 
+    private int ghostStatus = 0;
+    private int ghostTime;
     private int cntGhost = 4;
     private int pacmanSpeed = 4;
     private int ghostSpeed = 5;
@@ -43,6 +45,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     private int seconds = 0, minutes = 0, hours = 0;
 
     // --- Images ---
+    private BufferedImage redBullImage;
     private BufferedImage cherryImage, cherryImage1, cherryImage2;
     private BufferedImage appleImage1;
     private BufferedImage appleImage2;
@@ -54,6 +57,9 @@ public class BoardPanel extends JPanel implements ActionListener {
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
     private BufferedImage UImage1, UImage2, UImage3, UImage4;
 
+    public int redBullX = -1;
+    public int redBullY = -1;
+    public int redBullStatus = 0;
     // --- Super Point ---
     public int appleRedX = -1;
     public int appleRedY = -1;
@@ -62,9 +68,9 @@ public class BoardPanel extends JPanel implements ActionListener {
     public int appleGoldY = -1;
     private int appleGoldStatus = 0;
 
-    public int bottlleX = -1;
-    public int bottlleY = -1;
-    public int bottlleStatus = 0;
+    public int bottleX = -1;
+    public int bottleY = -1;
+    public int bottleStatus = 0;
 
     private ArrayList<Block> itemBlock = new ArrayList<>();
     Random rand = new Random();
@@ -99,7 +105,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         this.gameFrame = frame;
         this.setBackground(Color.BLACK);
         loadMapImages();
-        
+
         mapData = new int[ORIGINAL_MAP.length][];
         for (int i = 0; i < ORIGINAL_MAP.length; i++) {
             mapData[i] = ORIGINAL_MAP[i].clone();
@@ -172,8 +178,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         updateCherryImage();
         pacman.updateImage(cnt);
         for (int i = 0; i < cntGhost; ++i) {
-            ghosts[i].updateImage(cnt);
-
+            ghosts[i].updateImage(cnt, ghostStatus);
         }
 
         drawMaze(g2d);
@@ -278,12 +283,19 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleGoldY = -1;
             }
 
-            // an binh thuoc
-            if (newX == bottlleX && newY == bottlleY) {
+            // an binh thuoc 
+            if (newX == bottleX && newY == bottleY) {
                 pacman.setChoiceCharacter(3 - pacman.getChoiceCharacter());
                 pacman.loadImages();
-                bottlleX = -1;
-                bottlleY = -1;
+                bottleX = -1;
+                bottleY = -1;
+            }
+
+            // an nuoc tang luc
+            if (newX == redBullX && newY == redBullY) {
+                ghostStatus = 1;
+                redBullX = -1;
+                redBullY = -1;
             }
 
             // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
@@ -297,10 +309,16 @@ public class BoardPanel extends JPanel implements ActionListener {
         // Va chạm tại cùng một ô
         for (int i = 0; i < cntGhost; ++i) {
             if (pacman.getX() == ghosts[i].getX() && pacman.getY() == ghosts[i].getY()) {
-
+                if (ghostStatus > 0) {
+                    score += 200;
+                    ghosts[i].setX(-1);
+                    ghosts[i].setY(-1);
+                    return;
+                }
                 appleRedX = appleRedY = -1;
                 appleGoldX = appleGoldY = -1;
-                bottlleX = appleGoldY = -1;
+                bottleX = bottleY = -1;
+                redBullX = redBullY = -1;
                 gameFrame.pacmanHit();
                 return;
             }
@@ -308,9 +326,16 @@ public class BoardPanel extends JPanel implements ActionListener {
             if (pacman.getX() == ghosts[i].getPrevX() && pacman.getY() == ghosts[i].getPrevY()
                     && ghosts[i].getX() == pacman.getPrevX() && ghosts[i].getY() == pacman.getPrevY()) {
 
+                if (ghostStatus > 0) {
+                    score += 200;
+                    ghosts[i].setX(-1);
+                    ghosts[i].setY(-1);
+                    return;
+                }
                 appleRedX = appleRedY = -1;
                 appleGoldX = appleGoldY = -1;
-                bottlleX = appleGoldY = -1;
+                bottleX = bottleY = -1;
+                redBullX = redBullY = -1;
                 gameFrame.pacmanHit();
             }
         }
@@ -379,7 +404,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void drawMaze(Graphics2D g2d) {
-
+        System.out.println(cnt);
         for (int x = 0; x < mapData.length; x++) {
             for (int y = 0; y < mapData[x].length; y++) {
                 int value = mapData[x][y];
@@ -498,12 +523,22 @@ public class BoardPanel extends JPanel implements ActionListener {
                     }
                 }
 
-                if (x == bottlleX && y == bottlleY) {
+                if (x == bottleX && y == bottleY) {
 
                     if (imageStatus == 1) {
                         g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
                         g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    }
+
+                }
+
+                if (x == redBullX && y == redBullY) {
+
+                    if (imageStatus == 1) {
+                        g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    } else {
+                        g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
 
                 }
@@ -520,7 +555,8 @@ public class BoardPanel extends JPanel implements ActionListener {
                 //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
                 if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5
                         && manhattanDistance(x, y, appleGoldX, appleGoldX) > 5
-                        && manhattanDistance(x, y, bottlleX, bottlleY) > 5) {
+                        && manhattanDistance(x, y, bottleX, bottleY) > 5
+                        && manhattanDistance(x, y, redBullX, redBullY) > 5) {
                     appleRedX = x;
                     appleRedY = y;
                     break;
@@ -541,7 +577,8 @@ public class BoardPanel extends JPanel implements ActionListener {
                     //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
                     if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 3
                             && manhattanDistance(x, y, appleRedX, appleRedY) > 5
-                            && manhattanDistance(x, y, bottlleX, bottlleY) > 5) {
+                            && manhattanDistance(x, y, bottleX, bottleY) > 5
+                            && manhattanDistance(x, y, redBullX, redBullY) > 5) {
                         appleGoldX = x;
                         appleGoldY = y;
                         break;
@@ -554,8 +591,8 @@ public class BoardPanel extends JPanel implements ActionListener {
 
         // 7s
         if (cnt % 140 == 0) {
-            bottlleStatus ^= 1;
-            if (bottlleStatus == 1) {
+            bottleStatus ^= 1;
+            if (bottleStatus == 1) {
                 int x = -1, y = -1;
                 for (int i = 1; i <= 10; ++i) {
                     int id = rand.nextInt(itemBlock.size());
@@ -564,15 +601,60 @@ public class BoardPanel extends JPanel implements ActionListener {
                     //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
                     if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 3
                             && manhattanDistance(x, y, appleRedX, appleRedY) > 5
-                            && manhattanDistance(x, y, appleGoldX, appleGoldY) > 5) {
-                        bottlleX = x;
-                        bottlleY = y;
+                            && manhattanDistance(x, y, appleGoldX, appleGoldY) > 5
+                            && manhattanDistance(x, y, redBullX, redBullY) > 5) {
+                        bottleX = x;
+                        bottleY = y;
                         break;
                     }
                 }
             } else {
-                bottlleX = bottlleY = -1;
+                bottleX = bottleY = -1;
             }
+        }
+
+        if (cnt % 20 == 0) {
+            if (ghostStatus > 0) {
+                ghostTime = (ghostTime + 1) % 11;
+                if (ghostTime == 0) {
+                    for (int i = 0; i < cntGhost; ++i){
+                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+                            ghosts[i].setX(10);
+                            ghosts[i].setY(9);
+                        }
+                    }
+                    ghostStatus = 0;
+                }
+            }
+        }
+
+        // 12s
+        if (cnt % 240 == 0) {
+
+            redBullStatus ^= 1;
+            if (redBullStatus == 1) {
+                int x = -1, y = -1;
+                for (int i = 1; i <= 100; ++i) {
+                    int id = rand.nextInt(itemBlock.size());
+                    x = itemBlock.get(id).getX();
+                    y = itemBlock.get(id).getY();
+
+                    //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
+                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 3
+                            && manhattanDistance(x, y, appleRedX, appleRedY) > 3
+                            && manhattanDistance(x, y, appleGoldX, appleGoldY) > 3
+                            && manhattanDistance(x, y, bottleX, bottleY) > 3) {
+                        
+                        redBullX = x;
+                        redBullY = y;
+                        break;
+                    }
+                }
+            } else {
+                redBullX = redBullY = -1;
+            }
+//            System.out.println("");
+//            System.out.println("RedBull: " + redBullX + " " + redBullY);
         }
 
         if (cnt == 10000000) {
@@ -582,6 +664,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void loadMapImages() {
+        redBullImage = loadImage("/img/item/ball.png");
+
         cherryImage1 = loadImage("/img/item/cherry.png");
         cherryImage2 = loadImage("/img/item/cherry2.png");
 
