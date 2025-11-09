@@ -35,6 +35,7 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbnext = new javax.swing.JLabel();
         lbback = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         lbbackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,7 +52,7 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbnext);
-        lbnext.setBounds(450, 560, 130, 54);
+        lbnext.setBounds(380, 540, 130, 50);
 
         lbback.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutback.png"))); // NOI18N
         lbback.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -62,13 +63,18 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(30, 560, 120, 50);
+        lbback.setBounds(40, 540, 120, 50);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png"))); // NOI18N
+        jLabel1.setToolTipText("");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(540, 550, 40, 40);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut4.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lbbackground.setMaximumSize(new java.awt.Dimension(611, 628));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 620, 630);
+        lbbackground.setBounds(0, 0, 620, 620);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,9 +84,7 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -143,6 +147,7 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbback;
     private javax.swing.JLabel lbbackground;
