@@ -24,7 +24,12 @@ public class BoardPanel extends JPanel implements ActionListener {
     // --- Game Objects ---
     private Pacman pacman;
 
+    private int ghostStatus = 0;
+//    private int ghostTime;
+    private int redBullTicks = 0; // Bộ đếm ngược (200 ticks = 10 giây)
     private int cntGhost = 4;
+    private int pacManSpeed = 4;
+    private int ghostSpeed = 5;
     private Ghost[] ghosts = new Ghost[105];
     //private redGhost
 
@@ -34,35 +39,42 @@ public class BoardPanel extends JPanel implements ActionListener {
     private int defaultLives = 100;
     public int totalLives = defaultLives;
     private int totalDots = 0;
-    private int cherryStatus = 0;
+    private int imageStatus = 0;
     private Timer gameLoopTimer;
     private Timer clockTimer;
     private Timer ghostSpawnTimer; // Timer để sinh ghost
     private int seconds = 0, minutes = 0, hours = 0;
 
     // --- Images ---
+    private BufferedImage redBullImage;
     private BufferedImage cherryImage, cherryImage1, cherryImage2;
     private BufferedImage appleImage1;
     private BufferedImage appleImage2;
     private BufferedImage appleGoldImage1;
     private BufferedImage appleGoldImage2;
+    private BufferedImage bottleImage;
     private BufferedImage verticalImage, horizontalImage;
     private BufferedImage cornerImage1, cornerImage2, cornerImage3, cornerImage4;
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
     private BufferedImage UImage1, UImage2, UImage3, UImage4;
 
+    public int redBullX = -1;
+    public int redBullY = -1;
+    public int redBullStatus = 0;
     // --- Super Point ---
-    public int superPointX = -1;
-    public int superPointY = -1;
-    private ArrayList<Block> superPoint = new ArrayList<>();
+    public int appleRedX = -1;
+    public int appleRedY = -1;
 
     public int appleGoldX = -1;
     public int appleGoldY = -1;
     private int appleGoldStatus = 0;
-    private ArrayList<Block> appleGold = new ArrayList<>();
+
+    public int bottleX = -1;
+    public int bottleY = -1;
+    public int bottleStatus = 0;
+
+    private ArrayList<Block> itemBlock = new ArrayList<>();
     Random rand = new Random();
-    private int pacManSpeed = 4; // Càng cao càng chậm
-    private int ghostSpeed = 5;
 
     private int cnt = 0; // Counter for animations
 
@@ -91,11 +103,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     };
 
     public BoardPanel(PacManMainGame_Frame frame) {
-        System.out.println("hahahihi : " + frame.getChoice());
         this.gameFrame = frame;
         this.setBackground(Color.BLACK);
-        
-        
         loadMapImages();
 
         mapData = new int[ORIGINAL_MAP.length][];
@@ -140,6 +149,7 @@ public class BoardPanel extends JPanel implements ActionListener {
             for (int y = 0; y < mapData[x].length; y++) {
                 if (mapData[x][y] == 3) {
                     totalDots++;
+                    itemBlock.add(new Block(x, y));
                 }
             }
         }
@@ -169,8 +179,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         updateCherryImage();
         pacman.updateImage(cnt);
         for (int i = 0; i < cntGhost; ++i) {
-            ghosts[i].updateImage(cnt);
-
+            ghosts[i].updateImage(cnt, ghostStatus);
         }
 
         drawMaze(g2d);
@@ -183,15 +192,37 @@ public class BoardPanel extends JPanel implements ActionListener {
     // ĐIỀU KHIỂN LOGIC GAME
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Tốc độ Pac-Man theo hệ số tick
+        // Pac-Man di chuyển mỗi 4 tick (4 * 50ms = 200ms)
         if (cnt % pacManSpeed == 0) {
             movePacman();
         }
 
-        // Tốc độ của Ghost theo hệ số tick
+        // Ghost di chuyển mỗi 5 tick (3 * 50ms = 150ms)
         if (cnt % ghostSpeed == 0) {
             for (int i = 0; i < cntGhost; ++i) {
                 ghosts[i].move(mapData);
+            }
+        }
+
+        // ĐẾM NGƯỢC RED BULL
+        if (ghostStatus > 0) {
+            if (redBullTicks > 0) {
+                redBullTicks--; // Giảm 1 tick (tương đương 50ms)
+                
+                // Cập nhật thanh tiến trình
+                gameFrame.updateRedBullTimer(true, redBullTicks);
+                
+            } else { // redBullTicks == 0, hết giờ
+                ghostStatus = 0;
+                gameFrame.updateRedBullTimer(false, 0); // Tắt thanh bar
+                
+                // Hồi sinh các ghost đã bị ăn
+                for (int i = 0; i < cntGhost; ++i){
+                    if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+                        ghosts[i].setX(10);
+                        ghosts[i].setY(9);
+                    }
+                }
             }
         }
 
@@ -261,11 +292,11 @@ public class BoardPanel extends JPanel implements ActionListener {
                 gameFrame.lbCountScore.setText(String.valueOf(score));
             }
             // tao do
-            if (newX == superPointX && newY == superPointY) {
+            if (newX == appleRedX && newY == appleRedY) {
                 score += 50;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
-                superPointX = -1;
-                superPointY = -1;
+                appleRedX = -1;
+                appleRedY = -1;
             }
             // an tao do
             if (newX == appleGoldX && newY == appleGoldY) {
@@ -275,15 +306,27 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleGoldY = -1;
             }
 
-            // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
-            if (mapData[oldX][oldY] != 1) {
-                superPoint.add(new Block(oldX, oldY));
-                appleGold.add(new Block(oldX, oldY));
+            // an binh thuoc 
+            if (newX == bottleX && newY == bottleY) {
+                pacman.setChoiceCharacter(3 - pacman.getChoiceCharacter());
+                pacman.loadImages();
+                bottleX = -1;
+                bottleY = -1;
             }
 
+            // an nuoc tang luc
+            if (newX == redBullX && newY == redBullY) {
+                ghostStatus = 1;
+                redBullTicks = 200; // Bắt đầu đếm từ 200 ticks
+                gameFrame.updateRedBullTimer(true, redBullTicks); // Gửi 200
+                redBullX = -1;
+                redBullY = -1;
+            }
+
+            // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
             // Cập nhật vị trí trên bản đồ logic
             mapData[oldX][oldY] = 1; // Vị trí cũ trở thành ô trống
-            mapData[newX][newY] = 6; // Vị trí mới là Pacman
+            //mapData[newX][newY] = 6; // Vị trí mới là Pacman
         }
     }
 
@@ -291,9 +334,20 @@ public class BoardPanel extends JPanel implements ActionListener {
         // Va chạm tại cùng một ô
         for (int i = 0; i < cntGhost; ++i) {
             if (pacman.getX() == ghosts[i].getX() && pacman.getY() == ghosts[i].getY()) {
-
-                superPointX = superPointY = -1;
+                if (ghostStatus > 0) {
+                    score += 200;
+                    ghosts[i].setX(-1);
+                    ghosts[i].setY(-1);
+                    return;
+                }
+                appleRedX = appleRedY = -1;
                 appleGoldX = appleGoldY = -1;
+                bottleX = bottleY = -1;
+                redBullX = redBullY = -1;
+                ghostStatus = 0; 
+//                ghostTime = 0;
+                redBullTicks = 0;
+                gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
                 return;
             }
@@ -301,8 +355,20 @@ public class BoardPanel extends JPanel implements ActionListener {
             if (pacman.getX() == ghosts[i].getPrevX() && pacman.getY() == ghosts[i].getPrevY()
                     && ghosts[i].getX() == pacman.getPrevX() && ghosts[i].getY() == pacman.getPrevY()) {
 
-                superPointX = superPointY = -1;
+                if (ghostStatus > 0) {
+                    score += 200;
+                    ghosts[i].setX(-1);
+                    ghosts[i].setY(-1);
+                    return;
+                }
+                appleRedX = appleRedY = -1;
                 appleGoldX = appleGoldY = -1;
+                bottleX = bottleY = -1;
+                redBullX = redBullY = -1;
+                ghostStatus = 0; 
+//                ghostTime = 0;
+                redBullTicks = 0;
+                gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
             }
         }
@@ -328,6 +394,11 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     public void replayGame() {
         totalLives = defaultLives;
+        
+        ghostStatus = 0;
+//        ghostTime = 0;
+        redBullTicks = 0;
+        gameFrame.updateRedBullTimer(false, 0);
 
         // Reset lại số lượng ghost về 4
         cntGhost = 4;
@@ -349,6 +420,8 @@ public class BoardPanel extends JPanel implements ActionListener {
         gameFrame.lbCountScore.setText("0");
         gameFrame.lbCountTime.setText("00:00:00");
 
+        //countBlock();
+        // System.out.println("aaaaaaaaaaaaaaa");
         countInitialDots();
         startTimers();
     }
@@ -369,7 +442,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void drawMaze(Graphics2D g2d) {
-
+        System.out.println(cnt);
         for (int x = 0; x < mapData.length; x++) {
             for (int y = 0; y < mapData[x].length; y++) {
                 int value = mapData[x][y];
@@ -470,9 +543,9 @@ public class BoardPanel extends JPanel implements ActionListener {
                     }
                 }
 
-                if (x == superPointX && y == superPointY) {
+                if (x == appleRedX && y == appleRedY) {
 
-                    if (cherryStatus == 1) {
+                    if (imageStatus == 1) {
                         g2d.drawImage(appleImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
                         g2d.drawImage(appleImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
@@ -481,56 +554,166 @@ public class BoardPanel extends JPanel implements ActionListener {
 
                 if (x == appleGoldX && y == appleGoldY) {
 
-                    if (cherryStatus == 1) {
+                    if (imageStatus == 1) {
                         g2d.drawImage(appleGoldImage1, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
                         g2d.drawImage(appleGoldImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
 
+                if (x == bottleX && y == bottleY) {
+
+                    if (imageStatus == 1) {
+                        g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    } else {
+                        g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    }
+
+                }
+
+                if (x == redBullX && y == redBullY) {
+
+                    if (imageStatus == 1) {
+                        g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    } else {
+                        g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                    }
+
+                }
             }
         }
 
+        // 5s
         if (cnt % 100 == 0) {
             int x = -1, y = -1;
-            if (!superPoint.isEmpty()) {
-                for (int i = 1; i <= 5; ++i) {
-                    int id = rand.nextInt(superPoint.size());
-                    x = superPoint.get(id).getX();
-                    y = superPoint.get(id).getY();
-                    System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
-                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5
-                            && manhattanDistance(appleGoldX, appleGoldX, x, y) > 5) {
-                        superPointX = x;
-                        superPointY = y;
-                        break;
-                    }
+            for (int i = 1; i <= 10; ++i) {
+                int id = rand.nextInt(itemBlock.size());
+                x = itemBlock.get(id).getX();
+                y = itemBlock.get(id).getY();
+                //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
+                if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5
+                        && manhattanDistance(x, y, appleGoldX, appleGoldX) > 5
+                        && manhattanDistance(x, y, bottleX, bottleY) > 5
+                        && manhattanDistance(x, y, redBullX, redBullY) > 5) {
+                    appleRedX = x;
+                    appleRedY = y;
+                    break;
                 }
-                System.out.println(superPointX + " " + superPointY);
             }
+            System.out.println(appleRedX + " " + appleRedY);
         }
 
+        // 10s xuat hien, 10s an
         if (cnt % 200 == 0) {
             appleGoldStatus ^= 1;
             if (appleGoldStatus == 1) {
                 int x = -1, y = -1;
-                if (!appleGold.isEmpty()) {
-                    for (int i = 1; i <= 5; ++i) {
-                        int id = rand.nextInt(appleGold.size());
-                        x = appleGold.get(id).getX();
-                        y = appleGold.get(id).getY();
-                        //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
-                        if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 5
-                                && manhattanDistance(superPointX, superPointY, x, y) > 5) {
-                            appleGoldX = x;
-                            appleGoldY = y;
-                            break;
-                        }
+                for (int i = 1; i <= 10; ++i) {
+                    int id = rand.nextInt(itemBlock.size());
+                    x = itemBlock.get(id).getX();
+                    y = itemBlock.get(id).getY();
+                    //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
+                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 3
+                            && manhattanDistance(x, y, appleRedX, appleRedY) > 5
+                            && manhattanDistance(x, y, bottleX, bottleY) > 5
+                            && manhattanDistance(x, y, redBullX, redBullY) > 5) {
+                        appleGoldX = x;
+                        appleGoldY = y;
+                        break;
                     }
                 }
             } else {
                 appleGoldX = appleGoldY = -1;
             }
+        }
+
+        // 7s
+        if (cnt % 140 == 0) {
+            bottleStatus ^= 1;
+            if (bottleStatus == 1) {
+                int x = -1, y = -1;
+                for (int i = 1; i <= 10; ++i) {
+                    int id = rand.nextInt(itemBlock.size());
+                    x = itemBlock.get(id).getX();
+                    y = itemBlock.get(id).getY();
+                    //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
+                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 3
+                            && manhattanDistance(x, y, appleRedX, appleRedY) > 5
+                            && manhattanDistance(x, y, appleGoldX, appleGoldY) > 5
+                            && manhattanDistance(x, y, redBullX, redBullY) > 5) {
+                        bottleX = x;
+                        bottleY = y;
+                        break;
+                    }
+                }
+            } else {
+                bottleX = bottleY = -1;
+            }
+        }
+        
+//        if (cnt % 20 == 0) {
+//            if (ghostStatus > 0) {
+//                ghostTime = (ghostTime + 1) % 11; // Tăng thời gian đã trôi qua (0 -> 1 ... 10 -> 0)
+//                
+//                if (ghostTime == 0) { // Đã hết 10 giây (vừa quay về 0)
+//                    for (int i = 0; i < cntGhost; ++i){
+//                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+//                            ghosts[i].setX(10);
+//                            ghosts[i].setY(9);
+//                        }
+//                    }
+//                    ghostStatus = 0;
+//                    gameFrame.updateRedBullTimer(false, 0); // Tắt thanh tiến trình
+//                } else {
+//                    // Vẫn đang trong thời gian hiệu lực (ghostTime từ 1 đến 10)
+//                    int remainingTime = 10 - ghostTime; // Thời gian còn lại (9... 0)
+//                    gameFrame.updateRedBullTimer(true, remainingTime); // Cập nhật thanh
+//                }
+//            }
+//        }
+
+//        if (cnt % 20 == 0) {
+//            if (ghostStatus > 0) {
+//                ghostTime = (ghostTime + 1) % 11;
+//                if (ghostTime == 0) {
+//                    for (int i = 0; i < cntGhost; ++i){
+//                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+//                            ghosts[i].setX(10);
+//                            ghosts[i].setY(9);
+//                        }
+//                    }
+//                    ghostStatus = 0;
+//                }
+//            }
+//        }
+
+        // 12s
+        if (cnt % 240 == 0) {
+
+            redBullStatus ^= 1;
+            if (redBullStatus == 1) {
+                int x = -1, y = -1;
+                for (int i = 1; i <= 100; ++i) {
+                    int id = rand.nextInt(itemBlock.size());
+                    x = itemBlock.get(id).getX();
+                    y = itemBlock.get(id).getY();
+
+                    //System.out.println(manhattanDistance(x, y, pacman.getX(), pacman.getY()));
+                    if (manhattanDistance(x, y, pacman.getX(), pacman.getY()) > 3
+                            && manhattanDistance(x, y, appleRedX, appleRedY) > 3
+                            && manhattanDistance(x, y, appleGoldX, appleGoldY) > 3
+                            && manhattanDistance(x, y, bottleX, bottleY) > 3) {
+                        
+                        redBullX = x;
+                        redBullY = y;
+                        break;
+                    }
+                }
+            } else {
+                redBullX = redBullY = -1;
+            }
+//            System.out.println("");
+//            System.out.println("RedBull: " + redBullX + " " + redBullY);
         }
 
         if (cnt == 10000000) {
@@ -540,13 +723,17 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void loadMapImages() {
-        cherryImage1 = loadImage("/img/food/cherry.png");
-        cherryImage2 = loadImage("/img/food/cherry2.png");
+        redBullImage = loadImage("/img/item/redBull.png");
 
-        appleImage1 = loadImage("/img/food/apple1.png");
-        appleImage2 = loadImage("/img/food/apple2.png");
-        appleGoldImage1 = loadImage("/img/food/goldenApple1.png");
-        appleGoldImage2 = loadImage("/img/food/goldenApple2.png");
+        cherryImage1 = loadImage("/img/item/cherry.png");
+        cherryImage2 = loadImage("/img/item/cherry2.png");
+
+        appleImage1 = loadImage("/img/item/apple1.png");
+        appleImage2 = loadImage("/img/item/apple2.png");
+        appleGoldImage1 = loadImage("/img/item/goldenApple1.png");
+        appleGoldImage2 = loadImage("/img/item/goldenApple2.png");
+
+        bottleImage = loadImage("/img/item/bottle.png");
 
         verticalImage = loadImage("/img/Map/vertical.png");
         horizontalImage = loadImage("/img/Map/horizontal.png");
@@ -584,10 +771,10 @@ public class BoardPanel extends JPanel implements ActionListener {
     private void updateCherryImage() {
 
         if (cnt % 4 == 0) {
-            cherryStatus ^= 1;
+            imageStatus ^= 1;
         }
 
-        if (cherryStatus == 1) {
+        if (imageStatus == 1) {
             cherryImage = cherryImage1;
         } else {
             cherryImage = cherryImage2;

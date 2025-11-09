@@ -14,6 +14,8 @@ public class GhostBlue extends Ghost {
 
     /** Load sprite cho ma xanh dương */
     private void loadImages() {
+        ghostv2 = loadImage("/img/ghost/ghostv2.png");
+        
         upImage1    = loadImage("/img/ghost/blue/blueup1.png");
         upImage2    = loadImage("/img/ghost/blue/blueup2.png");
         downImage1  = loadImage("/img/ghost/blue/bluedown1.png");
@@ -26,7 +28,11 @@ public class GhostBlue extends Ghost {
 
     /** Cập nhật frame ảnh theo hướng di chuyển */
     @Override
-    public void updateImage(int frame) {
+    public void updateImage(int frame, int t) {
+        if (t == 1){
+            image = ghostv2;
+            return;
+        }
         if (dx == -1) {                     // Left
             if (frame % 4 == 0) leftStatus ^= 1;
             image = (leftStatus == 0) ? leftImage1 : leftImage2;
