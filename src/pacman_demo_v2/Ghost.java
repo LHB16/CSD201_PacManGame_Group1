@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.util.Random;
 
 public class Ghost {
+
     private int x, y;
     private int prevX, prevY;
     int dx; // Hướng di chuyển hiện tại
@@ -25,7 +26,9 @@ public class Ghost {
     BufferedImage leftImage2;
     BufferedImage rightImage1;
     BufferedImage rightImage2;
-    
+
+    BufferedImage ghostv2;
+
     int leftStatus = 0;
     int rightStatus = 0;
     int upStatus = 0;
@@ -33,15 +36,15 @@ public class Ghost {
 
     private final int TILE_SIZE;
     private final int[][] moveDeltas = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // Lên, Xuống, Trái, Phải
-    
+
     protected Random rand;
-    
+
     public Ghost(int startX, int startY, int tileSize) {
         this.x = startX;
         this.y = startY;
         this.TILE_SIZE = tileSize;
         this.dx = -1; // Bắt đầu đi lên (thay đổi hàng)
-        this.dy = 0; 
+        this.dy = 0;
         loadImages();
         this.image = upImage1;
         this.rand = new Random();
@@ -71,29 +74,18 @@ public class Ghost {
         }
         return null;
     }
-    
-    public void updateImage(int cnt) {
-        if (dx == -1) { // Left
-            if (cnt % 4 == 0) leftStatus ^= 1;
-            image = (leftStatus % 2 == 0) ? leftImage1 : leftImage2;
-        } else if (dx == 1) { // Right
-            if (cnt % 4 == 0) rightStatus ^= 1;
-            image = (rightStatus % 2 == 0) ? rightImage1 : rightImage2;
-        } else if (dy == -1) { // Up
-            if (cnt % 4 == 0) upStatus ^= 1;
-            image = (upStatus % 2 == 0) ? upImage1 : upImage2;
-        } else if (dy == 1) { // Down
-            if (cnt % 4 == 0) downStatus ^= 1;
-            image = (downStatus % 2 == 0) ? downImage1 : downImage2;
-        }
+
+    public void updateImage(int cnt, int t) {
+
     }
 
     /**
-     * Di chuyển con ma
-     * Logic mới: Ưu tiên rẽ ngẫu nhiên tại các ngã rẽ.
+     * Di chuyển con ma Logic mới: Ưu tiên rẽ ngẫu nhiên tại các ngã rẽ.
+     *
      * @param mapData
      */
     public void move(int[][] mapData) {
+        if (x == -1 && y == -1) return;
         prevX = x;
         prevY = y;
 
@@ -156,13 +148,13 @@ public class Ghost {
         }
         return false;
     }
-    
+
     public void draw(Graphics2D g2d) {
         if (image != null) {
             g2d.drawImage(image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
         }
     }
-    
+
     public void resetPosition(int startX, int startY) {
         this.x = startX;
         this.y = startY;
@@ -171,9 +163,28 @@ public class Ghost {
         this.image = upImage1;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     // Getters
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public int getPrevX() { return prevX; }
-    public int getPrevY() { return prevY; }
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getPrevX() {
+        return prevX;
+    }
+
+    public int getPrevY() {
+        return prevY;
+    }
 }
