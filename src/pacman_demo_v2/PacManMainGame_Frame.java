@@ -156,8 +156,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnBoard.setBackground(new java.awt.Color(0, 0, 0));
         pnBoard.setName("PacMan"); // NOI18N
 
-        pnlTile.setBackground(new java.awt.Color(0, 0, 204));
+        pnlTile.setBackground(new java.awt.Color(153, 204, 255));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
+        pnlTile.setForeground(new java.awt.Color(255, 255, 255));
+        pnlTile.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
 
@@ -165,23 +167,20 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbCountLive.setForeground(new java.awt.Color(255, 255, 0));
         lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        lbCountTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCountTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountTime.setForeground(new java.awt.Color(255, 255, 255));
         lbCountTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountTime.setText("00:00:00");
 
         lbTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbTime.setForeground(new java.awt.Color(255, 255, 255));
         lbTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/timeIcon.png"))); // NOI18N
         lbTime.setText("TIME");
 
         lbLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbLive.setForeground(new java.awt.Color(51, 255, 102));
         lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacman/pacnu1phai.png"))); // NOI18N
         lbLive.setText("LIVE");
 
         lbScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbScore.setForeground(new java.awt.Color(255, 255, 255));
         lbScore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/scoreIcon.png"))); // NOI18N
         lbScore.setText("SCORE");
 
