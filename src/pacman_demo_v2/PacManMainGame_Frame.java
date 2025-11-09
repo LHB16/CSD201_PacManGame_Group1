@@ -78,6 +78,29 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
 
         }
     }
+    
+    /**
+     * Cập nhật thanh tiến trình VÀ icon Red Bull.
+     * @param isActive true nếu Red Bull đang kích hoạt
+     * @param remainingTicks Số "ticks" (50ms) còn lại (từ 200 -> 0)
+     */
+    public void updateRedBullTimer(boolean isActive, int remainingTicks) {
+        prbarRedBull.setVisible(isActive);
+        lbRedBullIcon.setVisible(isActive);
+
+        if (isActive) {
+            // Chuyển đổi ticks (0-200) sang giây (0.0 - 10.0)
+            // 20 ticks = 1 giây
+            double secondsLeft = (double) remainingTicks / 20.0; 
+            
+            prbarRedBull.setValue(remainingTicks);
+            // Định dạng chuỗi để hiển thị 1 chữ số thập phân (ví dụ: "9.8s")
+            prbarRedBull.setString(String.format("Red Bull: %.1fs", secondsLeft));
+        } else {
+            prbarRedBull.setValue(0);
+            prbarRedBull.setString("Red Bull: Inactive");
+        }
+    }
 
     
     /**
@@ -87,6 +110,9 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         this.choice = choice;
         System.out.println("choice: " + choice);
         initComponents();
+        
+        prbarRedBull.setVisible(false);
+        lbRedBullIcon.setVisible(false);
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
 
@@ -127,6 +153,8 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbScore = new javax.swing.JLabel();
         lbCountScore = new javax.swing.JLabel();
         lbHome = new javax.swing.JLabel();
+        prbarRedBull = new javax.swing.JProgressBar();
+        lbRedBullIcon = new javax.swing.JLabel();
         pnlBoard = new BoardPanel(this);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -156,8 +184,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnBoard.setBackground(new java.awt.Color(0, 0, 0));
         pnBoard.setName("PacMan"); // NOI18N
 
-        pnlTile.setBackground(new java.awt.Color(0, 0, 204));
+        pnlTile.setBackground(new java.awt.Color(153, 204, 255));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
+        pnlTile.setForeground(new java.awt.Color(255, 255, 255));
+        pnlTile.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
 
@@ -165,23 +195,20 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbCountLive.setForeground(new java.awt.Color(255, 255, 0));
         lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        lbCountTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCountTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountTime.setForeground(new java.awt.Color(255, 255, 255));
         lbCountTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountTime.setText("00:00:00");
 
         lbTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbTime.setForeground(new java.awt.Color(255, 255, 255));
         lbTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/timeIcon.png"))); // NOI18N
         lbTime.setText("TIME");
 
         lbLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbLive.setForeground(new java.awt.Color(51, 255, 102));
         lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacman/pacnu1phai.png"))); // NOI18N
         lbLive.setText("LIVE");
 
         lbScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbScore.setForeground(new java.awt.Color(255, 255, 255));
         lbScore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/scoreIcon.png"))); // NOI18N
         lbScore.setText("SCORE");
 
@@ -207,48 +234,70 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
             }
         });
 
+        prbarRedBull.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        prbarRedBull.setForeground(new java.awt.Color(102, 102, 102));
+        prbarRedBull.setMaximum(200);
+        prbarRedBull.setToolTipText("");
+        prbarRedBull.setOpaque(true);
+        prbarRedBull.setString("Red Bull: Inactive");
+        prbarRedBull.setStringPainted(true);
+
+        lbRedBullIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/item/redBull.png"))); // NOI18N
+
         javax.swing.GroupLayout pnlTileLayout = new javax.swing.GroupLayout(pnlTile);
         pnlTile.setLayout(pnlTileLayout);
         pnlTileLayout.setHorizontalGroup(
             pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTileLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbScore)
-                            .addComponent(lbLive)
-                            .addComponent(lbTime))
+                        .addComponent(lbTime)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbCountTime, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTileLayout.createSequentialGroup()
+                        .addComponent(lbLive)
+                        .addGap(21, 21, 21)
+                        .addComponent(lbCountLive, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTileLayout.createSequentialGroup()
+                        .addComponent(lbScore)
+                        .addGap(6, 6, 6)
+                        .addComponent(lbCountScore, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbHome))
+                .addGap(33, 33, 33)
+                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTileLayout.createSequentialGroup()
+                        .addComponent(lbRedBullIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbCountScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbCountLive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbCountTime, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))))
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(prbarRedBull, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         pnlTileLayout.setVerticalGroup(
             pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbCountTime, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTime))
-                .addGap(26, 26, 26)
-                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbLive)
-                    .addComponent(lbCountLive))
-                .addGap(26, 26, 26)
-                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbScore)
-                    .addComponent(lbCountScore))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-            .addGroup(pnlTileLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTileLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbTime)
+                            .addComponent(lbCountTime))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbLive)
+                            .addComponent(lbCountLive))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbScore)
+                            .addComponent(lbCountScore))
+                        .addGap(11, 11, 11)
+                        .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTileLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(prbarRedBull, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                            .addComponent(lbRedBullIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlBoard.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -261,19 +310,19 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         );
         pnlBoardLayout.setVerticalGroup(
             pnlBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGap(0, 479, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnBoardLayout = new javax.swing.GroupLayout(pnBoard);
         pnBoard.setLayout(pnBoardLayout);
         pnBoardLayout.setHorizontalGroup(
             pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnBoardLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBoardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlTile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlTile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pnBoardLayout.setVerticalGroup(
             pnBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +338,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,11 +442,13 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     public javax.swing.JLabel lbCountTime;
     private javax.swing.JLabel lbHome;
     private javax.swing.JLabel lbLive;
+    private javax.swing.JLabel lbRedBullIcon;
     private javax.swing.JLabel lbScore;
     private javax.swing.JLabel lbTime;
     private javax.swing.JPanel pnBoard;
     private javax.swing.JPanel pnlBoard;
     private javax.swing.JPanel pnlTile;
+    private javax.swing.JProgressBar prbarRedBull;
     private javax.swing.JTextField txtfLive1;
     // End of variables declaration//GEN-END:variables
 }

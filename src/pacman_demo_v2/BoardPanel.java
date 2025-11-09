@@ -25,33 +25,40 @@ public class BoardPanel extends JPanel implements ActionListener {
     private Pacman pacman;
 
     private int ghostStatus = 0;
-    private int ghostTime;
+//    private int ghostTime;
+    private int redBullTicks = 0; // Bộ đếm ngược (200 ticks = 10 giây)
     private int cntGhost = 4;
-    private int pacManSpeed = 4;
-    private int ghostSpeed = 5;
+
+    private final int DEFAULT_PACMAN_SPEED = 4;
+    private final int DEFAULT_GHOST_SPEED = 5;
+    private final int REDBULL_PACMAN_SPEED = 3; // Nhanh hơn (giảm từ 4)
+    private final int REDBULL_GHOST_SPEED = 7; // Chậm hơn (tăng từ 5)
     private Ghost[] ghosts = new Ghost[105];
+    private int pacManSpeed = DEFAULT_PACMAN_SPEED;
+    private int ghostSpeed = DEFAULT_GHOST_SPEED;
     //private redGhost
 
     // --- Map and Game State ---
     private int mapData[][];
     private int score = 0;
-    private int defaultLives = 100;
+    private int defaultLives = 3;
     public int totalLives = defaultLives;
     private int totalDots = 0;
     private int imageStatus = 0;
     private Timer gameLoopTimer;
     private Timer clockTimer;
     private Timer ghostSpawnTimer; // Timer để sinh ghost
-    private int seconds = 0, minutes = 0, hours = 0;
+    private int seconds = 0, minutes = 0, hours = 0;    
 
     // --- Images ---
-    private BufferedImage redBullImage;
+    private BufferedImage redBullImage, redBullImage2;
     private BufferedImage cherryImage, cherryImage1, cherryImage2;
     private BufferedImage appleImage1;
     private BufferedImage appleImage2;
     private BufferedImage appleGoldImage1;
     private BufferedImage appleGoldImage2;
     private BufferedImage bottleImage;
+    private BufferedImage bottleImage2;
     private BufferedImage verticalImage, horizontalImage;
     private BufferedImage cornerImage1, cornerImage2, cornerImage3, cornerImage4;
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
@@ -203,6 +210,30 @@ public class BoardPanel extends JPanel implements ActionListener {
             }
         }
 
+        // ĐẾM NGƯỢC RED BULL
+        if (ghostStatus > 0) {
+            if (redBullTicks > 0) {
+                redBullTicks--; // Giảm 1 tick (tương đương 50ms)
+                
+                // Cập nhật thanh tiến trình
+                gameFrame.updateRedBullTimer(true, redBullTicks);
+                
+            } else { // redBullTicks == 0, hết giờ
+                ghostStatus = 0;
+                gameFrame.updateRedBullTimer(false, 0); // Tắt thanh bar
+                this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+                this.ghostSpeed = DEFAULT_GHOST_SPEED;
+                
+                // Hồi sinh các ghost đã bị ăn
+                for (int i = 0; i < cntGhost; ++i){
+                    if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+                        ghosts[i].setX(10);
+                        ghosts[i].setY(9);
+                    }
+                }
+            }
+        }
+
         checkCollision();
         repaint();
     }
@@ -268,6 +299,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                 score += 1000;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
             }
+            
             // tao do
             if (newX == appleRedX && newY == appleRedY) {
                 score += 50;
@@ -275,6 +307,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleRedX = -1;
                 appleRedY = -1;
             }
+            
             // an tao do
             if (newX == appleGoldX && newY == appleGoldY) {
                 ++totalLives;
@@ -294,8 +327,13 @@ public class BoardPanel extends JPanel implements ActionListener {
             // an nuoc tang luc
             if (newX == redBullX && newY == redBullY) {
                 ghostStatus = 1;
+                redBullTicks = 200; // Bắt đầu đếm từ 200 ticks
+                gameFrame.updateRedBullTimer(true, redBullTicks); // Gửi 200
                 redBullX = -1;
                 redBullY = -1;
+                
+                this.pacManSpeed = REDBULL_PACMAN_SPEED;
+                this.ghostSpeed = REDBULL_GHOST_SPEED;
             }
 
             // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
@@ -319,6 +357,13 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleGoldX = appleGoldY = -1;
                 bottleX = bottleY = -1;
                 redBullX = redBullY = -1;
+                ghostStatus = 0; 
+//                ghostTime = 0;
+                redBullTicks = 0;
+                this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+                this.ghostSpeed = DEFAULT_GHOST_SPEED;
+            
+                gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
                 return;
             }
@@ -336,6 +381,13 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleGoldX = appleGoldY = -1;
                 bottleX = bottleY = -1;
                 redBullX = redBullY = -1;
+                ghostStatus = 0; 
+//                ghostTime = 0;
+                redBullTicks = 0;
+                this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+                this.ghostSpeed = DEFAULT_GHOST_SPEED;
+                
+                gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
             }
         }
@@ -361,6 +413,13 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     public void replayGame() {
         totalLives = defaultLives;
+        
+        ghostStatus = 0;
+//        ghostTime = 0;
+        redBullTicks = 0;
+        this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+        this.ghostSpeed = DEFAULT_GHOST_SPEED;
+        gameFrame.updateRedBullTimer(false, 0);
 
         // Reset lại số lượng ghost về 4
         cntGhost = 4;
@@ -528,7 +587,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                     if (imageStatus == 1) {
                         g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                        g2d.drawImage(bottleImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
 
                 }
@@ -538,7 +597,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                     if (imageStatus == 1) {
                         g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                        g2d.drawImage(redBullImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
 
                 }
@@ -612,21 +671,42 @@ public class BoardPanel extends JPanel implements ActionListener {
                 bottleX = bottleY = -1;
             }
         }
+        
+//        if (cnt % 20 == 0) {
+//            if (ghostStatus > 0) {
+//                ghostTime = (ghostTime + 1) % 11; // Tăng thời gian đã trôi qua (0 -> 1 ... 10 -> 0)
+//                
+//                if (ghostTime == 0) { // Đã hết 10 giây (vừa quay về 0)
+//                    for (int i = 0; i < cntGhost; ++i){
+//                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+//                            ghosts[i].setX(10);
+//                            ghosts[i].setY(9);
+//                        }
+//                    }
+//                    ghostStatus = 0;
+//                    gameFrame.updateRedBullTimer(false, 0); // Tắt thanh tiến trình
+//                } else {
+//                    // Vẫn đang trong thời gian hiệu lực (ghostTime từ 1 đến 10)
+//                    int remainingTime = 10 - ghostTime; // Thời gian còn lại (9... 0)
+//                    gameFrame.updateRedBullTimer(true, remainingTime); // Cập nhật thanh
+//                }
+//            }
+//        }
 
-        if (cnt % 20 == 0) {
-            if (ghostStatus > 0) {
-                ghostTime = (ghostTime + 1) % 11;
-                if (ghostTime == 0) {
-                    for (int i = 0; i < cntGhost; ++i){
-                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
-                            ghosts[i].setX(10);
-                            ghosts[i].setY(9);
-                        }
-                    }
-                    ghostStatus = 0;
-                }
-            }
-        }
+//        if (cnt % 20 == 0) {
+//            if (ghostStatus > 0) {
+//                ghostTime = (ghostTime + 1) % 11;
+//                if (ghostTime == 0) {
+//                    for (int i = 0; i < cntGhost; ++i){
+//                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+//                            ghosts[i].setX(10);
+//                            ghosts[i].setY(9);
+//                        }
+//                    }
+//                    ghostStatus = 0;
+//                }
+//            }
+//        }
 
         // 12s
         if (cnt % 240 == 0) {
@@ -664,7 +744,9 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void loadMapImages() {
-        redBullImage = loadImage("/img/item/ball.png");
+        redBullImage = loadImage("/img/item/redBull.png");
+        redBullImage2 = loadImage("/img/item/redBull2.png");
+        
 
         cherryImage1 = loadImage("/img/item/cherry.png");
         cherryImage2 = loadImage("/img/item/cherry2.png");
@@ -675,6 +757,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         appleGoldImage2 = loadImage("/img/item/goldenApple2.png");
 
         bottleImage = loadImage("/img/item/bottle.png");
+        bottleImage2 = loadImage("/img/item/bottle2.png");
 
         verticalImage = loadImage("/img/Map/vertical.png");
         horizontalImage = loadImage("/img/Map/horizontal.png");

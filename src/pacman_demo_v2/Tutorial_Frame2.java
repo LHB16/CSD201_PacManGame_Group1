@@ -35,6 +35,8 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbback = new javax.swing.JLabel();
         lbnext = new javax.swing.JLabel();
+        lbback1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         lbbackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,7 +53,7 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(30, 560, 120, 50);
+        lbback.setBounds(30, 550, 120, 50);
 
         lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutnext.png"))); // NOI18N
         lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -62,7 +64,22 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbnext);
-        lbnext.setBounds(160, 560, 130, 50);
+        lbnext.setBounds(160, 550, 130, 50);
+
+        lbback1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
+        lbback1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbback1.setPreferredSize(new java.awt.Dimension(117, 54));
+        lbback1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbback1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbback1);
+        lbback1.setBounds(360, 550, 120, 50);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2.png"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(540, 560, 78, 40);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut2.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -100,6 +117,13 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
         tut.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lbnextMouseClicked
+
+    private void lbback1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbback1MouseClicked
+        // TODO add your handling code here:
+        StartMenu_Frame startMenu = new StartMenu_Frame();
+        startMenu.setVisible(true); // Mở lại menu chính
+        this.dispose(); // Đóng cửa sổ game hiện tại
+    }//GEN-LAST:event_lbback1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -140,8 +164,10 @@ public class Tutorial_Frame2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbback;
+    private javax.swing.JLabel lbback1;
     private javax.swing.JLabel lbbackground;
     private javax.swing.JLabel lbnext;
     // End of variables declaration//GEN-END:variables
