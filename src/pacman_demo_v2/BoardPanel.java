@@ -28,9 +28,14 @@ public class BoardPanel extends JPanel implements ActionListener {
 //    private int ghostTime;
     private int redBullTicks = 0; // Bộ đếm ngược (200 ticks = 10 giây)
     private int cntGhost = 4;
-    private int pacManSpeed = 4;
-    private int ghostSpeed = 5;
+
+    private final int DEFAULT_PACMAN_SPEED = 4;
+    private final int DEFAULT_GHOST_SPEED = 5;
+    private final int REDBULL_PACMAN_SPEED = 3; // Nhanh hơn (giảm từ 4)
+    private final int REDBULL_GHOST_SPEED = 7; // Chậm hơn (tăng từ 5)
     private Ghost[] ghosts = new Ghost[105];
+    private int pacManSpeed = DEFAULT_PACMAN_SPEED;
+    private int ghostSpeed = DEFAULT_GHOST_SPEED;
     //private redGhost
 
     // --- Map and Game State ---
@@ -215,6 +220,8 @@ public class BoardPanel extends JPanel implements ActionListener {
             } else { // redBullTicks == 0, hết giờ
                 ghostStatus = 0;
                 gameFrame.updateRedBullTimer(false, 0); // Tắt thanh bar
+                this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+                this.ghostSpeed = DEFAULT_GHOST_SPEED;
                 
                 // Hồi sinh các ghost đã bị ăn
                 for (int i = 0; i < cntGhost; ++i){
@@ -321,6 +328,9 @@ public class BoardPanel extends JPanel implements ActionListener {
                 gameFrame.updateRedBullTimer(true, redBullTicks); // Gửi 200
                 redBullX = -1;
                 redBullY = -1;
+                
+                this.pacManSpeed = REDBULL_PACMAN_SPEED;
+                this.ghostSpeed = REDBULL_GHOST_SPEED;
             }
 
             // Thêm vị trí cũ vào danh sách có thể xuất hiện siêu điểm
@@ -347,6 +357,9 @@ public class BoardPanel extends JPanel implements ActionListener {
                 ghostStatus = 0; 
 //                ghostTime = 0;
                 redBullTicks = 0;
+                this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+                this.ghostSpeed = DEFAULT_GHOST_SPEED;
+            
                 gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
                 return;
@@ -368,6 +381,9 @@ public class BoardPanel extends JPanel implements ActionListener {
                 ghostStatus = 0; 
 //                ghostTime = 0;
                 redBullTicks = 0;
+                this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+                this.ghostSpeed = DEFAULT_GHOST_SPEED;
+                
                 gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
             }
@@ -398,6 +414,8 @@ public class BoardPanel extends JPanel implements ActionListener {
         ghostStatus = 0;
 //        ghostTime = 0;
         redBullTicks = 0;
+        this.pacManSpeed = DEFAULT_PACMAN_SPEED;
+        this.ghostSpeed = DEFAULT_GHOST_SPEED;
         gameFrame.updateRedBullTimer(false, 0);
 
         // Reset lại số lượng ghost về 4
