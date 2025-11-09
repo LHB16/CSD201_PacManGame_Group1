@@ -41,23 +41,24 @@ public class BoardPanel extends JPanel implements ActionListener {
     // --- Map and Game State ---
     private int mapData[][];
     private int score = 0;
-    private int defaultLives = 100;
+    private int defaultLives = 3;
     public int totalLives = defaultLives;
     private int totalDots = 0;
     private int imageStatus = 0;
     private Timer gameLoopTimer;
     private Timer clockTimer;
     private Timer ghostSpawnTimer; // Timer để sinh ghost
-    private int seconds = 0, minutes = 0, hours = 0;
+    private int seconds = 0, minutes = 0, hours = 0;    
 
     // --- Images ---
-    private BufferedImage redBullImage;
+    private BufferedImage redBullImage, redBullImage2;
     private BufferedImage cherryImage, cherryImage1, cherryImage2;
     private BufferedImage appleImage1;
     private BufferedImage appleImage2;
     private BufferedImage appleGoldImage1;
     private BufferedImage appleGoldImage2;
     private BufferedImage bottleImage;
+    private BufferedImage bottleImage2;
     private BufferedImage verticalImage, horizontalImage;
     private BufferedImage cornerImage1, cornerImage2, cornerImage3, cornerImage4;
     private BufferedImage intersectionImage1, intersectionImage2, intersectionImage3, intersectionImage4;
@@ -298,6 +299,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                 score += 1000;
                 gameFrame.lbCountScore.setText(String.valueOf(score));
             }
+            
             // tao do
             if (newX == appleRedX && newY == appleRedY) {
                 score += 50;
@@ -305,6 +307,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleRedX = -1;
                 appleRedY = -1;
             }
+            
             // an tao do
             if (newX == appleGoldX && newY == appleGoldY) {
                 ++totalLives;
@@ -584,7 +587,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                     if (imageStatus == 1) {
                         g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(bottleImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                        g2d.drawImage(bottleImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
 
                 }
@@ -594,7 +597,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                     if (imageStatus == 1) {
                         g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     } else {
-                        g2d.drawImage(redBullImage, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                        g2d.drawImage(redBullImage2, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
                     }
 
                 }
@@ -742,6 +745,8 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     private void loadMapImages() {
         redBullImage = loadImage("/img/item/redBull.png");
+        redBullImage2 = loadImage("/img/item/redBull2.png");
+        
 
         cherryImage1 = loadImage("/img/item/cherry.png");
         cherryImage2 = loadImage("/img/item/cherry2.png");
@@ -752,6 +757,7 @@ public class BoardPanel extends JPanel implements ActionListener {
         appleGoldImage2 = loadImage("/img/item/goldenApple2.png");
 
         bottleImage = loadImage("/img/item/bottle.png");
+        bottleImage2 = loadImage("/img/item/bottle2.png");
 
         verticalImage = loadImage("/img/Map/vertical.png");
         horizontalImage = loadImage("/img/Map/horizontal.png");

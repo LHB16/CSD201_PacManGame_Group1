@@ -143,19 +143,16 @@
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Component id="lbCountScore" min="-2" pref="115" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lbHome" min="-2" pref="116" max="-2" attributes="0"/>
+                          <Component id="lbHome" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" pref="210" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="lbRedBullIcon" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                              <Component id="lbRedBullIcon" min="-2" pref="19" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="prbarRedBull" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jLabel1" min="-2" pref="210" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -163,34 +160,36 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbTime" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbCountTime" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbLive" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbCountLive" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbScore" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbCountScore" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
-                      <Component id="lbHome" min="-2" pref="55" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" pref="131" max="-2" attributes="0"/>
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbRedBullIcon" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
-                              <Component id="prbarRedBull" min="-2" pref="21" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbTime" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCountTime" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbLive" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCountLive" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lbScore" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCountScore" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
+                              <Component id="lbHome" min="-2" pref="55" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel1" min="-2" pref="131" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="prbarRedBull" pref="21" max="32767" attributes="0"/>
+                                  <Component id="lbRedBullIcon" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -338,7 +337,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="490" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="479" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
