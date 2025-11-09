@@ -51,7 +51,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(40, 520, 120, 50);
+        lbback.setBounds(40, 520, 130, 50);
 
         lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutnext.png"))); // NOI18N
         lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
