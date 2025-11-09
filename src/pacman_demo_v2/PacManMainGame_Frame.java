@@ -184,9 +184,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnBoard.setBackground(new java.awt.Color(0, 0, 0));
         pnBoard.setName("PacMan"); // NOI18N
 
-        pnlTile.setBackground(new java.awt.Color(0, 0, 204));
+        pnlTile.setBackground(new java.awt.Color(153, 204, 255));
         pnlTile.setBorder(javax.swing.BorderFactory.createTitledBorder("PacMan Game"));
-        pnlTile.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlTile.setForeground(new java.awt.Color(255, 255, 255));
+        pnlTile.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
         pnlTile.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 16, 210, 131));
@@ -196,26 +197,23 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         pnlTile.add(lbCountLive, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 70, 115, -1));
 
-        lbCountTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCountTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbCountTime.setForeground(new java.awt.Color(255, 255, 255));
         lbCountTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountTime.setText("00:00:00");
         pnlTile.add(lbCountTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 27, 115, -1));
 
         lbTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbTime.setForeground(new java.awt.Color(255, 255, 255));
         lbTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/timeIcon.png"))); // NOI18N
         lbTime.setText("TIME");
         pnlTile.add(lbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 27, -1, -1));
 
         lbLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbLive.setForeground(new java.awt.Color(51, 255, 102));
         lbLive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pacman/pacnu1phai.png"))); // NOI18N
         lbLive.setText("LIVE");
         pnlTile.add(lbLive, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 70, -1, -1));
 
         lbScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbScore.setForeground(new java.awt.Color(255, 255, 255));
         lbScore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/scoreIcon.png"))); // NOI18N
         lbScore.setText("SCORE");
         pnlTile.add(lbScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 113, -1, -1));
