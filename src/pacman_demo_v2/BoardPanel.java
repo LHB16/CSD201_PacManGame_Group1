@@ -25,7 +25,8 @@ public class BoardPanel extends JPanel implements ActionListener {
     private Pacman pacman;
 
     private int ghostStatus = 0;
-    private int ghostTime;
+//    private int ghostTime;
+    private int redBullTicks = 0; // Bộ đếm ngược (200 ticks = 10 giây)
     private int cntGhost = 4;
     private int pacManSpeed = 4;
     private int ghostSpeed = 5;
@@ -203,6 +204,28 @@ public class BoardPanel extends JPanel implements ActionListener {
             }
         }
 
+        // ĐẾM NGƯỢC RED BULL
+        if (ghostStatus > 0) {
+            if (redBullTicks > 0) {
+                redBullTicks--; // Giảm 1 tick (tương đương 50ms)
+                
+                // Cập nhật thanh tiến trình
+                gameFrame.updateRedBullTimer(true, redBullTicks);
+                
+            } else { // redBullTicks == 0, hết giờ
+                ghostStatus = 0;
+                gameFrame.updateRedBullTimer(false, 0); // Tắt thanh bar
+                
+                // Hồi sinh các ghost đã bị ăn
+                for (int i = 0; i < cntGhost; ++i){
+                    if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+                        ghosts[i].setX(10);
+                        ghosts[i].setY(9);
+                    }
+                }
+            }
+        }
+
         checkCollision();
         repaint();
     }
@@ -294,6 +317,8 @@ public class BoardPanel extends JPanel implements ActionListener {
             // an nuoc tang luc
             if (newX == redBullX && newY == redBullY) {
                 ghostStatus = 1;
+                redBullTicks = 200; // Bắt đầu đếm từ 200 ticks
+                gameFrame.updateRedBullTimer(true, redBullTicks); // Gửi 200
                 redBullX = -1;
                 redBullY = -1;
             }
@@ -319,6 +344,10 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleGoldX = appleGoldY = -1;
                 bottleX = bottleY = -1;
                 redBullX = redBullY = -1;
+                ghostStatus = 0; 
+//                ghostTime = 0;
+                redBullTicks = 0;
+                gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
                 return;
             }
@@ -336,6 +365,10 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleGoldX = appleGoldY = -1;
                 bottleX = bottleY = -1;
                 redBullX = redBullY = -1;
+                ghostStatus = 0; 
+//                ghostTime = 0;
+                redBullTicks = 0;
+                gameFrame.updateRedBullTimer(false, 0);
                 gameFrame.pacmanHit();
             }
         }
@@ -361,6 +394,11 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     public void replayGame() {
         totalLives = defaultLives;
+        
+        ghostStatus = 0;
+//        ghostTime = 0;
+        redBullTicks = 0;
+        gameFrame.updateRedBullTimer(false, 0);
 
         // Reset lại số lượng ghost về 4
         cntGhost = 4;
@@ -612,21 +650,42 @@ public class BoardPanel extends JPanel implements ActionListener {
                 bottleX = bottleY = -1;
             }
         }
+        
+//        if (cnt % 20 == 0) {
+//            if (ghostStatus > 0) {
+//                ghostTime = (ghostTime + 1) % 11; // Tăng thời gian đã trôi qua (0 -> 1 ... 10 -> 0)
+//                
+//                if (ghostTime == 0) { // Đã hết 10 giây (vừa quay về 0)
+//                    for (int i = 0; i < cntGhost; ++i){
+//                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+//                            ghosts[i].setX(10);
+//                            ghosts[i].setY(9);
+//                        }
+//                    }
+//                    ghostStatus = 0;
+//                    gameFrame.updateRedBullTimer(false, 0); // Tắt thanh tiến trình
+//                } else {
+//                    // Vẫn đang trong thời gian hiệu lực (ghostTime từ 1 đến 10)
+//                    int remainingTime = 10 - ghostTime; // Thời gian còn lại (9... 0)
+//                    gameFrame.updateRedBullTimer(true, remainingTime); // Cập nhật thanh
+//                }
+//            }
+//        }
 
-        if (cnt % 20 == 0) {
-            if (ghostStatus > 0) {
-                ghostTime = (ghostTime + 1) % 11;
-                if (ghostTime == 0) {
-                    for (int i = 0; i < cntGhost; ++i){
-                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
-                            ghosts[i].setX(10);
-                            ghosts[i].setY(9);
-                        }
-                    }
-                    ghostStatus = 0;
-                }
-            }
-        }
+//        if (cnt % 20 == 0) {
+//            if (ghostStatus > 0) {
+//                ghostTime = (ghostTime + 1) % 11;
+//                if (ghostTime == 0) {
+//                    for (int i = 0; i < cntGhost; ++i){
+//                        if (ghosts[i].getX() == -1 && ghosts[i].getY() == -1){
+//                            ghosts[i].setX(10);
+//                            ghosts[i].setY(9);
+//                        }
+//                    }
+//                    ghostStatus = 0;
+//                }
+//            }
+//        }
 
         // 12s
         if (cnt % 240 == 0) {
@@ -664,7 +723,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     }
 
     private void loadMapImages() {
-        redBullImage = loadImage("/img/item/ball.png");
+        redBullImage = loadImage("/img/item/redBull.png");
 
         cherryImage1 = loadImage("/img/item/cherry.png");
         cherryImage2 = loadImage("/img/item/cherry2.png");
