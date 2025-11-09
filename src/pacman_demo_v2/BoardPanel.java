@@ -74,6 +74,8 @@ public class BoardPanel extends JPanel implements ActionListener {
 
     private ArrayList<Block> itemBlock = new ArrayList<>();
     Random rand = new Random();
+    private int pacManSpeed = 4; // Càng cao càng chậm
+    private int ghostSpeed = 5;
 
     private int cnt = 0; // Counter for animations
 
