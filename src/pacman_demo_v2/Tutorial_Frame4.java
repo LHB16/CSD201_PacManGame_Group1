@@ -18,7 +18,7 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
         initComponents();
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
-        this.setSize(625, 650);          // Đặt kích thước
+        this.setSize(650, 675);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
     }
@@ -33,9 +33,9 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         lbnext = new javax.swing.JLabel();
         lbback = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         lbbackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -43,6 +43,14 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("4/4");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(300, 580, 40, 40);
+
+        lbnext.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
         lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbnext.setPreferredSize(new java.awt.Dimension(120, 54));
@@ -52,8 +60,9 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbnext);
-        lbnext.setBounds(380, 540, 130, 50);
+        lbnext.setBounds(490, 570, 120, 50);
 
+        lbback.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbback.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutback.png"))); // NOI18N
         lbback.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbback.setPreferredSize(new java.awt.Dimension(117, 54));
@@ -63,28 +72,24 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(40, 540, 120, 50);
+        lbback.setBounds(40, 570, 120, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/4.png"))); // NOI18N
-        jLabel1.setToolTipText("");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(540, 550, 40, 40);
-
+        lbbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut4.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         lbbackground.setMaximumSize(new java.awt.Dimension(611, 628));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 620, 620);
+        lbbackground.setBounds(0, 0, 650, 650);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -147,7 +152,7 @@ public class Tutorial_Frame4 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbback;
     private javax.swing.JLabel lbbackground;

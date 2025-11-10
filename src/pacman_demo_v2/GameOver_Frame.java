@@ -92,7 +92,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         lbName.setBounds(80, 380, 240, 50);
 
         btnNo.setBackground(new java.awt.Color(255, 51, 51));
-        btnNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnNo.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btnNo.setForeground(new java.awt.Color(255, 255, 255));
         btnNo.setText("CANCEL");
         btnNo.addActionListener(new java.awt.event.ActionListener() {
@@ -103,8 +103,8 @@ public class GameOver_Frame extends javax.swing.JDialog {
         getContentPane().add(btnNo);
         btnNo.setBounds(100, 435, 80, 40);
 
-        btnYes.setBackground(new java.awt.Color(102, 255, 51));
-        btnYes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnYes.setBackground(new java.awt.Color(0, 204, 0));
+        btnYes.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btnYes.setForeground(new java.awt.Color(255, 255, 255));
         btnYes.setText("OK");
         btnYes.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +116,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         btnYes.setBounds(220, 435, 80, 40);
 
         lbScore.setBackground(new java.awt.Color(204, 255, 255));
-        lbScore.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbScore.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbScore.setForeground(new java.awt.Color(255, 153, 255));
         lbScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbScore.setText("1111");
@@ -124,7 +124,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         lbScore.setBounds(90, 65, 100, 20);
 
         lbTime.setBackground(new java.awt.Color(255, 255, 255));
-        lbTime.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbTime.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbTime.setForeground(new java.awt.Color(255, 153, 153));
         lbTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbTime.setText("1111");
@@ -149,6 +149,14 @@ public class GameOver_Frame extends javax.swing.JDialog {
         if (username.isEmpty() || username.contains(" ")) {
             JOptionPane.showMessageDialog(this, 
                     "Invalid name. Please enter the name without spaces.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            return; // Không đóng dialog
+        }
+        // Tên người dùng không được chứa quá 11 ký tự
+        if (username.length() > 11) {
+            JOptionPane.showMessageDialog(this, 
+                    "Invalid name. The name has a maximum length of 11 characters.", 
                     "Error", 
                     JOptionPane.ERROR_MESSAGE);
             return; // Không đóng dialog

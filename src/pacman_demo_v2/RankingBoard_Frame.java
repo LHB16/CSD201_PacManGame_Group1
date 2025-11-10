@@ -129,7 +129,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
         lbText3rd1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jPanel1.add(lbText3rd1);
-        lbText3rd1.setBounds(200, 307, 90, 40);
+        lbText3rd1.setBounds(200, 307, 120, 40);
 
         lbText2nd3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jPanel1.add(lbText2nd3);
@@ -141,7 +141,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
         lbText2nd1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jPanel1.add(lbText2nd1);
-        lbText2nd1.setBounds(200, 242, 90, 40);
+        lbText2nd1.setBounds(200, 242, 120, 40);
 
         lbText1st3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jPanel1.add(lbText1st3);
@@ -153,7 +153,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
         lbText1st1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jPanel1.add(lbText1st1);
-        lbText1st1.setBounds(200, 179, 90, 40);
+        lbText1st1.setBounds(200, 179, 120, 40);
 
         lbText5th3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jPanel1.add(lbText5th3);
@@ -165,7 +165,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
         lbText5th1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jPanel1.add(lbText5th1);
-        lbText5th1.setBounds(200, 436, 90, 40);
+        lbText5th1.setBounds(200, 436, 120, 40);
 
         lbText4th3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jPanel1.add(lbText4th3);
@@ -177,7 +177,7 @@ public class RankingBoard_Frame extends javax.swing.JFrame {
 
         lbText4th1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jPanel1.add(lbText4th1);
-        lbText4th1.setBounds(200, 372, 90, 40);
+        lbText4th1.setBounds(200, 372, 120, 40);
 
         lbBgRankingBoard.setBackground(new java.awt.Color(51, 153, 255));
         lbBgRankingBoard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

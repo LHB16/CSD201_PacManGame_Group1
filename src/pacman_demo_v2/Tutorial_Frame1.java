@@ -18,7 +18,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
         initComponents();
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
-        this.setSize(635, 650);          // Đặt kích thước
+        this.setSize(650, 675);          // Đặt kích thước
         this.setResizable(false);        // Không cho phép thay đổi kích thước
         this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
     }
@@ -43,6 +43,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
+        lbback.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbback.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
         lbback.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbback.setPreferredSize(new java.awt.Dimension(117, 54));
@@ -52,8 +53,9 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbback);
-        lbback.setBounds(40, 520, 120, 50);
+        lbback.setBounds(40, 560, 120, 50);
 
+        lbnext.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbnext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Tutnext.png"))); // NOI18N
         lbnext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbnext.setPreferredSize(new java.awt.Dimension(120, 54));
@@ -63,28 +65,33 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbnext);
-        lbnext.setBounds(170, 520, 130, 50);
+        lbnext.setBounds(160, 560, 130, 50);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png"))); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("1/4");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(540, 530, 50, 50);
+        jLabel3.setBounds(310, 570, 40, 40);
 
+        lbbackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut1.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbbackground.setMaximumSize(new java.awt.Dimension(650, 650));
+        lbbackground.setMinimumSize(new java.awt.Dimension(650, 650));
+        lbbackground.setPreferredSize(new java.awt.Dimension(650, 650));
         jPanel1.add(lbbackground);
-        lbbackground.setBounds(0, 0, 630, 610);
+        lbbackground.setBounds(0, 0, 650, 650);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         pack();

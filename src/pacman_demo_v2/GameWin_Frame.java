@@ -44,7 +44,7 @@ public class GameWin_Frame extends javax.swing.JDialog {
         txtName.setBackground(new Color(0, 0, 0, 0)); // Vẫn nên dùng cách 1
         txtName.setBorder(null); // Tắt hoàn toàn đường viền
 
-        setSize(400, 384);
+        setSize(400, 492);
         setLocationRelativeTo(parent);
     }
 
@@ -64,13 +64,11 @@ public class GameWin_Frame extends javax.swing.JDialog {
 
         txtName = new javax.swing.JTextField();
         lbName = new javax.swing.JLabel();
-        lbTime1 = new javax.swing.JLabel();
-        lbScore1 = new javax.swing.JLabel();
+        btnNo = new javax.swing.JButton();
         btnYes = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         lbScore = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -87,30 +85,26 @@ public class GameWin_Frame extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtName);
-        txtName.setBounds(90, 260, 220, 30);
+        txtName.setBounds(90, 390, 220, 30);
 
         lbName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/NameLB.png"))); // NOI18N
         getContentPane().add(lbName);
-        lbName.setBounds(80, 250, 240, 50);
+        lbName.setBounds(80, 380, 240, 50);
 
-        lbTime1.setBackground(new java.awt.Color(255, 255, 255));
-        lbTime1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lbTime1.setForeground(new java.awt.Color(255, 153, 153));
-        lbTime1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbTime1.setText("Time:");
-        getContentPane().add(lbTime1);
-        lbTime1.setBounds(100, 140, 70, 20);
+        btnNo.setBackground(new java.awt.Color(255, 51, 51));
+        btnNo.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        btnNo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNo.setText("CANCEL");
+        btnNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnNo);
+        btnNo.setBounds(100, 435, 80, 40);
 
-        lbScore1.setBackground(new java.awt.Color(204, 255, 255));
-        lbScore1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lbScore1.setForeground(new java.awt.Color(255, 153, 255));
-        lbScore1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbScore1.setText("Score:");
-        getContentPane().add(lbScore1);
-        lbScore1.setBounds(100, 180, 70, 20);
-
-        btnYes.setBackground(new java.awt.Color(102, 255, 51));
-        btnYes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnYes.setBackground(new java.awt.Color(0, 204, 0));
+        btnYes.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btnYes.setForeground(new java.awt.Color(255, 255, 255));
         btnYes.setText("OK");
         btnYes.addActionListener(new java.awt.event.ActionListener() {
@@ -119,36 +113,28 @@ public class GameWin_Frame extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnYes);
-        btnYes.setBounds(170, 320, 60, 40);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("PLAESE ENTER YOUR NAME");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 210, 380, 40);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("GameWin");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(110, 10, 190, 130);
+        btnYes.setBounds(220, 435, 80, 40);
 
         lbScore.setBackground(new java.awt.Color(204, 255, 255));
-        lbScore.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbScore.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbScore.setForeground(new java.awt.Color(255, 153, 255));
         lbScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbScore.setText("1111");
         getContentPane().add(lbScore);
-        lbScore.setBounds(190, 180, 120, 20);
+        lbScore.setBounds(90, 65, 100, 20);
 
         lbTime.setBackground(new java.awt.Color(255, 255, 255));
-        lbTime.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbTime.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbTime.setForeground(new java.awt.Color(255, 153, 153));
         lbTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbTime.setText("1111");
         getContentPane().add(lbTime);
-        lbTime.setBounds(190, 140, 120, 20);
+        lbTime.setBounds(220, 65, 120, 20);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gameWinIcon.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 400, 493);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -159,10 +145,18 @@ public class GameWin_Frame extends javax.swing.JDialog {
         
         // Kiểm tra tên hợp lệ
         // File scores.txt của bạn dùng khoảng trắng để phân tách
-        // nên tên người dùng không được chứa khoảng trắng.
+        // Tên người dùng không được chứa khoảng trắng.
         if (username.isEmpty() || username.contains(" ")) {
             JOptionPane.showMessageDialog(this, 
                     "Invalid name. Please enter the name without spaces.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            return; // Không đóng dialog
+        }
+        // Tên người dùng không được chứa quá 11 ký tự
+        if (username.length() > 11) {
+            JOptionPane.showMessageDialog(this, 
+                    "Invalid name. The name has a maximum length of 11 characters.", 
                     "Error", 
                     JOptionPane.ERROR_MESSAGE);
             return; // Không đóng dialog
@@ -178,6 +172,14 @@ public class GameWin_Frame extends javax.swing.JDialog {
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
+
+    private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
+        // TODO add your handling code here:
+        this.userChoice = JOptionPane.YES_OPTION;
+        this.dispose(); // Đóng dialog
+        StartMenu_Frame sm = new StartMenu_Frame();
+        sm.setVisible(true);
+    }//GEN-LAST:event_btnNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,10 +210,6 @@ public class GameWin_Frame extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -229,14 +227,12 @@ public class GameWin_Frame extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNo;
     private javax.swing.JButton btnYes;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbScore;
-    private javax.swing.JLabel lbScore1;
     private javax.swing.JLabel lbTime;
-    private javax.swing.JLabel lbTime1;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }
