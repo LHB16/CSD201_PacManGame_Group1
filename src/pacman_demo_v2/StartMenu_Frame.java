@@ -16,7 +16,8 @@ import javafx.scene.media.MediaPlayer;
  * @author luuhu
  */
 public class StartMenu_Frame extends javax.swing.JFrame {
-
+    private MediaPlayer menuMusicPlayer; // Biến để lưu nhạc nền của menu
+    
     /**
      * Creates new form StartMenu_Frame
      */
@@ -36,7 +37,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         // phát nhạc nền (background thread)
         new Thread(() -> {
             try {
-                String[] paths = {"/msc/ms.mp3", "src/msc/ms.mp3", "msc/ms.mp3"};
+                String[] paths = {"/msc/BGM.mp3", "src/msc/BGM.mp3", "msc/BGM.mp3"};
                 URL url = null;
                 for (String p : paths) {
                     url = StartMenu_Frame.class.getResource(p);
@@ -51,9 +52,10 @@ public class StartMenu_Frame extends javax.swing.JFrame {
                     }
                 }
                 if (url != null) {
-                    MediaPlayer player = new MediaPlayer(new Media(url.toExternalForm()));
-                    player.setCycleCount(MediaPlayer.INDEFINITE); // loop nhạc
-                    player.play();
+                    // Gán vào biến của class, không tạo biến mới
+                    menuMusicPlayer = new MediaPlayer(new Media(url.toExternalForm()));
+                    menuMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // loop nhạc
+                    menuMusicPlayer.play();
                 }
             } catch (Exception e) {
                 /* bỏ qua lỗi */ }
