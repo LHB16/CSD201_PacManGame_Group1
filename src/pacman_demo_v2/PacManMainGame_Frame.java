@@ -122,6 +122,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnlBoard.requestFocusInWindow();
 
         this.setResizable(false);
+        this.setSize(520, 767);          // Đặt kích thước
         this.setTitle("PacMan Game"); // Thêm tiêu đề cho cửa sổ
         this.setLocationRelativeTo(null); // Hiển thị cửa sổ ở giữa màn hình
 
@@ -189,6 +190,7 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         pnlTile.setForeground(new java.awt.Color(255, 255, 255));
         pnlTile.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
 
         lbCountLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -263,14 +265,12 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                         .addComponent(lbScore)
                         .addGap(6, 6, 6)
                         .addComponent(lbCountScore, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addComponent(lbHome))
+                .addGap(33, 33, 33)
                 .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addComponent(lbRedBullIcon)
+                        .addComponent(lbRedBullIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
                         .addComponent(prbarRedBull, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -293,12 +293,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
                 .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pnlTileLayout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addGap(17, 17, 17)
                 .addGroup(pnlTileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbRedBullIcon)
-                    .addGroup(pnlTileLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(prbarRedBull, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lbRedBullIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(prbarRedBull, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pnlBoard.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

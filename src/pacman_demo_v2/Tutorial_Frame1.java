@@ -35,6 +35,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbback = new javax.swing.JLabel();
         lbnext = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         lbbackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,6 +64,10 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
         });
         jPanel1.add(lbnext);
         lbnext.setBounds(170, 520, 130, 50);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1.png"))); // NOI18N
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(540, 530, 50, 50);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tutorial/Tut1.png"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -142,6 +147,7 @@ public class Tutorial_Frame1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbback;
     private javax.swing.JLabel lbbackground;
