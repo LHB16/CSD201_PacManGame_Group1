@@ -188,7 +188,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
 
     private void lbExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbExitMouseClicked
         // TODO add your handling code here:
-        thankYou_Frame tyf = new thankYou_Frame();
+        ThankYou_Frame tyf = new ThankYou_Frame();
         tyf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbExitMouseClicked

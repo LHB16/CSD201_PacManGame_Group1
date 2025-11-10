@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author luuhu
  */
-public class GameOver_Frame extends javax.swing.JDialog {
+public class GameWin_Frame extends javax.swing.JDialog {
 
     private int userChoice = JOptionPane.CLOSED_OPTION;
     private long finalScore;
@@ -22,7 +22,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
     /**
      * Creates new form CustomDialog
      */
-    public GameOver_Frame(java.awt.Frame parent, boolean modal, long finalScore, String finalTime) {
+    public GameWin_Frame(java.awt.Frame parent, boolean modal, long finalScore, String finalTime) {
         super(parent, modal);
         
         this.finalScore = finalScore;
@@ -44,7 +44,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         txtName.setBackground(new Color(0, 0, 0, 0)); // Vẫn nên dùng cách 1
         txtName.setBorder(null); // Tắt hoàn toàn đường viền
 
-        setSize(400, 492);
+        setSize(400, 384);
         setLocationRelativeTo(parent);
     }
 
@@ -64,11 +64,13 @@ public class GameOver_Frame extends javax.swing.JDialog {
 
         txtName = new javax.swing.JTextField();
         lbName = new javax.swing.JLabel();
-        btnNo = new javax.swing.JButton();
+        lbTime1 = new javax.swing.JLabel();
+        lbScore1 = new javax.swing.JLabel();
         btnYes = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         lbScore = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -85,23 +87,27 @@ public class GameOver_Frame extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtName);
-        txtName.setBounds(90, 390, 220, 30);
+        txtName.setBounds(90, 260, 220, 30);
 
         lbName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/NameLB.png"))); // NOI18N
         getContentPane().add(lbName);
-        lbName.setBounds(80, 380, 240, 50);
+        lbName.setBounds(80, 250, 240, 50);
 
-        btnNo.setBackground(new java.awt.Color(255, 51, 51));
-        btnNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnNo.setForeground(new java.awt.Color(255, 255, 255));
-        btnNo.setText("CANCEL");
-        btnNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnNo);
-        btnNo.setBounds(100, 435, 80, 40);
+        lbTime1.setBackground(new java.awt.Color(255, 255, 255));
+        lbTime1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbTime1.setForeground(new java.awt.Color(255, 153, 153));
+        lbTime1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbTime1.setText("Time:");
+        getContentPane().add(lbTime1);
+        lbTime1.setBounds(100, 140, 70, 20);
+
+        lbScore1.setBackground(new java.awt.Color(204, 255, 255));
+        lbScore1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbScore1.setForeground(new java.awt.Color(255, 153, 255));
+        lbScore1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbScore1.setText("Score:");
+        getContentPane().add(lbScore1);
+        lbScore1.setBounds(100, 180, 70, 20);
 
         btnYes.setBackground(new java.awt.Color(102, 255, 51));
         btnYes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -113,7 +119,20 @@ public class GameOver_Frame extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnYes);
-        btnYes.setBounds(220, 435, 80, 40);
+        btnYes.setBounds(170, 320, 60, 40);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("PLAESE ENTER YOUR NAME");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 210, 380, 40);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("GameWin");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(110, 10, 190, 130);
 
         lbScore.setBackground(new java.awt.Color(204, 255, 255));
         lbScore.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -121,7 +140,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         lbScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbScore.setText("1111");
         getContentPane().add(lbScore);
-        lbScore.setBounds(90, 65, 100, 20);
+        lbScore.setBounds(190, 180, 120, 20);
 
         lbTime.setBackground(new java.awt.Color(255, 255, 255));
         lbTime.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -129,12 +148,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         lbTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbTime.setText("1111");
         getContentPane().add(lbTime);
-        lbTime.setBounds(220, 65, 120, 20);
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gameOverIcon.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 400, 493);
+        lbTime.setBounds(190, 140, 120, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -165,14 +179,6 @@ public class GameOver_Frame extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
 
-    private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
-        // TODO add your handling code here:
-        this.userChoice = JOptionPane.YES_OPTION;
-        this.dispose(); // Đóng dialog
-        StartMenu_Frame sm = new StartMenu_Frame();
-        sm.setVisible(true);
-    }//GEN-LAST:event_btnNoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -190,21 +196,27 @@ public class GameOver_Frame extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameOver_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameWin_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameOver_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameWin_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameOver_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameWin_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameOver_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameWin_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GameOver_Frame dialog = new GameOver_Frame(new javax.swing.JFrame(), true, 12345, "00:01:30");
+                GameWin_Frame dialog = new GameWin_Frame(new javax.swing.JFrame(), true, 12345, "00:01:30");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -217,12 +229,14 @@ public class GameOver_Frame extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnNo;
     private javax.swing.JButton btnYes;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbScore;
+    private javax.swing.JLabel lbScore1;
     private javax.swing.JLabel lbTime;
+    private javax.swing.JLabel lbTime1;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }
