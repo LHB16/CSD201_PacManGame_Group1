@@ -16,14 +16,10 @@ import javafx.scene.media.MediaPlayer;
  * @author luuhu
  */
 public class StartMenu_Frame extends javax.swing.JFrame {
-    private MediaPlayer menuMusicPlayer; // Biến để lưu nhạc nền của menu
     
     /**
      * Creates new form StartMenu_Frame
      */
-    static {
-        new JFXPanel();
-    } // khởi tạo JavaFX runtime
 
     public StartMenu_Frame() {
         initComponents();
@@ -34,33 +30,10 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
-        // phát nhạc nền (background thread)
-        new Thread(() -> {
-            try {
-                String[] paths = {"/msc/BGM.mp3", "src/msc/BGM.mp3", "msc/BGM.mp3"};
-                URL url = null;
-                for (String p : paths) {
-                    url = StartMenu_Frame.class.getResource(p);
-                    if (url == null) {
-                        File f = new File(p);
-                        if (f.exists()) {
-                            url = f.toURI().toURL();
-                        }
-                    }
-                    if (url != null) {
-                        break;
-                    }
-                }
-                if (url != null) {
-                    // Gán vào biến của class, không tạo biến mới
-                    menuMusicPlayer = new MediaPlayer(new Media(url.toExternalForm()));
-                    menuMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // loop nhạc
-                    menuMusicPlayer.play();
-                }
-            } catch (Exception e) {
-                /* bỏ qua lỗi */ }
-        }).start();
+        
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -183,6 +156,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
 
     private void lbPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbPlayMouseClicked
         // TODO add your handling code here:
+
         ChoiceCharacter_Frame pacManGame = new ChoiceCharacter_Frame();
         pacManGame.setVisible(true);
         this.setVisible(false);
@@ -190,13 +164,15 @@ public class StartMenu_Frame extends javax.swing.JFrame {
 
     private void lbExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbExitMouseClicked
         // TODO add your handling code here:
+        MusicManager.stopMusic();
         ThankYou_Frame tyf = new ThankYou_Frame();
         tyf.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_lbExitMouseClicked
 
     private void lbRankingBoardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbRankingBoardMouseClicked
         // TODO add your handling code here:
+
         RankingBoard_Frame rkf = new RankingBoard_Frame();
         rkf.setVisible(true);
         this.dispose();
@@ -204,6 +180,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
 
     private void lbTutorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTutorialMouseClicked
         // TODO add your handling code here:
+
         Tutorial_Frame1 tut = new Tutorial_Frame1();
         tut.setVisible(true);
         this.dispose();
@@ -211,6 +188,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
 
     private void lbAboutUsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbAboutUsMouseClicked
         // TODO add your handling code here:
+
         AboutUs_Frame tut = new AboutUs_Frame();
         tut.setVisible(true);
         this.dispose();
@@ -245,6 +223,8 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        MusicManager.playMenuMusic();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
