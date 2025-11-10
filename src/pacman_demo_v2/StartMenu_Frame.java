@@ -5,6 +5,12 @@
  */
 package pacman_demo_v2;
 
+import java.io.File;
+import java.net.URL;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 /**
  *
  * @author luuhu
@@ -14,15 +20,44 @@ public class StartMenu_Frame extends javax.swing.JFrame {
     /**
      * Creates new form StartMenu_Frame
      */
+    static {
+        new JFXPanel();
+    } // khởi tạo JavaFX runtime
+
     public StartMenu_Frame() {
         initComponents();
-        
+
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
-        
-        this.setSize(694, 725);          // Đặt kích thước
-        this.setResizable(false);        // Không cho phép thay đổi kích thước
-        this.setLocationRelativeTo(null); // Đặt cửa sổ ra giữa màn hình
+        this.setSize(694, 725);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
+        // phát nhạc nền (background thread)
+        new Thread(() -> {
+            try {
+                String[] paths = {"/msc/ms.mp3", "src/msc/ms.mp3", "msc/ms.mp3"};
+                URL url = null;
+                for (String p : paths) {
+                    url = StartMenu_Frame.class.getResource(p);
+                    if (url == null) {
+                        File f = new File(p);
+                        if (f.exists()) {
+                            url = f.toURI().toURL();
+                        }
+                    }
+                    if (url != null) {
+                        break;
+                    }
+                }
+                if (url != null) {
+                    MediaPlayer player = new MediaPlayer(new Media(url.toExternalForm()));
+                    player.setCycleCount(MediaPlayer.INDEFINITE); // loop nhạc
+                    player.play();
+                }
+            } catch (Exception e) {
+                /* bỏ qua lỗi */ }
+        }).start();
     }
 
     /**
@@ -187,10 +222,12 @@ public class StartMenu_Frame extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
+
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
