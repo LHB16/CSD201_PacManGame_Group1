@@ -79,6 +79,40 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         }
     }
     
+    public void eatCherry() {
+        int cherrys = ((BoardPanel) pnlBoard).getTotalCherry();
+        // Game over
+        if (cherrys <= 0) {
+            // Tạm dừng game
+            ((BoardPanel) pnlBoard).stopTimers();
+            
+            // Lấy điểm số và thời gian cuối cùng từ các JLabel
+            long finalScore = 0;
+            try {
+                finalScore = Long.parseLong(lbCountScore.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+            String finalTime = lbCountTime.getText();
+            
+            // Làm mờ nền game
+            glassPane.setVisible(true);
+
+            // Tạo và hiển thị hộp thoại tùy chỉnh
+            GameWin_Frame gameWinDialog = new GameWin_Frame(this, true, finalScore, finalTime);
+            gameWinDialog.showDialog();
+
+            // Tắt lớp làm mờ
+            glassPane.setVisible(false);
+
+            StartMenu_Frame startMenu = new StartMenu_Frame();
+            startMenu.setVisible(true); // Mở lại menu chính
+            this.dispose(); // Đóng cửa sổ hiện tại
+                      
+        }
+    }
+    
     /**
      * Cập nhật thanh tiến trình VÀ icon Red Bull.
      * @param isActive true nếu Red Bull đang kích hoạt

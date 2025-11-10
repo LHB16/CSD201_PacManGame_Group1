@@ -44,6 +44,7 @@ public class BoardPanel extends JPanel implements ActionListener {
     private int defaultLives = 3;
     public int totalLives = defaultLives;
     private int totalDots = 0;
+    private int totalCherry = 0;
     private int imageStatus = 0;
     private Timer gameLoopTimer;
     private Timer clockTimer;
@@ -137,6 +138,7 @@ public class BoardPanel extends JPanel implements ActionListener {
             }
         }
         countInitialDots();
+        countInitialChery();
 
         addKeyListener(new TAdapter());
         setFocusable(true);
@@ -156,6 +158,18 @@ public class BoardPanel extends JPanel implements ActionListener {
                 if (mapData[x][y] == 3) {
                     totalDots++;
                     itemBlock.add(new Block(x, y));
+                }
+            }
+        }
+    }
+    
+    private void countInitialChery() {
+        totalCherry = 0;
+        for (int x = 0; x < mapData.length; x++) {
+            for (int y = 0; y < mapData[x].length; y++) {
+                if (mapData[x][y] == 2) {
+                    totalCherry++;
+                    System.out.println(totalCherry + "chery");
                 }
             }
         }
@@ -234,8 +248,9 @@ public class BoardPanel extends JPanel implements ActionListener {
             }
         }
 
-        checkCollision();
         repaint();
+        checkCollision();       
+        gameFrame.eatCherry();
     }
 
     /**
@@ -262,6 +277,14 @@ public class BoardPanel extends JPanel implements ActionListener {
 
         // Tăng số lượng ghost đang hoạt động
         cntGhost++;
+    }
+
+    public int getTotalCherry() {
+        return totalCherry;
+    }
+
+    public void setTotalCherry(int totalCherry) {
+        this.totalCherry = totalCherry;
     }
 
     private void movePacman() {
@@ -291,9 +314,14 @@ public class BoardPanel extends JPanel implements ActionListener {
                         gameFrame.uploadLives();
                     }
                 }
-
             }
-
+            
+            if (mapData[newX][newY] == 2) {
+                score += 500;
+                gameFrame.lbCountScore.setText(String.valueOf(score));
+                totalCherry--;                
+            }
+            
             // tao gold
             if (mapData[newX][newY] == 2) {
                 score += 1000;
@@ -308,7 +336,7 @@ public class BoardPanel extends JPanel implements ActionListener {
                 appleRedY = -1;
             }
             
-            // an tao do
+            // an tao vang
             if (newX == appleGoldX && newY == appleGoldY) {
                 ++totalLives;
                 gameFrame.uploadLives();
