@@ -5,12 +5,6 @@
  */
 package pacman_demo_v2;
 
-import java.io.File;
-import java.net.URL;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
 /**
  *
  * @author luuhu
@@ -77,7 +71,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbPlay);
-        lbPlay.setBounds(100, 380, 540, 50);
+        lbPlay.setBounds(190, 380, 340, 50);
 
         lbTutorial.setBackground(new java.awt.Color(0, 255, 255));
         lbTutorial.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -91,7 +85,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbTutorial);
-        lbTutorial.setBounds(100, 440, 540, 50);
+        lbTutorial.setBounds(190, 440, 340, 50);
 
         lbRankingBoard.setBackground(new java.awt.Color(0, 255, 255));
         lbRankingBoard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -105,7 +99,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbRankingBoard);
-        lbRankingBoard.setBounds(100, 500, 540, 50);
+        lbRankingBoard.setBounds(190, 500, 340, 50);
 
         lbAboutUs.setBackground(new java.awt.Color(0, 255, 255));
         lbAboutUs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -119,7 +113,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbAboutUs);
-        lbAboutUs.setBounds(100, 560, 540, 50);
+        lbAboutUs.setBounds(190, 560, 340, 50);
 
         lbExit.setBackground(new java.awt.Color(0, 255, 255));
         lbExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -133,7 +127,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbExit);
-        lbExit.setBounds(100, 620, 540, 50);
+        lbExit.setBounds(190, 620, 340, 50);
 
         lbbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacManloop.gif"))); // NOI18N
         lbbackground.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -167,7 +161,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         MusicManager.stopMusic();
         ThankYou_Frame tyf = new ThankYou_Frame();
         tyf.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_lbExitMouseClicked
 
     private void lbRankingBoardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbRankingBoardMouseClicked

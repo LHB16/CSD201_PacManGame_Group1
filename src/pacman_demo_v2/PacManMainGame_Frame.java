@@ -6,7 +6,9 @@
 package pacman_demo_v2;
 
 import javax.swing.JOptionPane;
-
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import java.awt.Color;
 /**
  *
  * @author luuhu
@@ -15,6 +17,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
     private int choice;
     // Khởi tạo 1 màn làm mở cửa sổ
     private GlassPane glassPane;
+    
+    // 2 kiểu viền để tạo hiệu ứng cho thanh RedBull
+    private final Border electricBorder1 = BorderFactory.createLineBorder(Color.YELLOW, 2); // Viền VÀNG, dày 2px
+    private final Border electricBorder2 = BorderFactory.createLineBorder(Color.CYAN, 2);   // Viền XANH LƠ, dày 2px
 
     public int getChoice() {
         return choice;
@@ -130,9 +136,19 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
             prbarRedBull.setValue(remainingTicks);
             // Định dạng chuỗi để hiển thị 1 chữ số thập phân (ví dụ: "9.8s")
             prbarRedBull.setString(String.format("Red Bull: %.1fs", secondsLeft));
+            
+            // Cứ mỗi 5 tick (5 * 50ms = 0.25 giây) thì đổi màu viền
+            if ((remainingTicks / 5) % 2 == 0) {
+                // Nửa chu kỳ dùng viền vàng
+                prbarRedBull.setBorder(electricBorder1);
+            } else {
+                // Nửa chu kỳ còn lại dùng viền xanh lơ
+                prbarRedBull.setBorder(electricBorder2);
+            }
         } else {
             prbarRedBull.setValue(0);
             prbarRedBull.setString("Red Bull: Inactive");
+            prbarRedBull.setBorder(null); // Trả lại viền mặc định (không có viền)
         }
     }
 
