@@ -5,12 +5,6 @@
  */
 package pacman_demo_v2;
 
-import java.io.File;
-import java.net.URL;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
 /**
  *
  * @author luuhu
@@ -167,7 +161,7 @@ public class StartMenu_Frame extends javax.swing.JFrame {
         MusicManager.stopMusic();
         ThankYou_Frame tyf = new ThankYou_Frame();
         tyf.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_lbExitMouseClicked
 
     private void lbRankingBoardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbRankingBoardMouseClicked
