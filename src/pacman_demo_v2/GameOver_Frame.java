@@ -103,7 +103,7 @@ public class GameOver_Frame extends javax.swing.JDialog {
         getContentPane().add(btnNo);
         btnNo.setBounds(100, 435, 80, 40);
 
-        btnYes.setBackground(new java.awt.Color(0, 204, 0));
+        btnYes.setBackground(new java.awt.Color(0, 190, 1));
         btnYes.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btnYes.setForeground(new java.awt.Color(255, 255, 255));
         btnYes.setText("OK");

@@ -55,7 +55,7 @@ public class CustomDialog extends javax.swing.JDialog {
         setUndecorated(true);
         getContentPane().setLayout(null);
 
-        btnNo.setBackground(new java.awt.Color(0, 204, 0));
+        btnNo.setBackground(new java.awt.Color(0, 190, 1));
         btnNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnNo.setForeground(new java.awt.Color(255, 255, 255));
         btnNo.setText("NO");
