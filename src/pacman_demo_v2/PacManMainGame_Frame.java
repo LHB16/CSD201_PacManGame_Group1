@@ -244,12 +244,10 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/PacmanGameplayLogo.png"))); // NOI18N
 
         lbCountLive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbCountLive.setForeground(new java.awt.Color(243, 196, 50));
         lbCountLive.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountLive.setText("3");
 
         lbCountTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbCountTime.setForeground(new java.awt.Color(255, 255, 255));
         lbCountTime.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountTime.setText("00:00:00");
 
@@ -266,7 +264,6 @@ public class PacManMainGame_Frame extends javax.swing.JFrame {
         lbScore.setText("SCORE");
 
         lbCountScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbCountScore.setForeground(new java.awt.Color(255, 255, 255));
         lbCountScore.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbCountScore.setText("0");
 
