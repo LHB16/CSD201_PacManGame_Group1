@@ -15,6 +15,7 @@ public class ThankYou_Frame extends javax.swing.JFrame {
      * Creates new form StartMenu_Frame
      */
     public ThankYou_Frame() {
+        this.setUndecorated(true);
         initComponents();
         javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"));
         this.setIconImage(icon.getImage());
